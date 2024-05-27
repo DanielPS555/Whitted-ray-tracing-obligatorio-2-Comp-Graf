@@ -1,0 +1,101 @@
+{
+  "planos": [
+    {
+      "name": "Piso",
+      "ancho": 20,
+      "largo": 30,
+      "altura": 3,
+      "r": 15,
+      "g": 100,
+      "b": 222
+    },
+    {
+      "name": "Pared1",
+      "ancho": 3,
+      "largo": 30,
+      "z": 30,
+      "r": 15,
+      "g": 100,
+      "b": 222
+    },
+    {
+      "name": "pared2",
+      "ancho": 3,
+      "largo": 30,
+      "z": 30,
+      "r": 15,
+      "g": 100,
+      "b": 222
+    },
+    {
+      "name": "Pared3",
+      "ancho": 20,
+      "largo": 3,
+      "z": 30,
+      "r": 15,
+      "g": 100,
+      "b": 222
+    },
+    {
+      "name": "techo",
+      "ancho": 20,
+      "largo": 30,
+      "altura": 30,
+      "r": 15,
+      "g": 100,
+      "b": 222
+    }
+  ],
+
+  "rectangulos": [
+    {
+      "name": "Rec1",
+      "ancho": 5,
+      "largo": 10,
+      "altura": 5,
+      "x": 2,
+      "y": 3,
+      "z": 0,
+      "r": 15,
+      "g": 100,
+      "b": 222,
+      "Transparencia": 0,
+      "Refleccion": 0,
+      "Refraccion": 0
+    }
+  ],
+
+  "esferas": [
+    {
+      "name": "Esf1",
+      "Radio": 7,
+      "x": 3,
+      "y": 4,
+      "z": 5,
+      "r": 15,
+      "g": 100,
+      "b": 222,
+      "Transparencia": 0,
+      "Refleccion": 0,
+      "Refraccion": 0
+    }
+  ],
+
+  "cilindros": [
+    {
+      "name": "Cil1",
+      "Radio": 4,
+      "Altura": 8,
+      "x": 5,
+      "y": 7,
+      "z": 5,
+      "r": 15,
+      "g": 100,
+      "b": 222,
+      "Transparencia": 0,
+      "Refleccion": 0,
+      "Refraccion":  0
+    }
+  ]
+
+}
