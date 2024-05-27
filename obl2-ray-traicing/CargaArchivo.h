@@ -29,7 +29,7 @@ struct Rectangulo
 	int Refraccion;
 };
 
-struct Esferas
+struct Sphear
 {
 	int radio;
 	int x;
@@ -66,8 +66,9 @@ class CargaArchivo
 		json data;
 		std::vector<Plano> cuarto;
 		std::vector<Rectangulo> rects;
-		std::vector<Esferas> sphers;
+		std::vector<Sphear> sphears;
 		std::vector<Cilindro> cilins;
+		int xCam, yCam, zCam, resolucion;
 
 	public:
 

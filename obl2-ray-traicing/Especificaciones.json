@@ -94,7 +94,16 @@
       "b": 222,
       "Transparencia": 0,
       "Refleccion": 0,
-      "Refraccion":  0
+      "Refraccion": 0
+    }
+  ],
+
+  "camara": [
+    {
+      "Resolucion": 720,
+      "x": 0,
+      "y": 0,
+      "z": 0
     }
   ]
 
