@@ -8,7 +8,7 @@ private:
 
 public:
 
-	Esfera(MathVector centro, float radio);
+	Esfera(MathVector centro, float radio, RGBQUAD color);
 
 	float intersepcion(Rayo rayo);
 };

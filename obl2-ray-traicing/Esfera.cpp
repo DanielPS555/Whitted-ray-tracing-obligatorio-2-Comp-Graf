@@ -2,9 +2,10 @@
 #include "cmath"
 #include "Utils.h"
 
-Esfera::Esfera(MathVector centro, float radio) {
+Esfera::Esfera(MathVector centro, float radio, RGBQUAD color) {
 	this->centro = centro;
 	this->radio = radio;
+	setColorBase(color);
 }
 
 float Esfera::intersepcion(Rayo ra) {

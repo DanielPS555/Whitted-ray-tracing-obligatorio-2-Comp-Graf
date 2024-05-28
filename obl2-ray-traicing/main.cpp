@@ -7,6 +7,7 @@
 #include "ObjetosEscena.h"
 #include "Camara.h"
 #include "Esfera.h"
+#include "../Objeto.h"
 
 
 // Main function
@@ -26,7 +27,14 @@ int main() {
     int w = (int)ObjetosEscena::getInstancia()->resolucionX;
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
-    Esfera* eferaPrueba = new Esfera({ 200,200,1000 }, 150.0f);
+    Esfera* eferaPrueba = new Esfera({ 200,200,1000 }, 150.0f, {(BYTE)100, (BYTE)2, (BYTE)15});
+    Esfera* eferaPrueba2 = new Esfera({ -200,200,1200 }, 350.0f, { (BYTE)200, (BYTE)20, (BYTE)150 });
+
+    Objeto** elementos = new Objeto * [2];
+    elementos[0] = eferaPrueba;
+    elementos[1] = eferaPrueba2;
+
+    ObjetosEscena::getInstancia()->setElementos(2, elementos);
 
 
     for (int y = 0; y < h; y++) {
@@ -35,19 +43,10 @@ int main() {
             Rayo r = camaraPtr->getRayo(x, y);
 
 
-            RGBQUAD rgbColor;
-            if (eferaPrueba->intersepcion(r) == -1) {
-                rgbColor.rgbRed = (BYTE)(1 * 255);
-                rgbColor.rgbGreen = (BYTE)(1 * 255);
-                rgbColor.rgbBlue = (BYTE)(1 * 255);
-            }
-            else {
-                rgbColor.rgbRed = (BYTE)(0 * 255);
-                rgbColor.rgbGreen = (BYTE)(0 * 255);
-                rgbColor.rgbBlue = (BYTE)(0 * 255);
-            }
+            RGBQUAD rgbColor = ObjetosEscena::getInstancia()->getPixelPorRayo(r);
+            
 
-            FreeImage_SetPixelColor(bitmap, x, h - y - 1, &rgbColor);
+            FreeImage_SetPixelColor(bitmap, x, y, &rgbColor);
         }
     }
 
