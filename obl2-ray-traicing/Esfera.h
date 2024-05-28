@@ -1,5 +1,15 @@
-#pragma once
-class Esfera
-{
+#include "../Objeto.h"
+
+class Esfera: public Objeto{
+private:
+	float radio;
+	MathVector centro;
+
+
+public:
+
+	Esfera(MathVector centro, float radio);
+
+	float intersepcion(Rayo rayo);
 };
 

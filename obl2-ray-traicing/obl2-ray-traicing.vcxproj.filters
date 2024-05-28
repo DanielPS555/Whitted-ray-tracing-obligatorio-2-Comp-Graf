@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\modelos">
+      <UniqueIdentifier>{d51d7899-9905-44a5-842c-975ff5717daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\escena">
+      <UniqueIdentifier>{85939c25-101a-4ceb-ac50-eb3efb115144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\escena">
+      <UniqueIdentifier>{82901ad1-cfe1-49ba-992a-f463691ce3de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\modelos">
+      <UniqueIdentifier>{f24c02d5-e271-406d-9ab2-f6bef4e160d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{943a71ba-8558-4e39-a855-569f2caaaaca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{47b5ac8d-71f8-4aed-9887-4f5ee736606d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,26 +42,29 @@
     <ClCompile Include="ObjetosEscena.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConfiguracionEscena.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DivisionEspacio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Objeto.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Plano.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Esfera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ejemplo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Camara.cpp">
+      <Filter>Source Files\escena</Filter>
+    </ClCompile>
     <ClCompile Include="Utils.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MathVector.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Objeto.cpp">
+      <Filter>Source Files\modelos</Filter>
+    </ClCompile>
+    <ClCompile Include="Plano.cpp">
+      <Filter>Source Files\modelos</Filter>
+    </ClCompile>
+    <ClCompile Include="Esfera.cpp">
+      <Filter>Source Files\modelos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,26 +74,32 @@
     <ClInclude Include="ObjetosEscena.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConfiguracionEscena.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DivisionEspacio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Objeto.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Plano.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Esfera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ejemplo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Camara.h">
+      <Filter>Header Files\escena</Filter>
+    </ClInclude>
     <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MathVector.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Esfera.h">
+      <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+    <ClInclude Include="Objeto.h">
+      <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+    <ClInclude Include="Plano.h">
+      <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+    <ClInclude Include="Rayo.h">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
