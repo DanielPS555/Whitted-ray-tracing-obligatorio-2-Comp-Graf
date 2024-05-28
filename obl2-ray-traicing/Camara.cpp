@@ -25,10 +25,9 @@ Camara::Camara(MathVector up, MathVector lookupDirrecion, MathVector lookUpPosit
 }
 
 Rayo Camara::getRayo(int x, int y) {
-
-	//ToDo calcular el up y right segun la camara
-	MathVector vectorUp    = { 0.0f, 1.0f, 0.0f };
-	MathVector vectorRight = { 1.0f, 0.0f, 0.0f };
+	
+	MathVector vectorRight = normalizar(productoVectorial(dirrecionArriba, dirrecionPuntoVista));
+	MathVector vectorUp = normalizar(productoVectorial(dirrecionPuntoVista, vectorRight));
 
 	int w = (int)ObjetosEscena::getInstancia()->resolucionX;
 	int h = (int)ObjetosEscena::getInstancia()->resolucionY;

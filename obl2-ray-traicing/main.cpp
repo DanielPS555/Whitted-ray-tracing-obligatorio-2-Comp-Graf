@@ -15,8 +15,10 @@ int main() {
     ObjetosEscena::getInstancia()->resolucionX = 1000.f;
     ObjetosEscena::getInstancia()->resolucionY =  500.f;
 
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
 
+    // Camara superior diagonal para el ejemplo
+    //Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 1.0f }, { 0.0f, -1.0f, 1.0f }, { 200.0f, 500.0f, 600.0f });
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 0.0f});
 
     FIBITMAP* bitmap = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
                                         ObjetosEscena::getInstancia()->resolucionY);
@@ -27,8 +29,8 @@ int main() {
     int w = (int)ObjetosEscena::getInstancia()->resolucionX;
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
-    Esfera* eferaPrueba = new Esfera({ 200,200,1000 }, 150.0f, {(BYTE)100, (BYTE)2, (BYTE)15});
-    Esfera* eferaPrueba2 = new Esfera({ -200,200,1200 }, 350.0f, { (BYTE)200, (BYTE)20, (BYTE)150 });
+    Esfera* eferaPrueba = new Esfera({ 200,200,600 }, 150.0f, {(BYTE)100, (BYTE)2, (BYTE)15});
+    Esfera* eferaPrueba2 = new Esfera({ -100,200,1200 }, 350.0f, { (BYTE)200, (BYTE)20, (BYTE)150 });
 
     Objeto** elementos = new Objeto * [2];
     elementos[0] = eferaPrueba;
