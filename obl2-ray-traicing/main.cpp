@@ -7,6 +7,7 @@
 #include "ObjetosEscena.h"
 #include "Camara.h"
 #include "Esfera.h"
+#include "Triangulo.h"
 #include "../Objeto.h"
 
 
@@ -29,12 +30,12 @@ int main() {
     int w = (int)ObjetosEscena::getInstancia()->resolucionX;
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
-    Esfera* eferaPrueba = new Esfera({ 200,200,600 }, 150.0f, {(BYTE)100, (BYTE)2, (BYTE)15});
-    Esfera* eferaPrueba2 = new Esfera({ -100,200,1200 }, 350.0f, { (BYTE)200, (BYTE)20, (BYTE)150 });
-
+    Esfera* eferaPrueba = new Esfera({ 0,0,600 }, 150.0f, {(BYTE)100, (BYTE)2, (BYTE)15});
+    //Esfera* eferaPrueba2 = new Esfera({ -100,200,1200 }, 350.0f, { (BYTE)200, (BYTE)20, (BYTE)150 });
+    Triangulo* trianguloPrueba = new Triangulo({ 300,0,0 }, { 0,300,0 }, { 0,0,300 }, { (BYTE)200, (BYTE)20, (BYTE)150 });
     Objeto** elementos = new Objeto * [2];
     elementos[0] = eferaPrueba;
-    elementos[1] = eferaPrueba2;
+    elementos[1] = trianguloPrueba;
 
     ObjetosEscena::getInstancia()->setElementos(2, elementos);
 

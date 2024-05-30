@@ -66,6 +66,9 @@
     <ClCompile Include="Esfera.cpp">
       <Filter>Source Files\modelos</Filter>
     </ClCompile>
+    <ClCompile Include="Triangulo.cpp">
+      <Filter>Source Files\modelos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CargaArchivo.h">
@@ -100,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="Rayo.h">
       <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangulo.h">
+      <Filter>Header Files\modelos</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

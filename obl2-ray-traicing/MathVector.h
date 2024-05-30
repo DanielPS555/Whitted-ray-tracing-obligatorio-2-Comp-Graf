@@ -5,6 +5,7 @@ struct MathVector {
 	float x;
 	float y;
 	float z;
+
 };
 
 
