@@ -106,7 +106,13 @@
       "Resolucion": 720,
       "x": 0,
       "y": 0,
-      "z": 0
+      "z": 0,
+      "dirAx": 0,
+      "dirAy": 0,
+      "dirAz": 0,
+      "dirPVx": 0,
+      "dirPVy": 0,
+      "dirPVz": 0,
     }
   ]
 
