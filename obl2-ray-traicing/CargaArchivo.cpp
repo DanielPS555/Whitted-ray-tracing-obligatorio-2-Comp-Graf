@@ -2,12 +2,13 @@
 #include "Esfera.h"
 #include "Objeto.h"
 #include <fstream>
+#include <iostream>
 
 CargaArchivo::CargaArchivo()
 {
 	std::ifstream f("Especificaciones.json");
 	json data = json::parse(f);
-	
+
 	for (int i = 0; i < 4; i++) {
 		Plano p;
 		p.altura = data["planos"][i]["altura"];
@@ -17,6 +18,7 @@ CargaArchivo::CargaArchivo()
 		p.g = data["planos"][i]["g"];
 		p.b = data["planos"][i]["b"];
 		this->cuarto.push_back(p);
+		std::cout << p.altura;
 	}
 
 	for (int r = 0; r < data["rectangulos"].size(); r++) {
@@ -51,25 +53,25 @@ CargaArchivo::CargaArchivo()
 		this->sphears.push_back(esfe);
 	}
 
-	for (int e = 0; e < data["cilindros"].size(); e++) {
+	for (int c = 0; c < data["cilindros"].size(); c++) {
 		Cilindro cilin;
-		cilin.radio = data["cilindros"][e]["radio"];
-		cilin.altura = data["cilindros"][e]["altura"];
-		cilin.r = data["cilindros"][e]["r"];
-		cilin.g = data["cilindros"][e]["g"];
-		cilin.b = data["cilindros"][e]["b"];
-		cilin.Refleccion = data["cilindros"][e]["Refleccion"];
-		cilin.Refraccion = data["cilindros"][e]["Refraccion"];
-		cilin.Transparencia = data["cilindros"][e]["Transparencia"];
-		cilin.x = data["cilindros"][e]["x"];
-		cilin.y = data["cilindros"][e]["y"];
-		cilin.z = data["cilindros"][e]["z"];
+		cilin.radio = data["cilindros"][c]["radio"];
+		cilin.altura = data["cilindros"][c]["altura"];
+		cilin.r = data["cilindros"][c]["r"];
+		cilin.g = data["cilindros"][c]["g"];
+		cilin.b = data["cilindros"][c]["b"];
+		cilin.Refleccion = data["cilindros"][c]["Refleccion"];
+		cilin.Refraccion = data["cilindros"][c]["Refraccion"];
+		cilin.Transparencia = data["cilindros"][c]["Transparencia"];
+		cilin.x = data["cilindros"][c]["x"];
+		cilin.y = data["cilindros"][c]["y"];
+		cilin.z = data["cilindros"][c]["z"];
 		this->cilins.push_back(cilin);
 	}
-	
+
 	this->xCam = data["camara"][0]["x"];
 	this->yCam = data["camara"][0]["y"];
 	this->zCam = data["camara"][0]["z"];
-	this->resolucion = data["camara"][0]["resolucion"];
+	this->resolucion = data["camara"][0]["Resolucion"];
 
 }

@@ -9,12 +9,15 @@
 #include "Esfera.h"
 #include "Triangulo.h"
 #include "../Objeto.h"
+#include "CargaArchivo.h"
 
 
 // Main function
 int main() {
     ObjetosEscena::getInstancia()->resolucionX = 1000.f;
     ObjetosEscena::getInstancia()->resolucionY =  500.f;
+
+    CargaArchivo param = CargaArchivo();
 
 
     // Camara superior diagonal para el ejemplo

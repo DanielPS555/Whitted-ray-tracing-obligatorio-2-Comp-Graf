@@ -13,6 +13,7 @@
       "name": "Pared1",
       "ancho": 3,
       "largo": 30,
+      "altura": 30,
       "z": 30,
       "r": 15,
       "g": 100,
@@ -22,6 +23,7 @@
       "name": "pared2",
       "ancho": 3,
       "largo": 30,
+      "altura": 30,
       "z": 30,
       "r": 15,
       "g": 100,
@@ -31,6 +33,7 @@
       "name": "Pared3",
       "ancho": 20,
       "largo": 3,
+      "altura": 30,
       "z": 30,
       "r": 15,
       "g": 100,
@@ -40,7 +43,7 @@
       "name": "techo",
       "ancho": 20,
       "largo": 30,
-      "altura": 30,
+      "altura": 3,
       "r": 15,
       "g": 100,
       "b": 222
@@ -68,7 +71,7 @@
   "esferas": [
     {
       "name": "Esf1",
-      "Radio": 7,
+      "radio": 7,
       "x": 3,
       "y": 4,
       "z": 5,
@@ -84,8 +87,8 @@
   "cilindros": [
     {
       "name": "Cil1",
-      "Radio": 4,
-      "Altura": 8,
+      "radio": 4,
+      "altura": 8,
       "x": 5,
       "y": 7,
       "z": 5,
