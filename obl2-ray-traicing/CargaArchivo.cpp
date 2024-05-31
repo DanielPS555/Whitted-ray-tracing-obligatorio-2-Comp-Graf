@@ -69,9 +69,35 @@ CargaArchivo::CargaArchivo()
 		this->cilins.push_back(cilin);
 	}
 
-	this->xCam = data["camara"][0]["x"];
-	this->yCam = data["camara"][0]["y"];
-	this->zCam = data["camara"][0]["z"];
+	this->ubCam.push_back(data["camara"][0]["x"]);
+	this->ubCam.push_back(data["camara"][0]["y"]);
+	this->ubCam.push_back(data["camara"][0]["z"]);
+	this->dirACam.push_back(data["camara"][0]["dirAx"]);
+	this->dirACam.push_back(data["camara"][0]["dirAy"]);
+	this->dirACam.push_back(data["camara"][0]["dirAz"]);
+	this->dirPVCam.push_back(data["camara"][0]["dirPVx"]);
+	this->dirPVCam.push_back(data["camara"][0]["dirPVx"]);
+	this->dirPVCam.push_back(data["camara"][0]["dirPVx"]);
 	this->resolucion = data["camara"][0]["Resolucion"];
 
+}
+
+std::vector<float> CargaArchivo::getDirACam()
+{
+	return this->dirACam;
+}
+
+std::vector<float> CargaArchivo::getUbCam()
+{
+	return this->ubCam;
+}
+
+std::vector<float> CargaArchivo::getDirPVCam()
+{
+	return this->dirPVCam;
+}
+
+int CargaArchivo::getRes()
+{
+	return this->resolucion;
 }

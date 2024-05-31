@@ -68,10 +68,21 @@ class CargaArchivo
 		std::vector<Rectangulo> rects;
 		std::vector<Sphear> sphears;
 		std::vector<Cilindro> cilins;
-		int xCam, yCam, zCam, resolucion;
+		std::vector<float> dirACam, dirPVCam, ubCam;
+		int resolucion;
 
 	public:
 
 		CargaArchivo();
+
+		std::vector<float> getDirACam();
+
+		std::vector<float> getUbCam();
+
+		std::vector<float> getDirPVCam();
+
+		int getRes();
+
+
 };
 
