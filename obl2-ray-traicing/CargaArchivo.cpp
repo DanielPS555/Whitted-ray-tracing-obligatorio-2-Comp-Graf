@@ -2,12 +2,13 @@
 #include "Esfera.h"
 #include "Objeto.h"
 #include <fstream>
+#include <iostream>
 
 CargaArchivo::CargaArchivo()
 {
 	std::ifstream f("Especificaciones.json");
 	json data = json::parse(f);
-	
+
 	for (int i = 0; i < 4; i++) {
 		Plano p;
 		p.altura = data["planos"][i]["altura"];
@@ -66,10 +67,10 @@ CargaArchivo::CargaArchivo()
 		cilin.z = data["cilindros"][e]["z"];
 		this->cilins.push_back(cilin);
 	}
-	
+
 	this->xCam = data["camara"][0]["x"];
 	this->yCam = data["camara"][0]["y"];
 	this->zCam = data["camara"][0]["z"];
-	this->resolucion = data["camara"][0]["resolucion"];
+	this->resolucion = data["camara"][0]["Resolucion"];
 
 }
