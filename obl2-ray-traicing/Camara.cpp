@@ -21,7 +21,7 @@ Camara::Camara(MathVector up, MathVector lookupDirrecion, MathVector lookUpPosit
 	MathVector traslacionCamara = multiplicarPorEscalar(normalizar(dirrecionPuntoVista), -profundidadCamara);
 
 	ubicacionCamara = sumar(ubicacionPuntoVista, traslacionCamara);
-	print(ubicacionCamara);
+	
 }
 
 Rayo Camara::getRayo(int x, int y) {
@@ -42,6 +42,6 @@ Rayo Camara::getRayo(int x, int y) {
 
 	MathVector dirrecionCamara = restar(lugarFrame, ubicacionCamara);
 	
-	return { lugarFrame , dirrecionCamara };
+	return { ubicacionCamara , dirrecionCamara };
 
 }

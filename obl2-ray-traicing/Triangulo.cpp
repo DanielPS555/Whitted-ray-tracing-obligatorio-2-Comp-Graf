@@ -1,18 +1,25 @@
 #include "Triangulo.h"
 #include <cmath>
+#include "ObjetosEscena.h"
 
-Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2, RGBQUAD color) {
+Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2, Color color) {
     Triangulo::v0 = v0;
     Triangulo::v1 = v1;
     Triangulo::v2 = v2;
     setColorBase(color);
+
+    MathVector t1 = restar(v1, v0);
+    MathVector t2 = restar(v2, v0);
+
+    print(t1);
+    print(t2);
+
+    vectorNormal = normalizar(productoVectorial(t1, t2));
 }
 
 // este metodo esta basado en el algoritmo Moller-trumbore.
 // para entenderlo completamente visitar https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm#Rust_implementation
 float Triangulo::intersepcion(Rayo rayo) {
-    const float EPSILON = 1e-8;
-
     //calculos los vectores de las aristas del triangulo.
     MathVector edge1 = restar(v1,v0);
     MathVector edge2 = restar(v2,v0);
@@ -55,4 +62,18 @@ float Triangulo::intersepcion(Rayo rayo) {
     else {
         return -1; 
     }
+
+}
+
+Color Triangulo::getColor(Rayo rayo, float t){
+
+    LuzAmbiente luzAmbiente = ObjetosEscena::getInstancia()->luzAmbiente;
+
+    Color colorConLuzAmbiente = getLuzAmbientePorObjeto(luzAmbiente, colorBase, sensibilidad_luz_ambiente);
+
+    return colorConLuzAmbiente;
+}
+
+MathVector Triangulo::getNormal(MathVector punto) {
+    return vectorNormal;
 }

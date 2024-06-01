@@ -1,7 +1,9 @@
 #include "MathVector.h"
 #include "Rayo.h"
 #include "../Objeto.h"
-#include <FreeImage.h>
+#include "Color.h"
+#include "LuzAmbiente.h"
+#include "LuzDifusa.h"
 
 #ifndef OBJECTO_ESCENA_CLASS
 #define OBJECTO_ESCENA_CLASS
@@ -13,24 +15,28 @@ private:
 
 	Objeto** elementos;
 	unsigned int numeroElementos;
+	
 
-	RGBQUAD bgColor;
+	Color bgColor;
+
+	
 
 	ObjetosEscena() {
 		resolucionX = 0.0f;
 		resolucionY = 0.0f;
 
-		bgColor.rgbRed  = (BYTE)(1 * 255);
-		bgColor.rgbGreen = (BYTE)(1 * 255);
-		bgColor.rgbBlue = (BYTE)(1 * 255);
-		
-
+		bgColor.r = 0;
+		bgColor.g = 0;
+		bgColor.b = 0;
 	}
 
 public:
 	unsigned resolucionX;
 	unsigned resolucionY;
 
+	LuzAmbiente luzAmbiente;
+	LuzDifusa* lucesDifusas;
+	int numeroLucesDifusas;
 
 	ObjetosEscena(const ObjetosEscena& obj) = delete;
 	static ObjetosEscena* getInstancia() {
@@ -42,7 +48,9 @@ public:
 	// La collecion de "elementos" debe estar creado y se va a utilizar de igual forma
 	void setElementos(unsigned numeroElementos, Objeto** elementos);
 
-	RGBQUAD getPixelPorRayo(Rayo rayo);
+	Color getPixelPorRayo(Rayo rayo);
+
+	void getIntersepcionMasCercana(Rayo rayo, int& indiceObjeto, float& t_intersepcion);
 
 };
 

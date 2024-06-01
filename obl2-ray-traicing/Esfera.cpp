@@ -2,7 +2,10 @@
 #include "cmath"
 #include "Utils.h"
 
-Esfera::Esfera(MathVector centro, float radio, RGBQUAD color) {
+#include "ObjetosEscena.h"
+#include "LuzAmbiente.h"
+
+Esfera::Esfera(MathVector centro, float radio, Color color) {
 	this->centro = centro;
 	this->radio = radio;
 	setColorBase(color);
@@ -48,3 +51,9 @@ float Esfera::intersepcion(Rayo ra) {
 	return obtenerMenorRaizPositivaBhaskara(a, b, c);
 
 }
+
+
+MathVector Esfera::getNormal(MathVector punto) {
+	return normalizar(restar(punto, centro));
+}
+
