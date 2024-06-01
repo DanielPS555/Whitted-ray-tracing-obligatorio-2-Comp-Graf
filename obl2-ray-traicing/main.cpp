@@ -47,9 +47,12 @@ Camara* ejemplo2() {
 
     Esfera* eferaPrueba1 = new Esfera({ 0,0,0}, 40.0f, { 90,180,15 });
     eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
+    eferaPrueba1->setParametrosEspeculares(29, 0.9, {255.f, 0.f, 0.f});
 
     Triangulo* triangulo2 = new Triangulo({ -500,-500,-100 }, { 500,-500,-100 }, { 0,500,-100 }, { 0,200,150 });
     triangulo2->setAtenuacion(0, 0.001, 0.00001f);
+    triangulo2->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
+
 
     Objeto** elementos = new Objeto * [2];
     elementos[0] = eferaPrueba1;
@@ -59,7 +62,7 @@ Camara* ejemplo2() {
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
 
     LuzPuntual* luces = new LuzPuntual[1];
-    luces[0] = { {255.f,  255.f,  255.f}, {0.f   ,0.f,   200.f} };
+    luces[0] = { {200.f,  200.f,  200.f}, {0.f   ,0.f,   200.f} };
 
     ObjetosEscena::getInstancia()->lucesDifusas = luces;
     ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;

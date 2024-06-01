@@ -56,9 +56,9 @@ Color Objeto::getColor(Rayo rayo, float t) {
 	}
 
 	
-	// Calculo luz difuza 
+	// Calculo luz difuza y especular
 
-	MathVector normal = getNormal(posicionIntersepcion);
+	MathVector normal = normalizar(getNormal(posicionIntersepcion));
 
 	for (int i = 0; i < numeroLuces; i++) {
 		LuzPuntual ld = ObjetosEscena::getInstancia()->lucesDifusas[i];
@@ -66,28 +66,35 @@ Color Objeto::getColor(Rayo rayo, float t) {
 
 		float coeficiente_luz_por_obstruccion = coeficienteDeIntersepcion[i];
 
-		float distanciaConLuz = norma(restar(posicionIntersepcion, ld.posicion));
+		MathVector vectorALaLuz = restar(posicionIntersepcion, ld.posicion);
+
+		float distanciaConLuz = norma(vectorALaLuz);
 
 		float atenuacion = fmin(1.0f, 1 / (atenuacion_constante + antenuacion_lineal * distanciaConLuz + atenuacion_cuadratica * powf(distanciaConLuz, 2)));
 
-		float coeficiente = productoEscalar(posicionLuzSegunPixel, normal);
-		coeficiente = fmax(coeficiente, 0.f);
+		float coeficienteDifusa = productoEscalar(posicionLuzSegunPixel, normal);
+		coeficienteDifusa = fmax(coeficienteDifusa, 0.f);
 
-		float atenuadoresConvinados = coeficiente * atenuacion * sensibilidad_luz_difusa * coeficiente_luz_por_obstruccion;
+		MathVector vectorRefraxion = normalizar(simetrico(normal, normalizar(vectorALaLuz)));
 
-		Color luzDifusa = {
-						(ld.intensidad.r / 255.f) * colorBase.r * atenuadoresConvinados, //ToDO sensibilidad_luz_ambiente cambiar
-						(ld.intensidad.g / 255.f) * colorBase.g * atenuadoresConvinados,
-						(ld.intensidad.b / 255.f) * colorBase.b * atenuadoresConvinados
+		float coeficienteEspecular = powf(productoEscalar(normalizar(rayo.dirrecion), vectorRefraxion), exponenteReflexionEspecular);
+		
+		coeficienteEspecular = fmax(coeficienteEspecular, 0.f);
+
+
+
+
+		Color luzDifusaYEspecular = {
+						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.r / 255.f)) * (colorBase.r * coeficienteDifusa * sensibilidad_luz_difusa + coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.r),
+						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.g / 255.f)) * (colorBase.g * coeficienteDifusa * sensibilidad_luz_difusa + coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.g),
+						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.b / 255.f)) * (colorBase.b * coeficienteDifusa * sensibilidad_luz_difusa + coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.b),
 		};
 
-		colorTotal.r += luzDifusa.r;
-		colorTotal.g += luzDifusa.g;
-		colorTotal.b += luzDifusa.b;
+		colorTotal.r += luzDifusaYEspecular.r;
+		colorTotal.g += luzDifusaYEspecular.g;
+		colorTotal.b += luzDifusaYEspecular.b;
 	}
 
-
-	//Calculo de luz especular
 
 	return colorTotal;
 }
