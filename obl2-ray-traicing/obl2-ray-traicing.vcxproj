@@ -140,7 +140,7 @@
     <ClCompile Include="ejemplo.cpp" />
     <ClCompile Include="Esfera.cpp" />
     <ClCompile Include="LuzAmbiente.cpp" />
-    <ClCompile Include="LuzDifusa.cpp" />
+    <ClCompile Include="LuzPuntual.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathVector.cpp" />
     <ClCompile Include="Objeto.cpp" />
@@ -158,7 +158,7 @@
     <ClInclude Include="ejemplo.h" />
     <ClInclude Include="Esfera.h" />
     <ClInclude Include="LuzAmbiente.h" />
-    <ClInclude Include="LuzDifusa.h" />
+    <ClInclude Include="LuzPuntual.h" />
     <ClInclude Include="MathVector.h" />
     <ClInclude Include="Objeto.h" />
     <ClInclude Include="ObjetosEscena.h" />

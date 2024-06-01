@@ -81,7 +81,7 @@
     <ClCompile Include="Rayo.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
-    <ClCompile Include="LuzDifusa.cpp">
+    <ClCompile Include="LuzPuntual.cpp">
       <Filter>Source Files\iluminacion</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,7 +128,7 @@
     <ClInclude Include="Color.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="LuzDifusa.h">
+    <ClInclude Include="LuzPuntual.h">
       <Filter>Header Files\iluminacion</Filter>
     </ClInclude>
   </ItemGroup>

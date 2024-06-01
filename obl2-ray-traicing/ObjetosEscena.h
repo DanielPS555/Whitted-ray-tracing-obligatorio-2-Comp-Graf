@@ -3,7 +3,7 @@
 #include "../Objeto.h"
 #include "Color.h"
 #include "LuzAmbiente.h"
-#include "LuzDifusa.h"
+#include "LuzPuntual.h"
 
 #ifndef OBJECTO_ESCENA_CLASS
 #define OBJECTO_ESCENA_CLASS
@@ -35,7 +35,7 @@ public:
 	unsigned resolucionY;
 
 	LuzAmbiente luzAmbiente;
-	LuzDifusa* lucesDifusas;
+	LuzPuntual* lucesDifusas;
 	int numeroLucesDifusas;
 
 	ObjetosEscena(const ObjetosEscena& obj) = delete;

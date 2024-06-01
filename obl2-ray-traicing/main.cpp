@@ -30,7 +30,7 @@ Camara* ejemplo1() {
     ObjetosEscena::getInstancia()->setElementos(4, elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
 
-    LuzDifusa* luces = new LuzDifusa[3];
+    LuzPuntual* luces = new LuzPuntual[3];
     luces[0] = { {255.f,    255.f,  255.f}, {0.f   ,0.f,   500.f} };
     luces[1] = { {255.f,    0.f,  0.f} ,    {700.f ,0.f,   400.f} };
     luces[2] = { {255.f,    0.f,  255.f},  {-700.f ,0.f,   400.f} };
@@ -46,7 +46,10 @@ Camara* ejemplo2() {
     Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { -1.0f, 0.0f, -1.0f }, { 100.0f, 0.0f, 100.0f });
 
     Esfera* eferaPrueba1 = new Esfera({ 0,0,0}, 40.0f, { 90,180,15 });
+    eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
+
     Triangulo* triangulo2 = new Triangulo({ -500,-500,-100 }, { 500,-500,-100 }, { 0,500,-100 }, { 0,200,150 });
+    triangulo2->setAtenuacion(0, 0.001, 0.00001f);
 
     Objeto** elementos = new Objeto * [2];
     elementos[0] = eferaPrueba1;
@@ -55,7 +58,7 @@ Camara* ejemplo2() {
     ObjetosEscena::getInstancia()->setElementos(2, elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
 
-    LuzDifusa* luces = new LuzDifusa[1];
+    LuzPuntual* luces = new LuzPuntual[1];
     luces[0] = { {255.f,  255.f,  255.f}, {0.f   ,0.f,   200.f} };
 
     ObjetosEscena::getInstancia()->lucesDifusas = luces;

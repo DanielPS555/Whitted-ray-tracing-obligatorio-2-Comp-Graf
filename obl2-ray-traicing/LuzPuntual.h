@@ -4,7 +4,7 @@
 #ifndef LUZ_DIFUSA_STRUCT
 #define LUZ_DIFUSA_STRUCT
 
-struct LuzDifusa {
+struct LuzPuntual {
 
 	Color intensidad;
 	MathVector posicion;

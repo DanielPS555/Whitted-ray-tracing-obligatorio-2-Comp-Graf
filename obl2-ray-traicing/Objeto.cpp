@@ -20,16 +20,17 @@ Color Objeto::getColor(Rayo rayo, float t) {
 	colorTotal.g = colorConLuzAmbiente.g;
 	colorTotal.b = colorConLuzAmbiente.b;
 
-	// Calculo luz difuza 
+	// Calculo de intersepciones con las luces
 
-	MathVector normal = getNormal(posicionIntersepcion);
+	int numeroLuces = ObjetosEscena::getInstancia()->numeroLucesDifusas;
 
-	for (int i = 0; i < ObjetosEscena::getInstancia()->numeroLucesDifusas; i++) {
-		LuzDifusa ld = ObjetosEscena::getInstancia()->lucesDifusas[i];
+	float* coeficienteDeIntersepcion = new float[numeroLuces];
+	
+	for (int i = 0; i < numeroLuces; i++) {
+		LuzPuntual ld = ObjetosEscena::getInstancia()->lucesDifusas[i];
 		MathVector posicionLuzSegunPixel = normalizar(restar(ld.posicion, posicionIntersepcion));
 
 		float coeficiente_luz_por_obstruccion = 1.0f;
-
 
 		Rayo rayoAuxiliar = { posicionIntersepcion , posicionLuzSegunPixel };
 		MathVector puntoDeAnclajeSeparadoDeFigura = getPosicion(rayoAuxiliar, 1.0f, 0);
@@ -46,25 +47,47 @@ Color Objeto::getColor(Rayo rayo, float t) {
 			float distanciaConLuz = norma(restar(posicionIntersepcion, ld.posicion));
 
 			if (distanciaConLuz > distanciaObjetoMasCercano) {
-				
+
 			}
 			coeficiente_luz_por_obstruccion = 0.0f;
 		}
 
+		coeficienteDeIntersepcion[i] = coeficiente_luz_por_obstruccion;
+	}
+
+	
+	// Calculo luz difuza 
+
+	MathVector normal = getNormal(posicionIntersepcion);
+
+	for (int i = 0; i < numeroLuces; i++) {
+		LuzPuntual ld = ObjetosEscena::getInstancia()->lucesDifusas[i];
+		MathVector posicionLuzSegunPixel = normalizar(restar(ld.posicion, posicionIntersepcion));
+
+		float coeficiente_luz_por_obstruccion = coeficienteDeIntersepcion[i];
+
+		float distanciaConLuz = norma(restar(posicionIntersepcion, ld.posicion));
+
+		float atenuacion = fmin(1.0f, 1 / (atenuacion_constante + antenuacion_lineal * distanciaConLuz + atenuacion_cuadratica * powf(distanciaConLuz, 2)));
+
 		float coeficiente = productoEscalar(posicionLuzSegunPixel, normal);
 		coeficiente = fmax(coeficiente, 0.f);
+
+		float atenuadoresConvinados = coeficiente * atenuacion * sensibilidad_luz_difusa * coeficiente_luz_por_obstruccion;
+
 		Color luzDifusa = {
-						(ld.intensidad.r / 255.f) * sensibilidad_luz_difusa* colorBase.r * coeficiente * coeficiente_luz_por_obstruccion, //ToDO sensibilidad_luz_ambiente cambiar
-						(ld.intensidad.g / 255.f) * sensibilidad_luz_difusa* colorBase.g * coeficiente * coeficiente_luz_por_obstruccion,
-						(ld.intensidad.b / 255.f) * sensibilidad_luz_difusa* colorBase.b * coeficiente * coeficiente_luz_por_obstruccion
+						(ld.intensidad.r / 255.f) * colorBase.r * atenuadoresConvinados, //ToDO sensibilidad_luz_ambiente cambiar
+						(ld.intensidad.g / 255.f) * colorBase.g * atenuadoresConvinados,
+						(ld.intensidad.b / 255.f) * colorBase.b * atenuadoresConvinados
 		};
-
-
 
 		colorTotal.r += luzDifusa.r;
 		colorTotal.g += luzDifusa.g;
 		colorTotal.b += luzDifusa.b;
 	}
+
+
+	//Calculo de luz especular
 
 	return colorTotal;
 }
