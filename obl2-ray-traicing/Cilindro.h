@@ -1,0 +1,15 @@
+#pragma once
+#include "../Objeto.h"
+
+class Cilindro : public Objeto {
+private:
+	float radio, altura;
+	MathVector centro;
+
+
+public:
+
+	Cilindro(MathVector centro, float radio, float altura, RGBQUAD color);
+
+	float intersepcion(Rayo rayo);
+};
