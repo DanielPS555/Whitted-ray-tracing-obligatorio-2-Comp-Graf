@@ -9,6 +9,8 @@
 #ifndef UTILS
 #define UTILS
 
+#define EPSILON 1e-8
+
 
 std::string getCurrentDateTime();
 

@@ -31,6 +31,12 @@
     <Filter Include="Source Files\utils">
       <UniqueIdentifier>{47b5ac8d-71f8-4aed-9887-4f5ee736606d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\iluminacion">
+      <UniqueIdentifier>{710d53a3-1470-4ca4-9436-420240eceedb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\iluminacion">
+      <UniqueIdentifier>{d9ba5f9b-a0e8-4181-9e41-61ea6d2abc8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,6 +75,15 @@
     <ClCompile Include="Triangulo.cpp">
       <Filter>Source Files\modelos</Filter>
     </ClCompile>
+    <ClCompile Include="LuzAmbiente.cpp">
+      <Filter>Source Files\iluminacion</Filter>
+    </ClCompile>
+    <ClCompile Include="Rayo.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="LuzPuntual.cpp">
+      <Filter>Source Files\iluminacion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CargaArchivo.h">
@@ -106,6 +121,15 @@
     </ClInclude>
     <ClInclude Include="Triangulo.h">
       <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+    <ClInclude Include="LuzAmbiente.h">
+      <Filter>Header Files\iluminacion</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="LuzPuntual.h">
+      <Filter>Header Files\iluminacion</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

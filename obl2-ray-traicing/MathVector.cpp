@@ -93,3 +93,10 @@ MathVector interpolarVectores(MathVector inicio, MathVector fin, float t) {
 	float z_inter = (1 - t) * inicio.z + t * fin.z;
 	return { x_inter, y_inter, z_inter };
 }
+
+MathVector simetrico(MathVector ejeSimetria, MathVector vectorAInvetir) {
+	MathVector normasEspejo = normalizar(ejeSimetria);
+	float c = productoEscalar(ejeSimetria, vectorAInvetir);
+	MathVector vec1 = multiplicarPorEscalar(normasEspejo, 2 * c);
+	return restar(vec1, vectorAInvetir);
+}
