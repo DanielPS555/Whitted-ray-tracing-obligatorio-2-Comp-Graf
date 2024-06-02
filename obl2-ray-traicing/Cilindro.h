@@ -12,4 +12,7 @@ public:
 	Cilindro(MathVector centro, float radio, float altura, RGBQUAD color);
 
 	float intersepcion(Rayo rayo);
+
+	MathVector getNormal(MathVector punto);
+	Color getColor(Rayo rayo, float t);
 };

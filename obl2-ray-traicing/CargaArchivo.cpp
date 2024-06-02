@@ -17,8 +17,14 @@ CargaArchivo::CargaArchivo()
 		p.r = data["planos"][i]["r"];
 		p.g = data["planos"][i]["g"];
 		p.b = data["planos"][i]["b"];
+		p.atConst = data["cilindros"][i]["atConst"];
+		p.atLineal = data["cilindros"][i]["atLineal"];
+		p.atCuadr = data["cilindros"][i]["atCuadr"];
+		p.esxpReflecEspec = data["cilindros"][i]["esxpReflecEspec"];
+		p.fracReflecEspec = data["cilindros"][i]["fracReflecEspec"];
+		p.colorReflecEspec = data["cilindros"][i]["colorReflecEspec"];
+		p.sesibilidad = data["cilindros"][i]["sesibilidad"];
 		this->cuarto.push_back(p);
-		std::cout << p.altura;
 	}
 
 	for (int r = 0; r < data["rectangulos"].size(); r++) {
@@ -35,6 +41,13 @@ CargaArchivo::CargaArchivo()
 		rect.x = data["rectangulos"][r]["x"];
 		rect.y = data["rectangulos"][r]["y"];
 		rect.z = data["rectangulos"][r]["z"];
+		rect.atConst = data["cilindros"][r]["atConst"];
+		rect.atLineal = data["cilindros"][r]["atLineal"];
+		rect.atCuadr = data["cilindros"][r]["atCuadr"];
+		rect.esxpReflecEspec = data["cilindros"][r]["esxpReflecEspec"];
+		rect.fracReflecEspec = data["cilindros"][r]["fracReflecEspec"];
+		rect.colorReflecEspec = data["cilindros"][r]["colorReflecEspec"];
+		rect.sesibilidad = data["cilindros"][r]["sesibilidad"];
 		this->rects.push_back(rect);
 	}
 
@@ -50,11 +63,18 @@ CargaArchivo::CargaArchivo()
 		esfe.x = data["esferas"][e]["x"];
 		esfe.y = data["esferas"][e]["y"];
 		esfe.z = data["esferas"][e]["z"];
+		esfe.atConst = data["cilindros"][e]["atConst"];
+		esfe.atLineal = data["cilindros"][e]["atLineal"];
+		esfe.atCuadr = data["cilindros"][e]["atCuadr"];
+		esfe.esxpReflecEspec = data["cilindros"][e]["esxpReflecEspec"];
+		esfe.fracReflecEspec = data["cilindros"][e]["fracReflecEspec"];
+		esfe.colorReflecEspec = data["cilindros"][e]["colorReflecEspec"];
+		esfe.sesibilidad = data["cilindros"][e]["sesibilidad"];
 		this->sphears.push_back(esfe);
 	}
 
 	for (int c = 0; c < data["cilindros"].size(); c++) {
-		Cilindro cilin;
+		Cilinder cilin;
 		cilin.radio = data["cilindros"][c]["radio"];
 		cilin.altura = data["cilindros"][c]["altura"];
 		cilin.r = data["cilindros"][c]["r"];
@@ -66,6 +86,13 @@ CargaArchivo::CargaArchivo()
 		cilin.x = data["cilindros"][c]["x"];
 		cilin.y = data["cilindros"][c]["y"];
 		cilin.z = data["cilindros"][c]["z"];
+		cilin.atConst = data["cilindros"][c]["atConst"];
+		cilin.atLineal = data["cilindros"][c]["atLineal"];
+		cilin.atCuadr = data["cilindros"][c]["atCuadr"];
+		cilin.esxpReflecEspec = data["cilindros"][c]["esxpReflecEspec"];
+		cilin.fracReflecEspec = data["cilindros"][c]["fracReflecEspec"];
+		cilin.colorReflecEspec = data["cilindros"][c]["colorReflecEspec"];
+		cilin.sesibilidad = data["cilindros"][c]["sesibilidad"];
 		this->cilins.push_back(cilin);
 	}
 
@@ -100,4 +127,19 @@ std::vector<float> CargaArchivo::getDirPVCam()
 int CargaArchivo::getRes()
 {
 	return this->resolucion;
+}
+
+std::vector<Sphear> CargaArchivo::getEsferas()
+{
+	return this->sphears;
+}
+
+std::vector<Triangulo> CargaArchivo::getPlanos()
+{
+	return std::vector<Triangulo>();
+}
+
+std::vector<Rectangulo> CargaArchivo::getPrismas()
+{
+	return this->rects;
 }

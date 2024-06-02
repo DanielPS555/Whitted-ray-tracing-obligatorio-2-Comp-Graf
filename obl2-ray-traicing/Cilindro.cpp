@@ -31,3 +31,13 @@ float Cilindro::intersepcion(Rayo rayo)
 	*/
 	return 0.0f;
 }
+
+MathVector Cilindro::getNormal(MathVector punto)
+{
+	return MathVector();
+}
+
+Color Cilindro::getColor(Rayo rayo, float t)
+{
+	return Color();
+}
