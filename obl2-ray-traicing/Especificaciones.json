@@ -7,7 +7,14 @@
       "altura": 3,
       "r": 15,
       "g": 100,
-      "b": 222
+      "b": 222,
+      "atConst": 0,
+      "atLineal": 0,
+      "atCuadr": 0,
+      "esxpReflecEspec": 0,
+      "fracReflecEspec": 0,
+      "colorReflecEspec": 0,
+      "sesibilidad": 0
     },
     {
       "name": "Pared1",
@@ -17,7 +24,14 @@
       "z": 30,
       "r": 15,
       "g": 100,
-      "b": 222
+      "b": 222,
+      "atConst": 0,
+      "atLineal": 0,
+      "atCuadr": 0,
+      "esxpReflecEspec": 0,
+      "fracReflecEspec": 0,
+      "colorReflecEspec": 0,
+      "sesibilidad": 0
     },
     {
       "name": "pared2",
@@ -27,7 +41,14 @@
       "z": 30,
       "r": 15,
       "g": 100,
-      "b": 222
+      "b": 222,
+      "atConst": 0,
+      "atLineal": 0,
+      "atCuadr": 0,
+      "esxpReflecEspec": 0,
+      "fracReflecEspec": 0,
+      "colorReflecEspec": 0,
+      "sesibilidad": 0
     },
     {
       "name": "Pared3",
@@ -37,7 +58,14 @@
       "z": 30,
       "r": 15,
       "g": 100,
-      "b": 222
+      "b": 222,
+      "atConst": 0,
+      "atLineal": 0,
+      "atCuadr": 0,
+      "esxpReflecEspec": 0,
+      "fracReflecEspec": 0,
+      "colorReflecEspec": 0,
+      "sesibilidad": 0
     },
     {
       "name": "techo",
@@ -46,7 +74,14 @@
       "altura": 3,
       "r": 15,
       "g": 100,
-      "b": 222
+      "b": 222,
+      "atConst": 0,
+      "atLineal": 0,
+      "atCuadr": 0,
+      "esxpReflecEspec": 0,
+      "fracReflecEspec": 0,
+      "colorReflecEspec": 0,
+      "sesibilidad": 0
     }
   ],
 
@@ -64,7 +99,14 @@
       "b": 222,
       "Transparencia": 0,
       "Refleccion": 0,
-      "Refraccion": 0
+      "Refraccion": 0,
+      "atConst": 0,
+      "atLineal": 0,
+      "atCuadr": 0,
+      "esxpReflecEspec": 0,
+      "fracReflecEspec": 0,
+      "colorReflecEspec": 0,
+      "sesibilidad": 0
     }
   ],
 
@@ -80,7 +122,14 @@
       "b": 222,
       "Transparencia": 0,
       "Refleccion": 0,
-      "Refraccion": 0
+      "Refraccion": 0,
+      "atConst": 0,
+      "atLineal": 0,
+      "atCuadr": 0,
+      "esxpReflecEspec": 0,
+      "fracReflecEspec": 0,
+      "colorReflecEspec": 0,
+      "sesibilidad": 0
     }
   ],
 
@@ -97,7 +146,14 @@
       "b": 222,
       "Transparencia": 0,
       "Refleccion": 0,
-      "Refraccion": 0
+      "Refraccion": 0,
+      "atConst": 0,
+      "atLineal": 0,
+      "atCuadr": 0,
+      "esxpReflecEspec": 0,
+      "fracReflecEspec": 0,
+      "colorReflecEspec": 0,
+      "sesibilidad": 0
     }
   ],
 
@@ -112,7 +168,7 @@
       "dirAz": 0,
       "dirPVx": 0,
       "dirPVy": 0,
-      "dirPVz": 0,
+      "dirPVz": 0
     }
   ]
 
