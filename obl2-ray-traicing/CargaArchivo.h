@@ -1,6 +1,7 @@
 #pragma once
 
 #include "nlohmann/json.hpp"
+#include "Objeto.h"
 #include "Triangulo.h"
 #include "LuzPuntual.h"
 #include <string>
@@ -10,86 +11,97 @@ using json = nlohmann::json;
 
 struct Plano
 {
-	int ancho;
-	int largo;
-	int altura;
-	int r;
-	int g;
-	int b;
-	int atConst;
-	int	atLineal;
-	int	atCuadr;
-	int	esxpReflecEspec;
-	int	fracReflecEspec;
-	int colorReflecEspec;
-	int sesibilidad;
+	float ancho;
+	float largo;
+	float altura;
+	float x;
+	float y;
+	float z;
+	float r;
+	float g;
+	float b;
+	float atConst;
+	float	atLineal;
+	float	atCuadr;
+	float	esxpReflecEspec;
+	float	fracReflecEspec;
+	float colorReflecEspecR;
+	float colorReflecEspecG;
+	float colorReflecEspecB;
+	float sesibilidad;
 };
 
 struct Rectangulo
 {
-	int ancho;
-	int largo;
-	int altura;
-	int x;
-	int y;
-	int z;
-	int r;
-	int g;
-	int b;
-	int Transparencia;
-	int Refleccion;
-	int Refraccion;
-	int atConst;
-	int	atLineal;
-	int	atCuadr;
-	int	esxpReflecEspec;
-	int	fracReflecEspec;
-	int colorReflecEspec;
-	int sesibilidad;
+	float ancho;
+	float largo;
+	float altura;
+	float x;
+	float y;
+	float z;
+	float r;
+	float g;
+	float b;
+	float Transparencia;
+	float Refleccion;
+	float Refraccion;
+	float atConst;
+	float	atLineal;
+	float	atCuadr;
+	float	esxpReflecEspec;
+	float	fracReflecEspec;
+	float colorReflecEspecR;
+	float colorReflecEspecG;
+	float colorReflecEspecB;
+	float sesibilidad;
 };
 
 struct Sphear
 {
-	int radio;
-	int x;
-	int y;
-	int z;
-	int r;
-	int g;
-	int b;
-	int Transparencia;
-	int Refleccion;
-	int Refraccion;
-	int atConst;
-	int	atLineal;
-	int	atCuadr;
-	int	esxpReflecEspec;
-	int	fracReflecEspec;
-	int colorReflecEspec;
-	int sesibilidad;
+	float radio;
+	float x;
+	float y;
+	float z;
+	float r;
+	float g;
+	float b;
+	float Transparencia;
+	float Refleccion;
+	float Refraccion;
+	float atConst;
+	float	atLineal;
+	float	atCuadr;
+	float	esxpReflecEspec;
+	float	fracReflecEspec;
+	float colorReflecEspecR;
+	float colorReflecEspecG;
+	float colorReflecEspecB;
+	float sesibilidad;
 };
 
 struct Cilinder
 {
-	int radio;
-	int altura;
-	int x;
-	int y;
-	int z;
-	int r;
-	int g;
-	int b;
-	int Transparencia;
-	int Refleccion;
-	int Refraccion;
+	float radio;
+	float altura;
+	float x;
+	float y;
+	float z;
+	float r;
+	float g;
+	float b;
+	float Transparencia;
+	float Refleccion;
+	float Refraccion;
 
-	int atConst;
-	int	atLineal;
-	int	atCuadr;
-	int	esxpReflecEspec;
-	int	fracReflecEspec;
-	int colorReflecEspec;
-	int sesibilidad;
+	float atConst;
+	float	atLineal;
+	float	atCuadr;
+	float	esxpReflecEspec;
+	float	fracReflecEspec;
+	float colorReflecEspecR;
+	float colorReflecEspecG;
+	float colorReflecEspecB;
+	float sesibilidad;
 };
 
 
@@ -102,7 +114,7 @@ class CargaArchivo
 		std::vector<Rectangulo> rects;
 		std::vector<Sphear> sphears;
 		std::vector<Cilinder> cilins;
-		std::vector<float> dirACam, dirPVCam, ubCam;
+		MathVector dirACam, dirPVCam, ubCam;
 		std::vector<float> luzAmb;
 		std::vector<LuzPuntual> luces;
 		int resolucion;
@@ -111,22 +123,25 @@ class CargaArchivo
 
 		CargaArchivo(std::string file);
 
-		std::vector<float> getDirACam();
+		MathVector getDirACam();
 
-		std::vector<float> getUbCam();
+		MathVector getUbCam();
 
-		std::vector<float> getDirPVCam();
+		MathVector getDirPVCam();
 
 		int getRes();
 
 		std::vector<Sphear> getEsferas();
 
-		std::vector<Triangulo> getPlanos();
+		std::vector<Triangulo*> getPlanos();
 
 		std::vector<Rectangulo> getPrismas();
 
-		std::vector<LuzPuntual> getLuces();
+		LuzPuntual* getLuces();
+		int getCantLuces();
 
 		std::vector<float> getLuzAmb();
+
+		std::vector<Cilinder> getCilindros();
 };
 

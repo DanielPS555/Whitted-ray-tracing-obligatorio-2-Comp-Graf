@@ -84,6 +84,12 @@
     <ClCompile Include="LuzPuntual.cpp">
       <Filter>Source Files\iluminacion</Filter>
     </ClCompile>
+    <ClCompile Include="ConfiguracionEscena.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cilindro.cpp">
+      <Filter>Source Files\modelos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CargaArchivo.h">
@@ -131,5 +137,15 @@
     <ClInclude Include="LuzPuntual.h">
       <Filter>Header Files\iluminacion</Filter>
     </ClInclude>
+    <ClInclude Include="ConfiguracionEscena.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cilindro.h">
+      <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EscenaEjemplo.json" />
+    <None Include="Especificaciones.json" />
   </ItemGroup>
 </Project>

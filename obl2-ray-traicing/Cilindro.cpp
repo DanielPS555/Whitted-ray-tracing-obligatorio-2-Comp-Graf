@@ -1,4 +1,6 @@
 #include "Cilindro.h"
+#include <corecrt_math.h>
+#include "Utils.h"
 
 Cilindro::Cilindro(MathVector centro, float radio, float altura, Color color)
 {
@@ -24,20 +26,47 @@ float Cilindro::intersepcion(Rayo rayo)
 
 		Formando un polinomio de 2º grado queda de la forma:
 
-		  (v_x^2 + v_y^2 + v_z^2) *  t^2
-		+ 2(v_x(x_0 - c_x) + v_y(y_0 - c_y) + v_z(z_0 - c_z) ) * t
-		+ (x_0 - c_x)^2 + (y_0 - c_y)^2 + (z_0 - c_z)^2
+		  (v_x^2 + v_y^2) *  t^2
+		+ 2(v_x(x_0 - c_x) + v_y(y_0 - c_y)) * t
+		+ (x_0 - c_x)^2 + (y_0 - c_y)^2
 
 	*/
-	return 0.0f;
+	float a = powf(rayo.dirrecion.x, 2) +
+		powf(rayo.dirrecion.y, 2);
+
+	float b = 2 * (
+		rayo.dirrecion.x * (rayo.puntoAnclaje.x - centro.x) +
+		rayo.dirrecion.y * (rayo.puntoAnclaje.y - centro.y) 
+		);
+
+	float c = powf(rayo.puntoAnclaje.x - centro.x, 2)
+		+ powf(rayo.puntoAnclaje.y - centro.y, 2)
+		- powf(radio, 2);
+
+	if (((rayo.dirrecion.z + rayo.puntoAnclaje.z) <= (centro.z + altura)) && ((rayo.dirrecion.z + rayo.puntoAnclaje.z) >= centro.z)) {
+		return obtenerMenorRaizPositivaBhaskara(a, b, c);
+	}
+	else {
+		return 0.0f;
+	}
+	
 }
 
 MathVector Cilindro::getNormal(MathVector punto)
-{
-	return MathVector();
+{	
+	MathVector v1;
+	if (punto.z > (centro.z + altura)) {
+		v1 = { centro.x, centro.y, centro.z + altura};
+	}
+	else {
+		if (punto.z < (centro.z)) {
+			v1 = { centro.x, centro.y, centro.z};
+		}
+		else {
+			v1 = { centro.x, centro.y, punto.z };
+		}
+	}
+	return normalizar(restar(punto, v1));
 }
 
-Color Cilindro::getColor(Rayo rayo, float t)
-{
-	return Color();
-}
+
