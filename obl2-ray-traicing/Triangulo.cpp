@@ -65,7 +65,7 @@ float Triangulo::intersepcion(Rayo rayo) {
 
 }
 
-Color Triangulo::getColor(Rayo rayo, float t){
+Color Triangulo::getColor(Rayo rayo, float t,int profundidad){
 
     LuzAmbiente luzAmbiente = ObjetosEscena::getInstancia()->luzAmbiente;
 

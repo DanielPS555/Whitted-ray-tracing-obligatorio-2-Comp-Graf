@@ -10,6 +10,7 @@
 #define UTILS
 
 #define EPSILON 1e-8
+#define PROFUNDIDAD_MAX 5
 
 
 std::string getCurrentDateTime();

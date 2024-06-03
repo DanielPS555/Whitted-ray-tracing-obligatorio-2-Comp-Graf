@@ -48,7 +48,7 @@ public:
 	// La collecion de "elementos" debe estar creado y se va a utilizar de igual forma
 	void setElementos(unsigned numeroElementos, Objeto** elementos);
 
-	Color getPixelPorRayo(Rayo rayo);
+	Color getPixelPorRayo(Rayo rayo,int profundidad);
 
 	void getIntersepcionMasCercana(Rayo rayo, int& indiceObjeto, float& t_intersepcion);
 

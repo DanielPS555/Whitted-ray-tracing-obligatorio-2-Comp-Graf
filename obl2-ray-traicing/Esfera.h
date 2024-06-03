@@ -12,6 +12,5 @@ public:
 
 	MathVector getNormal(MathVector punto);
 	float intersepcion(Rayo rayo);
-	Color getColor(Rayo rayo, float t);
 };
 
