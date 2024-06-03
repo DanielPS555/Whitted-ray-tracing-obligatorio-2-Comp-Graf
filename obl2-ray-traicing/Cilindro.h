@@ -9,7 +9,7 @@ private:
 
 public:
 
-	Cilindro(MathVector centro, float radio, float altura, RGBQUAD color);
+	Cilindro(MathVector centro, float radio, float altura, Color color);
 
 	float intersepcion(Rayo rayo);
 

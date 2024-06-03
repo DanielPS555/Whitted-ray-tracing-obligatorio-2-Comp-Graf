@@ -2,6 +2,9 @@
 
 #include "nlohmann/json.hpp"
 #include "Triangulo.h"
+#include "LuzPuntual.h"
+#include <string>
+#include "nlohmann/json.hpp"
 
 using json = nlohmann::json;
 
@@ -100,11 +103,13 @@ class CargaArchivo
 		std::vector<Sphear> sphears;
 		std::vector<Cilinder> cilins;
 		std::vector<float> dirACam, dirPVCam, ubCam;
+		std::vector<float> luzAmb;
+		std::vector<LuzPuntual> luces;
 		int resolucion;
 
 	public:
 
-		CargaArchivo();
+		CargaArchivo(std::string file);
 
 		std::vector<float> getDirACam();
 
@@ -119,5 +124,9 @@ class CargaArchivo
 		std::vector<Triangulo> getPlanos();
 
 		std::vector<Rectangulo> getPrismas();
+
+		std::vector<LuzPuntual> getLuces();
+
+		std::vector<float> getLuzAmb();
 };
 

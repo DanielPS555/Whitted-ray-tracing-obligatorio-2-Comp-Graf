@@ -1,6 +1,6 @@
 #include "Cilindro.h"
 
-Cilindro::Cilindro(MathVector centro, float radio, float altura, RGBQUAD color)
+Cilindro::Cilindro(MathVector centro, float radio, float altura, Color color)
 {
 	this->altura = altura;
 	this->centro = centro;
@@ -12,7 +12,7 @@ float Cilindro::intersepcion(Rayo rayo)
 {
 	/*
 	La ecuacion de la esfera es asi:
-		(x / c_x)^2 + (y / c_y)^2 = r^2
+		(x - c_x)^2 + (y - c_y)^2 = r^2, con altura > z > centro.z
 
 		Utilizando  x = x_0 + t*v_x (notar que x_0 es la posicion del pixel en el frame)
 					y = y_0 + t*v_y
@@ -20,7 +20,7 @@ float Cilindro::intersepcion(Rayo rayo)
 
 		Queda de la forma:
 
-		((x_0 + t*v_x )/ c_x)^2 + ((y_0 + t*v_y) / c_y)^2 = r^2
+		(x_0 + t*v_x - c_x)^2 + (y_0 + t*v_y - c_y)^2 = r^2, con altura > z_0 + t*v_z > centro.z
 
 		Formando un polinomio de 2º grado queda de la forma:
 

@@ -4,9 +4,9 @@
 #include <fstream>
 #include <iostream>
 
-CargaArchivo::CargaArchivo()
+CargaArchivo::CargaArchivo(std::string file)
 {
-	std::ifstream f("Especificaciones.json");
+	std::ifstream f(file);
 	json data = json::parse(f);
 
 	for (int i = 0; i < 4; i++) {
@@ -107,6 +107,17 @@ CargaArchivo::CargaArchivo()
 	this->dirPVCam.push_back(data["camara"][0]["dirPVx"]);
 	this->resolucion = data["camara"][0]["Resolucion"];
 
+	this->luzAmb.push_back(data["luzAmbiente"][0]["intr"]);
+	this->luzAmb.push_back(data["luzAmbiente"][0]["intg"]);
+	this->luzAmb.push_back(data["luzAmbiente"][0]["intb"]);
+
+	for (int l = 0; l < data["lucesPuntuales"].size(); l++) {
+		LuzPuntual lp;
+		lp.intensidad = { data["lucesPuntuales"][l]["intr"], data["lucesPuntuales"][l]["intg"], data["lucesPuntuales"][l]["intb"]};
+		lp.posicion = { data["lucesPuntuales"][l]["posX"], data["lucesPuntuales"][l]["posY"], data["lucesPuntuales"][l]["posZ"]};
+		this->luces.push_back(lp);
+	}
+
 }
 
 std::vector<float> CargaArchivo::getDirACam()
@@ -136,10 +147,25 @@ std::vector<Sphear> CargaArchivo::getEsferas()
 
 std::vector<Triangulo> CargaArchivo::getPlanos()
 {
-	return std::vector<Triangulo>();
+	std::vector<Triangulo> paredes;
+	/*for (std::size_t t = 0; t < this->cuarto.size(); t++) {
+		Triangulo t1 = Triangulo({});
+		
+	}*/
+	return paredes;
 }
 
 std::vector<Rectangulo> CargaArchivo::getPrismas()
 {
 	return this->rects;
+}
+
+std::vector<LuzPuntual> CargaArchivo::getLuces()
+{
+	return this->luces;
+}
+
+std::vector<float> CargaArchivo::getLuzAmb()
+{
+	return this->luzAmb;
 }

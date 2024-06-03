@@ -10,6 +10,7 @@
 #include "Triangulo.h"
 #include "../Objeto.h"
 #include "Color.h"
+#include "CargaArchivo.h"
 
 
 Camara* ejemplo1() {
@@ -71,6 +72,9 @@ Camara* ejemplo2() {
     return camaraPtr;
 }
 
+Camara* ejemplo3() {
+    CargaArchivo carga = CargaArchivo("Especificaciones.json");
+}
 
 // Main function
 int main() {
