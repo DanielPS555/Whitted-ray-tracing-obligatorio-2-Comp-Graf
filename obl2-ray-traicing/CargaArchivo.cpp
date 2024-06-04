@@ -9,21 +9,26 @@ CargaArchivo::CargaArchivo(std::string file)
 	std::ifstream f(file);
 	json data = json::parse(f);
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		Plano p;
 		p.altura = data["planos"][i]["altura"];
 		p.ancho = data["planos"][i]["ancho"];
 		p.largo = data["planos"][i]["largo"];
+		p.x = data["planos"][i]["x"];
+		p.y = data["planos"][i]["y"];
+		p.z = data["planos"][i]["z"];
 		p.r = data["planos"][i]["r"];
 		p.g = data["planos"][i]["g"];
 		p.b = data["planos"][i]["b"];
-		p.atConst = data["cilindros"][i]["atConst"];
-		p.atLineal = data["cilindros"][i]["atLineal"];
-		p.atCuadr = data["cilindros"][i]["atCuadr"];
-		p.esxpReflecEspec = data["cilindros"][i]["esxpReflecEspec"];
-		p.fracReflecEspec = data["cilindros"][i]["fracReflecEspec"];
-		p.colorReflecEspec = data["cilindros"][i]["colorReflecEspec"];
-		p.sesibilidad = data["cilindros"][i]["sesibilidad"];
+		p.atConst = data["planos"][i]["atConst"];
+		p.atLineal = data["planos"][i]["atLineal"];
+		p.atCuadr = data["planos"][i]["atCuadr"];
+		p.esxpReflecEspec = data["planos"][i]["esxpReflecEspec"];
+		p.fracReflecEspec = data["planos"][i]["fracReflecEspec"];
+		p.colorReflecEspecR = data["planos"][i]["colorReflecEspecR"];
+		p.colorReflecEspecG = data["planos"][i]["colorReflecEspecG"];
+		p.colorReflecEspecB = data["planos"][i]["colorReflecEspecB"];
+		p.sesibilidad = data["planos"][i]["sesibilidad"];
 		this->cuarto.push_back(p);
 	}
 
@@ -41,13 +46,15 @@ CargaArchivo::CargaArchivo(std::string file)
 		rect.x = data["rectangulos"][r]["x"];
 		rect.y = data["rectangulos"][r]["y"];
 		rect.z = data["rectangulos"][r]["z"];
-		rect.atConst = data["cilindros"][r]["atConst"];
-		rect.atLineal = data["cilindros"][r]["atLineal"];
-		rect.atCuadr = data["cilindros"][r]["atCuadr"];
-		rect.esxpReflecEspec = data["cilindros"][r]["esxpReflecEspec"];
-		rect.fracReflecEspec = data["cilindros"][r]["fracReflecEspec"];
-		rect.colorReflecEspec = data["cilindros"][r]["colorReflecEspec"];
-		rect.sesibilidad = data["cilindros"][r]["sesibilidad"];
+		rect.atConst = data["rectangulos"][r]["atConst"];
+		rect.atLineal = data["rectangulos"][r]["atLineal"];
+		rect.atCuadr = data["rectangulos"][r]["atCuadr"];
+		rect.esxpReflecEspec = data["rectangulos"][r]["esxpReflecEspec"];
+		rect.fracReflecEspec = data["rectangulos"][r]["fracReflecEspec"];
+		rect.colorReflecEspecR = data["rectangulos"][r]["colorReflecEspecR"];
+		rect.colorReflecEspecG = data["rectangulos"][r]["colorReflecEspecG"];
+		rect.colorReflecEspecB = data["rectangulos"][r]["colorReflecEspecB"];
+		rect.sesibilidad = data["rectangulos"][r]["sesibilidad"];
 		this->rects.push_back(rect);
 	}
 
@@ -63,12 +70,14 @@ CargaArchivo::CargaArchivo(std::string file)
 		esfe.x = data["esferas"][e]["x"];
 		esfe.y = data["esferas"][e]["y"];
 		esfe.z = data["esferas"][e]["z"];
-		esfe.atConst = data["cilindros"][e]["atConst"];
-		esfe.atLineal = data["cilindros"][e]["atLineal"];
-		esfe.atCuadr = data["cilindros"][e]["atCuadr"];
-		esfe.esxpReflecEspec = data["cilindros"][e]["esxpReflecEspec"];
-		esfe.fracReflecEspec = data["cilindros"][e]["fracReflecEspec"];
-		esfe.colorReflecEspec = data["cilindros"][e]["colorReflecEspec"];
+		esfe.atConst = data["esferas"][e]["atConst"];
+		esfe.atLineal = data["esferas"][e]["atLineal"];
+		esfe.atCuadr = data["esferas"][e]["atCuadr"];
+		esfe.esxpReflecEspec = data["esferas"][e]["esxpReflecEspec"];
+		esfe.fracReflecEspec = data["esferas"][e]["fracReflecEspec"];
+		esfe.colorReflecEspecR = data["esferas"][e]["colorReflecEspecR"];
+		esfe.colorReflecEspecG = data["esferas"][e]["colorReflecEspecG"];
+		esfe.colorReflecEspecB = data["esferas"][e]["colorReflecEspecB"];
 		esfe.sesibilidad = data["cilindros"][e]["sesibilidad"];
 		this->sphears.push_back(esfe);
 	}
@@ -91,20 +100,16 @@ CargaArchivo::CargaArchivo(std::string file)
 		cilin.atCuadr = data["cilindros"][c]["atCuadr"];
 		cilin.esxpReflecEspec = data["cilindros"][c]["esxpReflecEspec"];
 		cilin.fracReflecEspec = data["cilindros"][c]["fracReflecEspec"];
-		cilin.colorReflecEspec = data["cilindros"][c]["colorReflecEspec"];
+		cilin.colorReflecEspecR = data["cilindros"][c]["colorReflecEspecR"];
+		cilin.colorReflecEspecG = data["cilindros"][c]["colorReflecEspecG"];
+		cilin.colorReflecEspecB = data["cilindros"][c]["colorReflecEspecB"];
 		cilin.sesibilidad = data["cilindros"][c]["sesibilidad"];
 		this->cilins.push_back(cilin);
 	}
 
-	this->ubCam.push_back(data["camara"][0]["x"]);
-	this->ubCam.push_back(data["camara"][0]["y"]);
-	this->ubCam.push_back(data["camara"][0]["z"]);
-	this->dirACam.push_back(data["camara"][0]["dirAx"]);
-	this->dirACam.push_back(data["camara"][0]["dirAy"]);
-	this->dirACam.push_back(data["camara"][0]["dirAz"]);
-	this->dirPVCam.push_back(data["camara"][0]["dirPVx"]);
-	this->dirPVCam.push_back(data["camara"][0]["dirPVx"]);
-	this->dirPVCam.push_back(data["camara"][0]["dirPVx"]);
+	this->ubCam = { data["camara"][0]["x"], data["camara"][0]["y"], data["camara"][0]["z"] };
+	this->dirACam = {data["camara"][0]["dirAx"], data["camara"][0]["dirAy"], data["camara"][0]["dirAz"]};
+	this->dirPVCam = { data["camara"][0]["dirPVx"], data["camara"][0]["dirPVx"], data["camara"][0]["dirPVx"] };
 	this->resolucion = data["camara"][0]["Resolucion"];
 
 	this->luzAmb.push_back(data["luzAmbiente"][0]["intr"]);
@@ -120,17 +125,17 @@ CargaArchivo::CargaArchivo(std::string file)
 
 }
 
-std::vector<float> CargaArchivo::getDirACam()
+MathVector CargaArchivo::getDirACam()
 {
 	return this->dirACam;
 }
 
-std::vector<float> CargaArchivo::getUbCam()
+MathVector CargaArchivo::getUbCam()
 {
 	return this->ubCam;
 }
 
-std::vector<float> CargaArchivo::getDirPVCam()
+MathVector CargaArchivo::getDirPVCam()
 {
 	return this->dirPVCam;
 }
@@ -145,13 +150,37 @@ std::vector<Sphear> CargaArchivo::getEsferas()
 	return this->sphears;
 }
 
-std::vector<Triangulo> CargaArchivo::getPlanos()
+std::vector<Triangulo*> CargaArchivo::getPlanos()
 {
-	std::vector<Triangulo> paredes;
-	/*for (std::size_t t = 0; t < this->cuarto.size(); t++) {
-		Triangulo t1 = Triangulo({});
-		
-	}*/
+	std::vector<Triangulo*> paredes;
+	for (int t = 0; t < this->cuarto.size(); t++) {
+		MathVector v0, v1, v2, v3;
+		v0 = {this->cuarto[t].x, this->cuarto[t].y, this->cuarto[t].z};
+		if (this->cuarto[t].altura == 0) {
+			v1 = { this->cuarto[t].x + this->cuarto[t].largo, this->cuarto[t].y, this->cuarto[t].z };
+			v2 = { this->cuarto[t].x, this->cuarto[t].y + this->cuarto[t].ancho, this->cuarto[t].z };
+			v3 = { this->cuarto[t].x + this->cuarto[t].largo, this->cuarto[t].y + this->cuarto[t].ancho, this->cuarto[t].z };
+		}
+		if (this->cuarto[t].ancho == 0) {
+			v1 = { this->cuarto[t].x + this->cuarto[t].largo, this->cuarto[t].y, this->cuarto[t].z };
+			v2 = { this->cuarto[t].x, this->cuarto[t].y, this->cuarto[t].z + this->cuarto[t].altura};
+			v3 = { this->cuarto[t].x + this->cuarto[t].largo, this->cuarto[t].y, this->cuarto[t].z + this->cuarto[t].altura};
+		}
+		if (this->cuarto[t].largo == 0) {
+			v1 = { this->cuarto[t].x, this->cuarto[t].y, this->cuarto[t].z + this->cuarto[t].altura};
+			v2 = { this->cuarto[t].x, this->cuarto[t].y + this->cuarto[t].ancho, this->cuarto[t].z};
+			v3 = { this->cuarto[t].x, this->cuarto[t].y + this->cuarto[t].ancho, this->cuarto[t].z + this->cuarto[t].altura};
+		}
+		Color c = { this->cuarto[t].r, this->cuarto[t].g, this->cuarto[t].b };
+		Triangulo* t1 = new Triangulo(v0, v1, v2, c);
+		Triangulo* t2 = new Triangulo(v3, v1, v2, c);
+		t1->setAtenuacion(this->cuarto[t].atConst, this->cuarto[t].atLineal, this->cuarto[t].atCuadr);
+		t1->setParametrosEspeculares(this->cuarto[t].esxpReflecEspec, this->cuarto[t].fracReflecEspec, {this->cuarto[t].colorReflecEspecR, this->cuarto[t].colorReflecEspecG, this->cuarto[t].colorReflecEspecB });
+		t2->setAtenuacion(this->cuarto[t].atConst, this->cuarto[t].atLineal, this->cuarto[t].atCuadr);
+		t2->setParametrosEspeculares(this->cuarto[t].esxpReflecEspec, this->cuarto[t].fracReflecEspec, { this->cuarto[t].colorReflecEspecR, this->cuarto[t].colorReflecEspecG, this->cuarto[t].colorReflecEspecB });
+		paredes.push_back(t1);
+		paredes.push_back(t2);
+	}
 	return paredes;
 }
 
@@ -160,12 +189,26 @@ std::vector<Rectangulo> CargaArchivo::getPrismas()
 	return this->rects;
 }
 
-std::vector<LuzPuntual> CargaArchivo::getLuces()
+LuzPuntual* CargaArchivo::getLuces()
+{	
+	LuzPuntual* lucesPunt = new LuzPuntual[luces.size()];
+	for (int l = 0; l < luces.size(); l++) {
+		lucesPunt[l] = this->luces[l];
+	}
+	return lucesPunt;
+}
+
+int CargaArchivo::getCantLuces()
 {
-	return this->luces;
+	return this->luces.size();
 }
 
 std::vector<float> CargaArchivo::getLuzAmb()
 {
 	return this->luzAmb;
+}
+
+std::vector<Cilinder> CargaArchivo::getCilindros()
+{
+	return this->cilins;
 }

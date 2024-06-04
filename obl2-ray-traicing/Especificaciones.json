@@ -16,7 +16,9 @@
       "atCuadr": 0,
       "esxpReflecEspec": 0,
       "fracReflecEspec": 0,
-      "colorReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
       "sesibilidad": 0
     },
     {
@@ -35,7 +37,9 @@
       "atCuadr": 0,
       "esxpReflecEspec": 0,
       "fracReflecEspec": 0,
-      "colorReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
       "sesibilidad": 0
     },
     {
@@ -54,7 +58,9 @@
       "atCuadr": 0,
       "esxpReflecEspec": 0,
       "fracReflecEspec": 0,
-      "colorReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
       "sesibilidad": 0
     },
     {
@@ -73,7 +79,9 @@
       "atCuadr": 0,
       "esxpReflecEspec": 0,
       "fracReflecEspec": 0,
-      "colorReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
       "sesibilidad": 0
     },
     {
@@ -92,7 +100,9 @@
       "atCuadr": 0,
       "esxpReflecEspec": 0,
       "fracReflecEspec": 0,
-      "colorReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
       "sesibilidad": 0
     }
   ],
@@ -117,7 +127,9 @@
       "atCuadr": 0,
       "esxpReflecEspec": 0,
       "fracReflecEspec": 0,
-      "colorReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
       "sesibilidad": 0
     }
   ],
@@ -140,7 +152,9 @@
       "atCuadr": 0,
       "esxpReflecEspec": 0,
       "fracReflecEspec": 0,
-      "colorReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
       "sesibilidad": 0
     }
   ],
@@ -164,7 +178,9 @@
       "atCuadr": 0,
       "esxpReflecEspec": 0,
       "fracReflecEspec": 0,
-      "colorReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
       "sesibilidad": 0
     }
   ],

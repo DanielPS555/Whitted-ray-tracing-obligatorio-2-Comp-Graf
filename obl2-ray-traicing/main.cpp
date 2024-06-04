@@ -10,6 +10,7 @@
 #include "Objeto.h"
 #include "Color.h"
 #include "CargaArchivo.h"
+#include "Cilindro.h"
 
 
 Camara* ejemplo1() {
@@ -122,6 +123,41 @@ Camara* ejemplo3() {
     luces[0] = { {255.f,    255.f,  255.f}, {0.f   ,500.f,  100.f} };
     ObjetosEscena::getInstancia()->lucesDifusas = luces;
     ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
+
+
+    CargaArchivo* carga = new CargaArchivo("EscenaEjemplo.json");
+
+    Camara* camaraPtr = new Camara(carga->getDirACam(), carga->getDirPVCam(), carga->getUbCam());
+
+    std::vector<Sphear> esferas = carga->getEsferas();
+    std::vector<Triangulo*> tris = carga->getPlanos();
+    std::vector<Cilinder> cilins = carga->getCilindros();
+    LuzPuntual* luces = carga->getLuces();
+    
+
+    Objeto** elementos = new Objeto * [esferas.size() + tris.size() + cilins.size()];
+
+    for (int t = 0; t < tris.size(); t++) {
+        elementos[t] = tris[t];
+    }
+
+    for (int e = 0; e < esferas.size(); e++) {
+        elementos[e] = new Esfera({ esferas[e].x, esferas[e].y, esferas[e].z }, esferas[e].radio, { esferas[e].r, esferas[e].g, esferas[e].b });
+        elementos[e]->setAtenuacion(esferas[e].atConst, esferas[e].atLineal, esferas[e].atCuadr);
+        elementos[e]->setParametrosEspeculares(esferas[e].esxpReflecEspec, esferas[e].fracReflecEspec, { esferas[e].colorReflecEspecR, esferas[e].colorReflecEspecG, esferas[e] .colorReflecEspecB});
+    }
+
+    for (int c = 0; c < cilins.size(); c++) {
+        elementos[c] = new Cilindro({ cilins[c].x, cilins[c].y, cilins[c].z }, cilins[c].radio, cilins[c].altura, { cilins[c].r, cilins[c].g, cilins[c].b });
+        elementos[c]->setAtenuacion(cilins[c].atConst, cilins[c].atLineal, cilins[c].atCuadr);
+        elementos[c]->setParametrosEspeculares(cilins[c].esxpReflecEspec, cilins[c].fracReflecEspec, { cilins[c].colorReflecEspecR, cilins[c].colorReflecEspecG, cilins[c].colorReflecEspecB });
+    }
+
+    ObjetosEscena::getInstancia()->setElementos(esferas.size() + tris.size() + cilins.size(), elementos);
+    ObjetosEscena::getInstancia()->luzAmbiente = { carga->getLuzAmb()[0], carga->getLuzAmb()[1], carga->getLuzAmb()[2] };
+
+    ObjetosEscena::getInstancia()->lucesDifusas = luces;
+    ObjetosEscena::getInstancia()->numeroLucesDifusas = carga->getCantLuces();
 
 
     return camaraPtr;
