@@ -1,6 +1,9 @@
-#include "../Objeto.h"
+#include "Objeto.h"
 #include "Color.h"
 #include "Utils.h"
+
+#ifndef TRIANGULO_CLASS
+#define TRIANGULO_CLASS
 
 class Triangulo : public Objeto {
 private:
@@ -17,5 +20,9 @@ public:
 	MathVector getNormal(MathVector punto);
 
 	float intersepcion(Rayo rayo);
-	Color getColor(Rayo rayo, float t);
+
+	Color getColor(Rayo rayo, float t, int profunidad);
 };
+
+#endif // !TRIANGULO_CLASS
+
