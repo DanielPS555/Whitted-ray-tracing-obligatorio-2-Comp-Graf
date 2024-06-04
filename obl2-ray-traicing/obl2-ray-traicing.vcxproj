@@ -136,6 +136,8 @@
   <ItemGroup>
     <ClCompile Include="Camara.cpp" />
     <ClCompile Include="CargaArchivo.cpp" />
+    <ClCompile Include="Cilindro.cpp" />
+    <ClCompile Include="ConfiguracionEscena.cpp" />
     <ClCompile Include="DivisionEspacio.cpp" />
     <ClCompile Include="ejemplo.cpp" />
     <ClCompile Include="Esfera.cpp" />
@@ -153,7 +155,9 @@
   <ItemGroup>
     <ClInclude Include="Camara.h" />
     <ClInclude Include="CargaArchivo.h" />
+    <ClInclude Include="Cilindro.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="ConfiguracionEscena.h" />
     <ClInclude Include="DivisionEspacio.h" />
     <ClInclude Include="ejemplo.h" />
     <ClInclude Include="Esfera.h" />
@@ -166,6 +170,10 @@
     <ClInclude Include="Rayo.h" />
     <ClInclude Include="Triangulo.h" />
     <ClInclude Include="Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EscenaEjemplo.jason" />
+    <None Include="Especificaciones.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

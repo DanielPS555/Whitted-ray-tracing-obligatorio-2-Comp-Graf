@@ -96,7 +96,7 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 
 		if (profundidad < PROFUNDIDAD_MAX) {
 			if (coeficienteReflexion > 0) {
-				vectorRefraxion = multiplicarPorEscalar(vectorRefraxion, -1);
+				//vectorRefraxion = multiplicarPorEscalar(vectorRefraxion, -1);
 				Rayo aux = { posicionIntersepcion, vectorRefraxion };
 				MathVector puntoAnclajeAux = getPosicion(aux, 1.0f, 0);
 				Rayo r = { puntoAnclajeAux , vectorRefraxion };

@@ -1,4 +1,4 @@
-#include "../Objeto.h"
+#include "Objeto.h"
 #include "Color.h"
 #include "Utils.h"
 

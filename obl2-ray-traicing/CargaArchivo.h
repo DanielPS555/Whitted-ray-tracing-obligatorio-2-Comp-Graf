@@ -1,6 +1,11 @@
 #pragma once
 
 #include "nlohmann/json.hpp"
+#include "Triangulo.h"
+#include "LuzPuntual.h"
+#include <string>
+#include "nlohmann/json.hpp"
+
 using json = nlohmann::json;
 
 struct Plano
@@ -11,6 +16,13 @@ struct Plano
 	int r;
 	int g;
 	int b;
+	int atConst;
+	int	atLineal;
+	int	atCuadr;
+	int	esxpReflecEspec;
+	int	fracReflecEspec;
+	int colorReflecEspec;
+	int sesibilidad;
 };
 
 struct Rectangulo
@@ -27,6 +39,13 @@ struct Rectangulo
 	int Transparencia;
 	int Refleccion;
 	int Refraccion;
+	int atConst;
+	int	atLineal;
+	int	atCuadr;
+	int	esxpReflecEspec;
+	int	fracReflecEspec;
+	int colorReflecEspec;
+	int sesibilidad;
 };
 
 struct Sphear
@@ -41,9 +60,16 @@ struct Sphear
 	int Transparencia;
 	int Refleccion;
 	int Refraccion;
+	int atConst;
+	int	atLineal;
+	int	atCuadr;
+	int	esxpReflecEspec;
+	int	fracReflecEspec;
+	int colorReflecEspec;
+	int sesibilidad;
 };
 
-struct Cilindro
+struct Cilinder
 {
 	int radio;
 	int altura;
@@ -56,6 +82,14 @@ struct Cilindro
 	int Transparencia;
 	int Refleccion;
 	int Refraccion;
+
+	int atConst;
+	int	atLineal;
+	int	atCuadr;
+	int	esxpReflecEspec;
+	int	fracReflecEspec;
+	int colorReflecEspec;
+	int sesibilidad;
 };
 
 
@@ -67,13 +101,15 @@ class CargaArchivo
 		std::vector<Plano> cuarto;
 		std::vector<Rectangulo> rects;
 		std::vector<Sphear> sphears;
-		std::vector<Cilindro> cilins;
+		std::vector<Cilinder> cilins;
 		std::vector<float> dirACam, dirPVCam, ubCam;
+		std::vector<float> luzAmb;
+		std::vector<LuzPuntual> luces;
 		int resolucion;
 
 	public:
 
-		CargaArchivo();
+		CargaArchivo(std::string file);
 
 		std::vector<float> getDirACam();
 
@@ -83,6 +119,14 @@ class CargaArchivo
 
 		int getRes();
 
+		std::vector<Sphear> getEsferas();
 
+		std::vector<Triangulo> getPlanos();
+
+		std::vector<Rectangulo> getPrismas();
+
+		std::vector<LuzPuntual> getLuces();
+
+		std::vector<float> getLuzAmb();
 };
 

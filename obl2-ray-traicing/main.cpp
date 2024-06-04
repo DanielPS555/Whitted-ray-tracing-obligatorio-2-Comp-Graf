@@ -7,9 +7,9 @@
 #include "ObjetosEscena.h"
 #include "Camara.h"
 #include "Esfera.h"
-#include "Triangulo.h"
-#include "../Objeto.h"
+#include "Objeto.h"
 #include "Color.h"
+#include "CargaArchivo.h"
 
 
 Camara* ejemplo1() {
@@ -90,7 +90,7 @@ Camara* ejemplo3() {
     Esfera* eferaPrueba2 = new Esfera({ 200,120,100}, 100.0f, { 220,220,220 });
     eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
     eferaPrueba1->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
-    eferaPrueba2->coeficienteReflexion = 0.2f;
+    eferaPrueba2->coeficienteReflexion = 1.0f;
     eferaPrueba2->coeficienteTransparencia = 0.0f;
 
     MathVector v1 = { 800, 0, 0 };
@@ -126,6 +126,10 @@ Camara* ejemplo3() {
 
     return camaraPtr;
 }
+
+
+    //CargaArchivo carga = CargaArchivo("Especificaciones.json");
+
 
 
 // Main function
