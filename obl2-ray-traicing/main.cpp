@@ -79,27 +79,27 @@ Camara* ejemplo3() {
     Camara* camaraPtr = new Camara(carga->getDirACam(), carga->getDirPVCam(), carga->getUbCam());
 
     std::vector<Sphear> esferas = carga->getEsferas();
-    std::vector<Triangulo*> tris = carga->getPlanos();
+    std::vector<Objeto*> tris = carga->getPlanos();
     std::vector<Cilinder> cilins = carga->getCilindros();
     LuzPuntual* luces = carga->getLuces();
     
 
     Objeto** elementos = new Objeto * [esferas.size() + tris.size() + cilins.size()];
 
-    for (int t = 0; t < tris.size(); t++) {
-        elementos[t] = tris[t];
-    }
+    for (int t = 0; t < tris.size(); t++) { 
+        elementos[t] = tris[t]; 
+    } 
 
-    for (int e = 0; e < esferas.size(); e++) {
-        elementos[e] = new Esfera({ esferas[e].x, esferas[e].y, esferas[e].z }, esferas[e].radio, { esferas[e].r, esferas[e].g, esferas[e].b });
-        elementos[e]->setAtenuacion(esferas[e].atConst, esferas[e].atLineal, esferas[e].atCuadr);
-        elementos[e]->setParametrosEspeculares(esferas[e].esxpReflecEspec, esferas[e].fracReflecEspec, { esferas[e].colorReflecEspecR, esferas[e].colorReflecEspecG, esferas[e] .colorReflecEspecB});
+    for (int e = 0; e < esferas.size(); e++) { 
+        elementos[e + tris.size()] = new Esfera({ esferas[e].x, esferas[e].y, esferas[e].z }, esferas[e].radio, { esferas[e].r, esferas[e].g, esferas[e].b });
+        elementos[e + tris.size()]->setAtenuacion(esferas[e].atConst, esferas[e].atLineal, esferas[e].atCuadr); 
+        elementos[e + tris.size()]->setParametrosEspeculares(esferas[e].esxpReflecEspec, esferas[e].fracReflecEspec, { esferas[e].colorReflecEspecR, esferas[e].colorReflecEspecG, esferas[e] .colorReflecEspecB});
     }
-
+    
     for (int c = 0; c < cilins.size(); c++) {
-        elementos[c] = new Cilindro({ cilins[c].x, cilins[c].y, cilins[c].z }, cilins[c].radio, cilins[c].altura, { cilins[c].r, cilins[c].g, cilins[c].b });
-        elementos[c]->setAtenuacion(cilins[c].atConst, cilins[c].atLineal, cilins[c].atCuadr);
-        elementos[c]->setParametrosEspeculares(cilins[c].esxpReflecEspec, cilins[c].fracReflecEspec, { cilins[c].colorReflecEspecR, cilins[c].colorReflecEspecG, cilins[c].colorReflecEspecB });
+        elementos[c + esferas.size() + tris.size()] = new Cilindro({ cilins[c].x, cilins[c].y, cilins[c].z }, cilins[c].radio, cilins[c].altura, { cilins[c].r, cilins[c].g, cilins[c].b });
+        elementos[c + esferas.size() + tris.size()]->setAtenuacion(cilins[c].atConst, cilins[c].atLineal, cilins[c].atCuadr);
+        elementos[c + esferas.size() + tris.size()]->setParametrosEspeculares(cilins[c].esxpReflecEspec, cilins[c].fracReflecEspec, { cilins[c].colorReflecEspecR, cilins[c].colorReflecEspecG, cilins[c].colorReflecEspecB });
     }
 
     ObjetosEscena::getInstancia()->setElementos(esferas.size() + tris.size() + cilins.size(), elementos);

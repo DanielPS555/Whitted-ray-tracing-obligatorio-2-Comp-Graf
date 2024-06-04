@@ -1,13 +1,14 @@
 #pragma once
 
-#include "nlohmann/json.hpp"
-#include "Objeto.h"
-#include "Triangulo.h"
+#include "../Objeto.h"
 #include "LuzPuntual.h"
 #include <string>
 #include "nlohmann/json.hpp"
 
 using json = nlohmann::json;
+
+#ifndef CARGA_CLASS 
+#define CARGA_CLASS 
 
 struct Plano
 {
@@ -94,10 +95,10 @@ struct Cilinder
 	float Refraccion;
 
 	float atConst;
-	float	atLineal;
-	float	atCuadr;
-	float	esxpReflecEspec;
-	float	fracReflecEspec;
+	float atLineal;
+	float atCuadr;
+	float esxpReflecEspec;
+	float fracReflecEspec;
 	float colorReflecEspecR;
 	float colorReflecEspecG;
 	float colorReflecEspecB;
@@ -133,7 +134,7 @@ class CargaArchivo
 
 		std::vector<Sphear> getEsferas();
 
-		std::vector<Triangulo*> getPlanos();
+		std::vector<Objeto*> getPlanos();
 
 		std::vector<Rectangulo> getPrismas();
 
@@ -145,3 +146,4 @@ class CargaArchivo
 		std::vector<Cilinder> getCilindros();
 };
 
+#endif

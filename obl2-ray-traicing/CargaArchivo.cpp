@@ -1,15 +1,14 @@
 #include "CargaArchivo.h"
-#include "Esfera.h"
-#include "Objeto.h"
 #include <fstream>
 #include <iostream>
+#include "Triangulo.h"
 
 CargaArchivo::CargaArchivo(std::string file)
 {
 	std::ifstream f(file);
 	json data = json::parse(f);
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < data["planos"].size(); i++) {
 		Plano p;
 		p.altura = data["planos"][i]["altura"];
 		p.ancho = data["planos"][i]["ancho"];
@@ -28,7 +27,7 @@ CargaArchivo::CargaArchivo(std::string file)
 		p.colorReflecEspecR = data["planos"][i]["colorReflecEspecR"];
 		p.colorReflecEspecG = data["planos"][i]["colorReflecEspecG"];
 		p.colorReflecEspecB = data["planos"][i]["colorReflecEspecB"];
-		p.sesibilidad = data["planos"][i]["sesibilidad"];
+		p.sesibilidad = data["planos"][i]["sensibilidad"];
 		this->cuarto.push_back(p);
 	}
 
@@ -54,7 +53,7 @@ CargaArchivo::CargaArchivo(std::string file)
 		rect.colorReflecEspecR = data["rectangulos"][r]["colorReflecEspecR"];
 		rect.colorReflecEspecG = data["rectangulos"][r]["colorReflecEspecG"];
 		rect.colorReflecEspecB = data["rectangulos"][r]["colorReflecEspecB"];
-		rect.sesibilidad = data["rectangulos"][r]["sesibilidad"];
+		rect.sesibilidad = data["rectangulos"][r]["sensibilidad"];
 		this->rects.push_back(rect);
 	}
 
@@ -78,7 +77,7 @@ CargaArchivo::CargaArchivo(std::string file)
 		esfe.colorReflecEspecR = data["esferas"][e]["colorReflecEspecR"];
 		esfe.colorReflecEspecG = data["esferas"][e]["colorReflecEspecG"];
 		esfe.colorReflecEspecB = data["esferas"][e]["colorReflecEspecB"];
-		esfe.sesibilidad = data["cilindros"][e]["sesibilidad"];
+		esfe.sesibilidad = data["esferas"][e]["sensibilidad"];
 		this->sphears.push_back(esfe);
 	}
 
@@ -103,13 +102,13 @@ CargaArchivo::CargaArchivo(std::string file)
 		cilin.colorReflecEspecR = data["cilindros"][c]["colorReflecEspecR"];
 		cilin.colorReflecEspecG = data["cilindros"][c]["colorReflecEspecG"];
 		cilin.colorReflecEspecB = data["cilindros"][c]["colorReflecEspecB"];
-		cilin.sesibilidad = data["cilindros"][c]["sesibilidad"];
+		cilin.sesibilidad = data["cilindros"][c]["sensibilidad"];
 		this->cilins.push_back(cilin);
 	}
 
 	this->ubCam = { data["camara"][0]["x"], data["camara"][0]["y"], data["camara"][0]["z"] };
 	this->dirACam = {data["camara"][0]["dirAx"], data["camara"][0]["dirAy"], data["camara"][0]["dirAz"]};
-	this->dirPVCam = { data["camara"][0]["dirPVx"], data["camara"][0]["dirPVx"], data["camara"][0]["dirPVx"] };
+	this->dirPVCam = { data["camara"][0]["dirPVx"], data["camara"][0]["dirPVy"], data["camara"][0]["dirPVz"] };
 	this->resolucion = data["camara"][0]["Resolucion"];
 
 	this->luzAmb.push_back(data["luzAmbiente"][0]["intr"]);
@@ -150,9 +149,9 @@ std::vector<Sphear> CargaArchivo::getEsferas()
 	return this->sphears;
 }
 
-std::vector<Triangulo*> CargaArchivo::getPlanos()
+std::vector<Objeto*> CargaArchivo::getPlanos()
 {
-	std::vector<Triangulo*> paredes;
+	std::vector<Objeto*> paredes;
 	for (int t = 0; t < this->cuarto.size(); t++) {
 		MathVector v0, v1, v2, v3;
 		v0 = {this->cuarto[t].x, this->cuarto[t].y, this->cuarto[t].z};
