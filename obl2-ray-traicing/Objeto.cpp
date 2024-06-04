@@ -1,4 +1,4 @@
-#include "Objeto.h"
+﻿#include "Objeto.h"
 #include "Utils.h"
 #include "ObjetosEscena.h"
 #include "LuzAmbiente.h"
@@ -76,9 +76,9 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 		float coeficienteDifusa = productoEscalar(posicionLuzSegunPixel, normal);
 		coeficienteDifusa = fmax(coeficienteDifusa, 0.f);
 
-		MathVector vectorRefraxion = normalizar(simetrico(normal, normalizar(vectorALaLuz)));
+		MathVector vectorEspecular = normalizar(simetrico(normal, normalizar(vectorALaLuz)));
 
-		float coeficienteEspecular = powf(productoEscalar(normalizar(rayo.dirrecion), vectorRefraxion), exponenteReflexionEspecular);
+		float coeficienteEspecular = powf(productoEscalar(normalizar(rayo.dirrecion), vectorEspecular), exponenteReflexionEspecular);
 		
 		coeficienteEspecular = fmax(coeficienteEspecular, 0.f);
 
@@ -92,63 +92,63 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 		colorTotal.r += luzDifusaYEspecular.r;
 		colorTotal.g += luzDifusaYEspecular.g;
 		colorTotal.b += luzDifusaYEspecular.b;
+	}
 
+	if (profundidad < PROFUNDIDAD_MAX) {
+		if (coeficienteReflexion > 0) {
+			//vectorRefraxion = multiplicarPorEscalar(vectorRefraxion, -1);
+			//R = 2(L⋅N)N−L
 
-		if (profundidad < PROFUNDIDAD_MAX) {
-			if (coeficienteReflexion > 0) {
-				//vectorRefraxion = multiplicarPorEscalar(vectorRefraxion, -1);
-				Rayo aux = { posicionIntersepcion, vectorRefraxion };
-				MathVector puntoAnclajeAux = getPosicion(aux, 1.0f, 0);
-				Rayo r = { puntoAnclajeAux , vectorRefraxion };
+			MathVector vectorReflexion = normalizar(simetrico(normal, multiplicarPorEscalar(normalizar(rayo.dirrecion), -1)));
+			Rayo aux = { posicionIntersepcion, vectorReflexion };
+			MathVector puntoAnclajeAux = getPosicion(aux, 1.0f, 0);
+			Rayo r = { puntoAnclajeAux , vectorReflexion };
 
-				Color color_r = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
-				
-				colorTotal.r += color_r.r  * coeficienteReflexion;
-				colorTotal.g += color_r.g  * coeficienteReflexion;
-				colorTotal.b += color_r.b * coeficienteReflexion;
-			}
+			Color color_r = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
 
-			//ley de snell dice que n1 sin01 = n2 sin02
-			//se usa el cos porque es la informaci�n que podemos obtener a trav�s del producto escalar.
-			// por mas informaci�n del procedimiento consultar wikipedia ley de snell en lenguaje ingles.
-
-			/*
-			if (coeficienteTransparencia > 0) {
-				float n1 = 1.0f; //transp del aire
-				float n2 = coeficienteTransparencia;
-
-				MathVector I = normalizar(vectorALaLuz);
-				MathVector N = normalizar(normal);
-
-				float cosi = fmax(-1.0f, fmin(1.0f, productoEscalar(I, N)));
-				if (cosi < 0) {
-					cosi = -cosi;
-				}
-				else {
-					std::swap(n1, n2);
-					N = multiplicarPorEscalar(N, -1);
-				}
-
-				float eta = n1 / n2;
-				float k = 1 - eta * eta * (1 - cosi * cosi);
-
-				if (k >= 0) {
-					MathVector refractada = sumar(multiplicarPorEscalar(I, eta), multiplicarPorEscalar(N, (eta * cosi - sqrtf(k))));
-					
-					Rayo aux2 = { posicionIntersepcion, refractada };
-					MathVector puntoAnclajeAux = getPosicion(aux2, 1.0f, 0);
-					Rayo r = { puntoAnclajeAux , refractada };
-					
-					Color color_t = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
-
-					colorTotal.r += color_t.r * coeficienteTransparencia;
-					colorTotal.g += color_t.g * coeficienteTransparencia;
-					colorTotal.b += color_t.b * coeficienteTransparencia;
-				}
-
-			}*/
+			colorTotal.r += color_r.r * coeficienteReflexion;
+			colorTotal.g += color_r.g * coeficienteReflexion;
+			colorTotal.b += color_r.b * coeficienteReflexion;
 		}
 
+		//ley de snell dice que n1 sin01 = n2 sin02
+		//se usa el cos porque es la información que podemos obtener a través del producto escalar.
+		// por mas información del procedimiento consultar wikipedia ley de snell en lenguaje ingles.
+
+
+		if (coeficienteTransparencia > 0) {
+			float n1 = 1.0f; //transp del aire
+			float n2 = indiceTransparencia;
+
+			MathVector I = normalizar(rayo.dirrecion);
+			MathVector N = normalizar(normal);
+
+			float cosi = fmax(-1.0f, fmin(1.0f, productoEscalar(I, N)));
+			if (cosi < 0) {
+				cosi = -cosi;
+			}
+			else {
+				std::swap(n1, n2);
+				N = multiplicarPorEscalar(N, -1);
+			}
+
+			float eta = n1 / n2;
+			float k = 1 - eta * eta * (1 - cosi * cosi);
+
+			if (k >= 0) {
+				MathVector refractada = sumar(multiplicarPorEscalar(I, eta), multiplicarPorEscalar(N, (eta * cosi - sqrtf(k))));
+
+				Rayo aux2 = { posicionIntersepcion, refractada };
+				MathVector puntoAnclajeAux = getPosicion(aux2, 1.0f, 0);
+				Rayo r = { puntoAnclajeAux , refractada };
+
+				Color color_t = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
+
+				colorTotal.r += color_t.r * coeficienteTransparencia;
+				colorTotal.g += color_t.g * coeficienteTransparencia;
+				colorTotal.b += color_t.b * coeficienteTransparencia;
+			}
+		}
 	}
 
 

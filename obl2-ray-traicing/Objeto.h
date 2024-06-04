@@ -17,6 +17,7 @@
 
 #define EXPONENTE_REFELXION_ESPECULAR_DEFECTO 3;
 #define FRACION_LUZ_REFLEJADA_ESPECULAR_DEFECTO 0.45f
+#define INDICE_TRANSPARENCIA 1.5; //n2
 
 
 
@@ -35,6 +36,7 @@ protected:
 	Color colorEspecular = { 255.f, 255.f, 255.f };
 
 public:
+	float indiceTransparencia = INDICE_TRANSPARENCIA; 
 	float coeficienteReflexion = SENSIBLIDAD_LUZ_ESPECULAR_POR_DEFECTO; // ks
 	float coeficienteTransparencia = SENSIBILIDAD_TRANSPARENCIA; // kt
 	float sensibilidad_luz_difusa = SENSIBILIDAD_LUZ_DIFUSA_POR_DEFECTO;
