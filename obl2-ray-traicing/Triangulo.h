@@ -2,6 +2,9 @@
 #include "Color.h"
 #include "Utils.h"
 
+#ifndef TRIANGULO_CLASS
+#define TRIANGULO_CLASS
+
 class Triangulo : public Objeto {
 private:
 	MathVector v0;
@@ -19,3 +22,5 @@ public:
 	float intersepcion(Rayo rayo);
 	Color getColor(Rayo rayo, float t);
 };
+
+#endif // !TRIANGULO_CLASS
