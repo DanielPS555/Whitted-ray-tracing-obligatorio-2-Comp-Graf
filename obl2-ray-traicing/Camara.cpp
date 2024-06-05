@@ -3,11 +3,11 @@
 #include "cmath"
 #include "iostream"
 
-Camara::Camara(MathVector up, MathVector lookupDirrecion, MathVector lookUpPosition) {
+Camara::Camara(MathVector up, MathVector lookupDirrecion, MathVector posicionCamara) {
 
 	this->dirrecionArriba	  = up;
 	this->dirrecionPuntoVista = lookupDirrecion;
-	this->ubicacionPuntoVista = lookUpPosition;
+	this->ubicacionCamara   = posicionCamara;
 	this->anguloVisionCamara  = ANGULO_VISION_CAMARA_DEFECTO;
 
 	
@@ -18,13 +18,13 @@ Camara::Camara(MathVector up, MathVector lookupDirrecion, MathVector lookUpPosit
 
 	float profundidadCamara = 0.5f * sqrt(w * w + h * h) * tan( gradosToRadianes((180 - anguloVisionCamara) / 2) );
 
-	MathVector traslacionCamara = multiplicarPorEscalar(normalizar(dirrecionPuntoVista), -profundidadCamara);
+	MathVector traslacionCamara = multiplicarPorEscalar(normalizar(dirrecionPuntoVista), profundidadCamara);
 
-	ubicacionCamara = sumar(ubicacionPuntoVista, traslacionCamara);
+	ubicacionPuntoVista = sumar(ubicacionCamara, traslacionCamara);
 	
 }
 
-Rayo Camara::getRayo(int x, int y) {
+Rayo Camara::getRayo(float x, float y) {
 	
 	MathVector vectorRight = normalizar(productoVectorial(dirrecionArriba, dirrecionPuntoVista));
 	MathVector vectorUp = normalizar(productoVectorial(dirrecionPuntoVista, vectorRight));

@@ -90,6 +90,9 @@
     <ClCompile Include="Cilindro.cpp">
       <Filter>Source Files\modelos</Filter>
     </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CargaArchivo.h">

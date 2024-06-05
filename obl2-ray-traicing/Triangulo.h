@@ -11,11 +11,13 @@ private:
 	MathVector v1;
 	MathVector v2;
 
-	MathVector vectorNormal;
+	MathVector vectorNormalV0, vectorNormalV1, vectorNormalV2;
 
 public:
 
 	Triangulo(MathVector v0, MathVector v1, MathVector v2, Color color);
+
+	Triangulo(MathVector v0, MathVector v1, MathVector v2, MathVector vectorNormalV0, MathVector vectorNormalV1, MathVector vectorNormalV2, Color color);
 
 	MathVector getNormal(MathVector punto);
 

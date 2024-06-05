@@ -9,4 +9,7 @@ struct Color {
 	float b;
 };
 
+
+Color corregirColorMaximos(Color c);
+
 #endif

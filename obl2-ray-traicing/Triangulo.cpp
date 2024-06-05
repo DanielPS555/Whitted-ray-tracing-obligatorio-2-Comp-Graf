@@ -11,11 +11,24 @@ Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2, Color color) {
     MathVector t1 = restar(v1, v0);
     MathVector t2 = restar(v2, v0);
 
-    print(t1);
-    print(t2);
-
-    vectorNormal = normalizar(productoVectorial(t1, t2));
+    vectorNormalV0 = normalizar(productoVectorial(t1, t2));
+    vectorNormalV1 = vectorNormalV0;
+    vectorNormalV2 = vectorNormalV0;
 }
+
+Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2,
+                        MathVector vectorNormalV0, MathVector vectorNormalV1, MathVector vectorNormalV2,
+                        Color color) {
+    Triangulo::v0 = v0;
+    Triangulo::v1 = v1;
+    Triangulo::v2 = v2;
+    setColorBase(color);
+
+    this->vectorNormalV0 = vectorNormalV0;
+    this->vectorNormalV1 = vectorNormalV1;
+    this->vectorNormalV2 = vectorNormalV2;
+}
+
 
 // este metodo esta basado en el algoritmo Moller-trumbore.
 // para entenderlo completamente visitar https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm#Rust_implementation
@@ -75,5 +88,5 @@ Color Triangulo::getColor(Rayo rayo, float t,int profundidad){
 }
 
 MathVector Triangulo::getNormal(MathVector punto) {
-    return vectorNormal;
+    return vectorNormalV0; //ToDo Pendiente
 }

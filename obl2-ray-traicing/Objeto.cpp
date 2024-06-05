@@ -7,18 +7,21 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 
 	Color colorTotal = { 0.0f,0.f,0.f };
 
+	// La suma de coeficiente_difusa_especular + coeficiente_reflexion + coeficiente_transaccion debe ser 1, cada color debe aportar esto
+	float coeficiente_difusa_especular_corregido;
+	float coeficiente_reflexion_corregido = this->coeficienteReflexion;
+	float coeficiente_transaccion_corregido = this->coeficienteTransparencia;
+
+	if (coeficiente_reflexion_corregido + coeficiente_transaccion_corregido > 1.0) {
+		coeficiente_reflexion_corregido = coeficiente_reflexion_corregido / (coeficiente_reflexion_corregido + coeficiente_transaccion_corregido);
+		coeficiente_transaccion_corregido = coeficiente_transaccion_corregido / (coeficiente_reflexion_corregido + coeficiente_transaccion_corregido);
+		coeficiente_difusa_especular_corregido = 0.0f;
+	}
+	else {
+		coeficiente_difusa_especular_corregido = 1.0f - (coeficiente_reflexion_corregido + coeficiente_transaccion_corregido);
+	}
+
 	MathVector posicionIntersepcion = getPosicion(rayo, t, EPSILON);
-
-	// Calculo luz ambiente
-
-	LuzAmbiente luzAmbiente = ObjetosEscena::getInstancia()->luzAmbiente;
-
-	Color colorConLuzAmbiente = getLuzAmbientePorObjeto(luzAmbiente, colorBase, sensibilidad_luz_ambiente);
-
-
-	colorTotal.r = colorConLuzAmbiente.r;
-	colorTotal.g = colorConLuzAmbiente.g;
-	colorTotal.b = colorConLuzAmbiente.b;
 
 	// Calculo de intersepciones con las luces
 
@@ -54,10 +57,21 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 		coeficienteDeIntersepcion[i] = coeficiente_luz_por_obstruccion;
 	}
 
+	// ----- Calculo luz ambiente -----
+
+	Color luzDifusaEspecularAmbiente = { 0.0f, 0.0f, 0.0f };
+
+	LuzAmbiente luzAmbiente = ObjetosEscena::getInstancia()->luzAmbiente;
+	Color colorConLuzAmbiente = getLuzAmbientePorObjeto(luzAmbiente, colorBase, sensibilidad_luz_ambiente);
+
+	luzDifusaEspecularAmbiente.r = colorConLuzAmbiente.r;
+	luzDifusaEspecularAmbiente.g = colorConLuzAmbiente.g;
+	luzDifusaEspecularAmbiente.b = colorConLuzAmbiente.b;
 	
-	// Calculo luz difuza y especular
+	// ----- Calculo luz difuza y especular -----
 
 	MathVector normal = normalizar(getNormal(posicionIntersepcion));
+
 
 	for (int i = 0; i < numeroLuces; i++) {
 		LuzPuntual ld = ObjetosEscena::getInstancia()->lucesDifusas[i];
@@ -83,19 +97,27 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 		coeficienteEspecular = fmax(coeficienteEspecular, 0.f);
 
 
-		Color luzDifusaYEspecular = {
+		Color luzDifusaYEspecularPorLuz = {
 						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.r / 255.f)) * (colorBase.r * coeficienteDifusa * sensibilidad_luz_difusa + coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.r),
 						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.g / 255.f)) * (colorBase.g * coeficienteDifusa * sensibilidad_luz_difusa + coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.g),
 						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.b / 255.f)) * (colorBase.b * coeficienteDifusa * sensibilidad_luz_difusa + coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.b),
 		};
 
-		colorTotal.r += luzDifusaYEspecular.r;
-		colorTotal.g += luzDifusaYEspecular.g;
-		colorTotal.b += luzDifusaYEspecular.b;
+		luzDifusaEspecularAmbiente.r += luzDifusaYEspecularPorLuz.r;
+		luzDifusaEspecularAmbiente.g += luzDifusaYEspecularPorLuz.g;
+		luzDifusaEspecularAmbiente.b += luzDifusaYEspecularPorLuz.b;
 	}
 
+	luzDifusaEspecularAmbiente = corregirColorMaximos(luzDifusaEspecularAmbiente);
+
+	colorTotal.r += luzDifusaEspecularAmbiente.r * coeficiente_difusa_especular_corregido;
+	colorTotal.g += luzDifusaEspecularAmbiente.g * coeficiente_difusa_especular_corregido;
+	colorTotal.b += luzDifusaEspecularAmbiente.b * coeficiente_difusa_especular_corregido;
+
+
+
 	if (profundidad < PROFUNDIDAD_MAX) {
-		if (coeficienteReflexion > 0) {
+		if (coeficiente_reflexion_corregido > 0) {
 			//vectorRefraxion = multiplicarPorEscalar(vectorRefraxion, -1);
 			//R = 2(L⋅N)N−L
 
@@ -106,9 +128,9 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 
 			Color color_r = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
 
-			colorTotal.r += color_r.r * coeficienteReflexion;
-			colorTotal.g += color_r.g * coeficienteReflexion;
-			colorTotal.b += color_r.b * coeficienteReflexion;
+			colorTotal.r += color_r.r * coeficiente_reflexion_corregido;
+			colorTotal.g += color_r.g * coeficiente_reflexion_corregido;
+			colorTotal.b += color_r.b * coeficiente_reflexion_corregido;
 		}
 
 		//ley de snell dice que n1 sin01 = n2 sin02

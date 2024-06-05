@@ -14,7 +14,7 @@
 #include "Triangulo.h"
 
 Camara* ejemplo1() {
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
 
     Esfera* eferaPrueba1 = new Esfera({ 250,250,500 }, 200.0f, { 90,180,15 });
     Esfera* eferaPrueba2 = new Esfera({ 250,-250,500 }, 200.0f, { 232,158,15 });
@@ -84,17 +84,17 @@ Camara* ejemplo2() {
 Camara* ejemplo4() {
     Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
 
-    Esfera* eferaPrueba1 = new Esfera({ -200,120,100 }, 100.0f, { 90,180,15 });
+    Esfera* eferaPrueba1 = new Esfera({ -200,120,110 }, 100.0f, { 90,180,15 });
     eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
     eferaPrueba1->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
     eferaPrueba1->coeficienteReflexion = 0.0f;
     eferaPrueba1->coeficienteTransparencia = 0.0f;
 
-    Esfera* eferaPrueba2 = new Esfera({ 200,120,100 }, 100.0f, { 220,220,220 });
+    Esfera* eferaPrueba2 = new Esfera({ 200,120,100 }, 100.0f, { 255.f,255.f,255.f});
     eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
     eferaPrueba1->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
-    eferaPrueba2->coeficienteReflexion = 0.2f;
-    eferaPrueba2->coeficienteTransparencia = 0.9f;
+    eferaPrueba2->coeficienteReflexion = 0.7f;
+    eferaPrueba2->coeficienteTransparencia = 0.0f;
 
     MathVector v1 = { 800, 0, 0 };
     MathVector v2 = { -800, 0, 0 };
@@ -222,7 +222,7 @@ Camara* ejemplo3() {
 // Main function
 int main() {
     ObjetosEscena::getInstancia()->resolucionX = 1000.f;
-    ObjetosEscena::getInstancia()->resolucionY =  500.f;
+    ObjetosEscena::getInstancia()->resolucionY =  600.f;
 
     FIBITMAP* bitmap = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
         ObjetosEscena::getInstancia()->resolucionY);
@@ -230,31 +230,48 @@ int main() {
     int w = (int)ObjetosEscena::getInstancia()->resolucionX;
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
-    Camara* camaraEj = ejemplo4();
+    Camara* camaraEj = ejemplo1();
    
 
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
 
-            Rayo r = camaraEj->getRayo(x, y);
+            //Implementacion de  anti-aliasing
 
 
-            Color color = ObjetosEscena::getInstancia()->getPixelPorRayo(r,1);
-            
-            if (color.r > 255) {
-                color.r = 255.0f;
+            int r_c = 0;
+            int g_c = 0;
+            int b_c = 0;
+
+            for (int y_s = 0; y_s <= 1; y_s++){
+                for (int x_s = 0; x_s <= 1; x_s++) {
+
+                    float x_delta = ((float)x_s - 0.5f)*0.5f;
+                    float y_delta = ((float)y_s - 0.5f)*0.5f;
+
+                    Rayo r = camaraEj->getRayo(x + x_delta, y + y_delta);
+
+                    Color color = ObjetosEscena::getInstancia()->getPixelPorRayo(r, 1);
+
+                    if (color.r > 255) {
+                        color.r = 255.0f;
+                    }
+
+                    if (color.g > 255) {
+                        color.g = 255.0f;
+                    }
+
+                    if (color.b > 255) {
+                        color.b = 255.0f;
+                    }
+
+                    r_c += color.r;
+                    g_c += color.g;
+                    b_c += color.b;
+                }
             }
 
-            if (color.g > 255) {
-                color.g = 255.0f;
-            }
-
-            if (color.b > 255) {
-                color.b = 255.0f;
-            }
-
-
-            RGBQUAD rgbColor = { (BYTE)color.b, (BYTE)color.g, (BYTE)color.r };
+            RGBQUAD rgbColor = { (BYTE)(b_c / 4), (BYTE)(g_c / 4), (BYTE)(r_c / 4) };
 
             FreeImage_SetPixelColor(bitmap, x, y, &rgbColor);
         }

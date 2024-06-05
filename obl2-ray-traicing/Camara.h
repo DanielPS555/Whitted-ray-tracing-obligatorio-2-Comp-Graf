@@ -13,20 +13,20 @@ private:
 	// Parametros por constructor
 	MathVector dirrecionArriba;
 	MathVector dirrecionPuntoVista;
-	MathVector ubicacionPuntoVista;
+	MathVector ubicacionCamara;
 
 	float anguloVisionCamara;
 
 	// Valores calculados
-	MathVector ubicacionCamara;
-
+	
+	MathVector ubicacionPuntoVista;
 
 
 public:
 
 	Camara(MathVector up, MathVector lookupDirrecion, MathVector lookUpPosition);
 
-	Rayo getRayo(int x, int y);
+	Rayo getRayo(float x, float y);
 
 
 };
