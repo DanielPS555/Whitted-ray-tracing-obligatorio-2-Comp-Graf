@@ -106,6 +106,22 @@ CargaArchivo::CargaArchivo(std::string file)
 		this->cilins.push_back(cilin);
 	}
 
+	for (int tr = 0; tr < data["triangulos"].size(); tr++) {
+		MathVector	vA = { data["triangulos"][tr]["xV1"], data["triangulos"][tr]["yV1"], data["triangulos"][tr]["zV1"] };
+		MathVector  vC = { data["triangulos"][tr]["xV2"], data["triangulos"][tr]["yV2"], data["triangulos"][tr]["zV2"] };
+		MathVector  vB = { data["triangulos"][tr]["xV3"], data["triangulos"][tr]["yV3"], data["triangulos"][tr]["zV3"] };
+		Color col = { data["triangulos"][tr]["r"], data["triangulos"][tr]["g"], data["triangulos"][tr]["b"] };
+		Triangulo* tri = new Triangulo(vA, vB, vC, col);
+		tri->setAtenuacion(data["triangulos"][tr]["atConst"], data["triangulos"][tr]["atLineal"], data["triangulos"][tr]["atCuadr"]);
+		tri->setParametrosEspeculares(data["triangulos"][tr]["esxpReflecEspec"], data["triangulos"][tr]["fracReflecEspec"], { data["triangulos"][tr]["colorReflecEspecR"], data["triangulos"][tr]["colorReflecEspecG"], data["triangulos"][tr]["colorReflecEspecB"] });
+
+		/*data["triangulos"][tr]["Refleccion"];
+		data["triangulos"][tr]["Refraccion"];
+		data["triangulos"][tr]["Transparencia"];
+		data["triangulos"][tr]["sensibilidad"];*/
+		this->paredes.push_back(tri);
+	}
+
 	this->ubCam = { data["camara"][0]["x"], data["camara"][0]["y"], data["camara"][0]["z"] };
 	this->dirACam = {data["camara"][0]["dirAx"], data["camara"][0]["dirAy"], data["camara"][0]["dirAz"]};
 	this->dirPVCam = { data["camara"][0]["dirPVx"], data["camara"][0]["dirPVy"], data["camara"][0]["dirPVz"] };
@@ -151,7 +167,6 @@ std::vector<Sphear> CargaArchivo::getEsferas()
 
 std::vector<Objeto*> CargaArchivo::getPlanos()
 {
-	std::vector<Objeto*> paredes;
 	for (int t = 0; t < this->cuarto.size(); t++) {
 		MathVector v0, v1, v2, v3;
 		v0 = {this->cuarto[t].x, this->cuarto[t].y, this->cuarto[t].z};
@@ -177,10 +192,10 @@ std::vector<Objeto*> CargaArchivo::getPlanos()
 		t1->setParametrosEspeculares(this->cuarto[t].esxpReflecEspec, this->cuarto[t].fracReflecEspec, {this->cuarto[t].colorReflecEspecR, this->cuarto[t].colorReflecEspecG, this->cuarto[t].colorReflecEspecB });
 		t2->setAtenuacion(this->cuarto[t].atConst, this->cuarto[t].atLineal, this->cuarto[t].atCuadr);
 		t2->setParametrosEspeculares(this->cuarto[t].esxpReflecEspec, this->cuarto[t].fracReflecEspec, { this->cuarto[t].colorReflecEspecR, this->cuarto[t].colorReflecEspecG, this->cuarto[t].colorReflecEspecB });
-		paredes.push_back(t1);
-		paredes.push_back(t2);
+		this->paredes.push_back(t1);
+		this->paredes.push_back(t2);
 	}
-	return paredes;
+	return this->paredes;
 }
 
 std::vector<Rectangulo> CargaArchivo::getPrismas()

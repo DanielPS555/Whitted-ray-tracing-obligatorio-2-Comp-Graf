@@ -106,11 +106,40 @@ struct Cilinder
 };
 
 
+struct Triangle {
+	float xV1;
+	float yV1;
+	float zV1;
+	float xV2;
+	float yV2;
+	float zV2;
+	float xV3;
+	float yV3;
+	float zV3;
+	float r;
+	float g;
+	float b;
+	float Transparencia;
+	float Refleccion;
+	float Refraccion;
+
+	float atConst;
+	float atLineal;
+	float atCuadr;
+	float esxpReflecEspec;
+	float fracReflecEspec;
+	float colorReflecEspecR;
+	float colorReflecEspecG;
+	float colorReflecEspecB;
+	float sesibilidad;
+};
+
 class CargaArchivo
 {
 	private:
 
 		json data;
+		std::vector<Objeto*> paredes;
 		std::vector<Plano> cuarto;
 		std::vector<Rectangulo> rects;
 		std::vector<Sphear> sphears;

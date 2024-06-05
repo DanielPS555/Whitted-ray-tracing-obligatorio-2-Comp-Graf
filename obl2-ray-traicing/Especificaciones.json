@@ -107,6 +107,36 @@
     }
   ],
 
+  "triangulos": [
+    {
+      "name": "tri",
+      "xV1": 2,
+      "yV1": 3,
+      "zV1": 0,
+      "xV2": 2,
+      "yV2": 3,
+      "zV2": 0,
+      "xV3": 2,
+      "yV3": 3,
+      "zV3": 0,
+      "r": 15,
+      "g": 100,
+      "b": 222,
+      "Transparencia": 0, 
+      "Refleccion": 0,
+      "Refraccion": 0,
+      "atConst": 0,
+      "atLineal": 0,
+      "atCuadr": 0,
+      "esxpReflecEspec": 0,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
+      "sesibilidad": 0
+    }
+  ],
+
   "rectangulos": [
     {
       "name": "Rec1",

@@ -54,19 +54,22 @@ float Cilindro::intersepcion(Rayo rayo)
 
 MathVector Cilindro::getNormal(MathVector punto)
 {	
-	MathVector v1;
+	MathVector v1, v2;
+	v2 = punto;
 	if (punto.z > (centro.z + altura)) {
 		v1 = { centro.x, centro.y, centro.z + altura};
+		v2.z = centro.z + altura;
 	}
 	else {
 		if (punto.z < (centro.z)) {
 			v1 = { centro.x, centro.y, centro.z};
+			v2.z = centro.z;
 		}
 		else {
 			v1 = { centro.x, centro.y, punto.z };
 		}
 	}
-	return normalizar(restar(punto, v1));
+	return normalizar(restar(v2, v1));
 }
 
 
