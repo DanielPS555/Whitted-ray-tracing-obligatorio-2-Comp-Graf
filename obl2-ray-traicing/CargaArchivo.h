@@ -170,7 +170,7 @@ class CargaArchivo
 		LuzPuntual* getLuces();
 		int getCantLuces();
 
-		std::vector<float> getLuzAmb();
+		MathVector getLuzAmb();
 
 		std::vector<Cilinder> getCilindros();
 };

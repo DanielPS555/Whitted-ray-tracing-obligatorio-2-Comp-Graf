@@ -43,7 +43,7 @@ Camara* ejemplo1() {
     luces[1] = { {255.f,    0.f,  0.f} ,    {700.f ,0.f,   400.f} };
     luces[2] = { {255.f,    0.f,  255.f},  {-700.f ,0.f,   400.f} };
     ObjetosEscena::getInstancia()->lucesDifusas = luces;
-    ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
+    ObjetosEscena::getInstancia()->numeroLucesDifusas = 3;
 
 
     return camaraPtr;
@@ -139,7 +139,7 @@ Camara* ejemplo4() {
 
 Camara* ejemplo3() {
    
-    CargaArchivo* carga = new CargaArchivo("EscenaEjemplo.json");
+    CargaArchivo* carga = new CargaArchivo("MetaDatas.json");
 
     Camara* camaraPtr2 = new Camara(carga->getDirACam(), carga->getDirPVCam(), carga->getUbCam());
 
@@ -159,6 +159,8 @@ Camara* ejemplo3() {
         elementos[e + tris.size()] = new Esfera({ esferas[e].x, esferas[e].y, esferas[e].z }, esferas[e].radio, { esferas[e].r, esferas[e].g, esferas[e].b });
         elementos[e + tris.size()]->setAtenuacion(esferas[e].atConst, esferas[e].atLineal, esferas[e].atCuadr); 
         elementos[e + tris.size()]->setParametrosEspeculares(esferas[e].esxpReflecEspec, esferas[e].fracReflecEspec, { esferas[e].colorReflecEspecR, esferas[e].colorReflecEspecG, esferas[e] .colorReflecEspecB});
+        elementos[e + tris.size()]->coeficienteReflexion = esferas[e].Refleccion;
+        elementos[e + tris.size()]->coeficienteTransparencia = esferas[e].Transparencia;
     }
     
     for (int c = 0; c < cilins.size(); c++) {
@@ -168,7 +170,7 @@ Camara* ejemplo3() {
     }
 
     ObjetosEscena::getInstancia()->setElementos(esferas.size() + tris.size() + cilins.size(), elementos);
-    ObjetosEscena::getInstancia()->luzAmbiente = { carga->getLuzAmb()[0], carga->getLuzAmb()[1], carga->getLuzAmb()[2] };
+    ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };//{ carga->getLuzAmb().x, carga->getLuzAmb().y , carga->getLuzAmb().z };
 
     ObjetosEscena::getInstancia()->lucesDifusas = luces2;
     ObjetosEscena::getInstancia()->numeroLucesDifusas = carga->getCantLuces();
@@ -194,7 +196,7 @@ int main() {
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
 
-    Camara* camaraEj = ejemplo4();
+    Camara* camaraEj = ejemplo3();
 
 
     for (int y = 0; y < h; y++) {

@@ -37,6 +37,9 @@
     <Filter Include="Source Files\iluminacion">
       <UniqueIdentifier>{d9ba5f9b-a0e8-4181-9e41-61ea6d2abc8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ejemplos">
+      <UniqueIdentifier>{b0dec8c6-e1b9-429c-a39f-93cd05e7ad96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -148,7 +151,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="EscenaEjemplo.json" />
-    <None Include="Especificaciones.json" />
+    <None Include="MetaDatas.json" />
+    <None Include="EscenaEjemplo.json">
+      <Filter>Ejemplos</Filter>
+    </None>
+    <None Include="Ejemplo1.json">
+      <Filter>Ejemplos</Filter>
+    </None>
+    <None Include="Ejemplo2.json">
+      <Filter>Ejemplos</Filter>
+    </None>
+    <None Include="Ejemplo4.json">
+      <Filter>Ejemplos</Filter>
+    </None>
   </ItemGroup>
 </Project>

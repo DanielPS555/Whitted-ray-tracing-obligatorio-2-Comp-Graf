@@ -173,8 +173,11 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Ejemplo1.json" />
+    <None Include="Ejemplo2.json" />
+    <None Include="Ejemplo4.json" />
     <None Include="EscenaEjemplo.json" />
-    <None Include="Especificaciones.json" />
+    <None Include="MetaDatas.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

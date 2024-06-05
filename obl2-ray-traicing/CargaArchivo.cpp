@@ -9,117 +9,127 @@ CargaArchivo::CargaArchivo(std::string file)
 	json data = json::parse(f);
 
 	for (int i = 0; i < data["planos"].size(); i++) {
-		Plano p;
-		p.altura = data["planos"][i]["altura"];
-		p.ancho = data["planos"][i]["ancho"];
-		p.largo = data["planos"][i]["largo"];
-		p.x = data["planos"][i]["x"];
-		p.y = data["planos"][i]["y"];
-		p.z = data["planos"][i]["z"];
-		p.r = data["planos"][i]["r"];
-		p.g = data["planos"][i]["g"];
-		p.b = data["planos"][i]["b"];
-		p.atConst = data["planos"][i]["atConst"];
-		p.atLineal = data["planos"][i]["atLineal"];
-		p.atCuadr = data["planos"][i]["atCuadr"];
-		p.esxpReflecEspec = data["planos"][i]["esxpReflecEspec"];
-		p.fracReflecEspec = data["planos"][i]["fracReflecEspec"];
-		p.colorReflecEspecR = data["planos"][i]["colorReflecEspecR"];
-		p.colorReflecEspecG = data["planos"][i]["colorReflecEspecG"];
-		p.colorReflecEspecB = data["planos"][i]["colorReflecEspecB"];
-		p.sesibilidad = data["planos"][i]["sensibilidad"];
-		this->cuarto.push_back(p);
+		if (data["planos"][i]["name"] != "ign") {
+			Plano p;
+			p.altura = data["planos"][i]["altura"];
+			p.ancho = data["planos"][i]["ancho"];
+			p.largo = data["planos"][i]["largo"];
+			p.x = data["planos"][i]["x"];
+			p.y = data["planos"][i]["y"];
+			p.z = data["planos"][i]["z"];
+			p.r = data["planos"][i]["r"];
+			p.g = data["planos"][i]["g"];
+			p.b = data["planos"][i]["b"];
+			p.atConst = data["planos"][i]["atConst"];
+			p.atLineal = data["planos"][i]["atLineal"];
+			p.atCuadr = data["planos"][i]["atCuadr"];
+			p.esxpReflecEspec = data["planos"][i]["esxpReflecEspec"];
+			p.fracReflecEspec = data["planos"][i]["fracReflecEspec"];
+			p.colorReflecEspecR = data["planos"][i]["colorReflecEspecR"];
+			p.colorReflecEspecG = data["planos"][i]["colorReflecEspecG"];
+			p.colorReflecEspecB = data["planos"][i]["colorReflecEspecB"];
+			p.sesibilidad = data["planos"][i]["sensibilidad"];
+			this->cuarto.push_back(p);
+		}
 	}
 
 	for (int r = 0; r < data["rectangulos"].size(); r++) {
-		Rectangulo rect;
-		rect.altura = data["rectangulos"][r]["altura"];
-		rect.ancho = data["rectangulos"][r]["ancho"];
-		rect.largo = data["rectangulos"][r]["largo"];
-		rect.r = data["rectangulos"][r]["r"];
-		rect.g = data["rectangulos"][r]["g"];
-		rect.b = data["rectangulos"][r]["b"];
-		rect.Refleccion = data["rectangulos"][r]["Refleccion"];
-		rect.Refraccion = data["rectangulos"][r]["Refraccion"];
-		rect.Transparencia = data["rectangulos"][r]["Transparencia"];
-		rect.x = data["rectangulos"][r]["x"];
-		rect.y = data["rectangulos"][r]["y"];
-		rect.z = data["rectangulos"][r]["z"];
-		rect.atConst = data["rectangulos"][r]["atConst"];
-		rect.atLineal = data["rectangulos"][r]["atLineal"];
-		rect.atCuadr = data["rectangulos"][r]["atCuadr"];
-		rect.esxpReflecEspec = data["rectangulos"][r]["esxpReflecEspec"];
-		rect.fracReflecEspec = data["rectangulos"][r]["fracReflecEspec"];
-		rect.colorReflecEspecR = data["rectangulos"][r]["colorReflecEspecR"];
-		rect.colorReflecEspecG = data["rectangulos"][r]["colorReflecEspecG"];
-		rect.colorReflecEspecB = data["rectangulos"][r]["colorReflecEspecB"];
-		rect.sesibilidad = data["rectangulos"][r]["sensibilidad"];
-		this->rects.push_back(rect);
+		if (data["rectangulos"][r]["name"] != "ign") {
+			Rectangulo rect;
+			rect.altura = data["rectangulos"][r]["altura"];
+			rect.ancho = data["rectangulos"][r]["ancho"];
+			rect.largo = data["rectangulos"][r]["largo"];
+			rect.r = data["rectangulos"][r]["r"];
+			rect.g = data["rectangulos"][r]["g"];
+			rect.b = data["rectangulos"][r]["b"];
+			rect.Refleccion = data["rectangulos"][r]["Refleccion"];
+			rect.Refraccion = data["rectangulos"][r]["Refraccion"];
+			rect.Transparencia = data["rectangulos"][r]["Transparencia"];
+			rect.x = data["rectangulos"][r]["x"];
+			rect.y = data["rectangulos"][r]["y"];
+			rect.z = data["rectangulos"][r]["z"];
+			rect.atConst = data["rectangulos"][r]["atConst"];
+			rect.atLineal = data["rectangulos"][r]["atLineal"];
+			rect.atCuadr = data["rectangulos"][r]["atCuadr"];
+			rect.esxpReflecEspec = data["rectangulos"][r]["esxpReflecEspec"];
+			rect.fracReflecEspec = data["rectangulos"][r]["fracReflecEspec"];
+			rect.colorReflecEspecR = data["rectangulos"][r]["colorReflecEspecR"];
+			rect.colorReflecEspecG = data["rectangulos"][r]["colorReflecEspecG"];
+			rect.colorReflecEspecB = data["rectangulos"][r]["colorReflecEspecB"];
+			rect.sesibilidad = data["rectangulos"][r]["sensibilidad"];
+			this->rects.push_back(rect);
+		}
 	}
 
 	for (int e = 0; e < data["esferas"].size(); e++) {
-		Sphear esfe;
-		esfe.radio = data["esferas"][e]["radio"];
-		esfe.r = data["esferas"][e]["r"];
-		esfe.g = data["esferas"][e]["g"];
-		esfe.b = data["esferas"][e]["b"];
-		esfe.Refleccion = data["esferas"][e]["Refleccion"];
-		esfe.Refraccion = data["esferas"][e]["Refraccion"];
-		esfe.Transparencia = data["esferas"][e]["Transparencia"];
-		esfe.x = data["esferas"][e]["x"];
-		esfe.y = data["esferas"][e]["y"];
-		esfe.z = data["esferas"][e]["z"];
-		esfe.atConst = data["esferas"][e]["atConst"];
-		esfe.atLineal = data["esferas"][e]["atLineal"];
-		esfe.atCuadr = data["esferas"][e]["atCuadr"];
-		esfe.esxpReflecEspec = data["esferas"][e]["esxpReflecEspec"];
-		esfe.fracReflecEspec = data["esferas"][e]["fracReflecEspec"];
-		esfe.colorReflecEspecR = data["esferas"][e]["colorReflecEspecR"];
-		esfe.colorReflecEspecG = data["esferas"][e]["colorReflecEspecG"];
-		esfe.colorReflecEspecB = data["esferas"][e]["colorReflecEspecB"];
-		esfe.sesibilidad = data["esferas"][e]["sensibilidad"];
-		this->sphears.push_back(esfe);
+		if (data["esferas"][e]["name"] != "ign") {
+			Sphear esfe;
+			esfe.radio = data["esferas"][e]["radio"];
+			esfe.r = data["esferas"][e]["r"];
+			esfe.g = data["esferas"][e]["g"];
+			esfe.b = data["esferas"][e]["b"];
+			esfe.Refleccion = data["esferas"][e]["Refleccion"];
+			esfe.Refraccion = data["esferas"][e]["Refraccion"];
+			esfe.Transparencia = data["esferas"][e]["Transparencia"];
+			esfe.x = data["esferas"][e]["x"];
+			esfe.y = data["esferas"][e]["y"];
+			esfe.z = data["esferas"][e]["z"];
+			esfe.atConst = data["esferas"][e]["atConst"];
+			esfe.atLineal = data["esferas"][e]["atLineal"];
+			esfe.atCuadr = data["esferas"][e]["atCuadr"];
+			esfe.esxpReflecEspec = data["esferas"][e]["esxpReflecEspec"];
+			esfe.fracReflecEspec = data["esferas"][e]["fracReflecEspec"];
+			esfe.colorReflecEspecR = data["esferas"][e]["colorReflecEspecR"];
+			esfe.colorReflecEspecG = data["esferas"][e]["colorReflecEspecG"];
+			esfe.colorReflecEspecB = data["esferas"][e]["colorReflecEspecB"];
+			esfe.sesibilidad = data["esferas"][e]["sensibilidad"];
+			this->sphears.push_back(esfe);
+		}
 	}
 
 	for (int c = 0; c < data["cilindros"].size(); c++) {
-		Cilinder cilin;
-		cilin.radio = data["cilindros"][c]["radio"];
-		cilin.altura = data["cilindros"][c]["altura"];
-		cilin.r = data["cilindros"][c]["r"];
-		cilin.g = data["cilindros"][c]["g"];
-		cilin.b = data["cilindros"][c]["b"];
-		cilin.Refleccion = data["cilindros"][c]["Refleccion"];
-		cilin.Refraccion = data["cilindros"][c]["Refraccion"];
-		cilin.Transparencia = data["cilindros"][c]["Transparencia"];
-		cilin.x = data["cilindros"][c]["x"];
-		cilin.y = data["cilindros"][c]["y"];
-		cilin.z = data["cilindros"][c]["z"];
-		cilin.atConst = data["cilindros"][c]["atConst"];
-		cilin.atLineal = data["cilindros"][c]["atLineal"];
-		cilin.atCuadr = data["cilindros"][c]["atCuadr"];
-		cilin.esxpReflecEspec = data["cilindros"][c]["esxpReflecEspec"];
-		cilin.fracReflecEspec = data["cilindros"][c]["fracReflecEspec"];
-		cilin.colorReflecEspecR = data["cilindros"][c]["colorReflecEspecR"];
-		cilin.colorReflecEspecG = data["cilindros"][c]["colorReflecEspecG"];
-		cilin.colorReflecEspecB = data["cilindros"][c]["colorReflecEspecB"];
-		cilin.sesibilidad = data["cilindros"][c]["sensibilidad"];
-		this->cilins.push_back(cilin);
+		if (data["cilindros"][c]["name"] != "ign") {
+			Cilinder cilin;
+			cilin.radio = data["cilindros"][c]["radio"];
+			cilin.altura = data["cilindros"][c]["altura"];
+			cilin.r = data["cilindros"][c]["r"];
+			cilin.g = data["cilindros"][c]["g"];
+			cilin.b = data["cilindros"][c]["b"];
+			cilin.Refleccion = data["cilindros"][c]["Refleccion"];
+			cilin.Refraccion = data["cilindros"][c]["Refraccion"];
+			cilin.Transparencia = data["cilindros"][c]["Transparencia"];
+			cilin.x = data["cilindros"][c]["x"];
+			cilin.y = data["cilindros"][c]["y"];
+			cilin.z = data["cilindros"][c]["z"];
+			cilin.atConst = data["cilindros"][c]["atConst"];
+			cilin.atLineal = data["cilindros"][c]["atLineal"];
+			cilin.atCuadr = data["cilindros"][c]["atCuadr"];
+			cilin.esxpReflecEspec = data["cilindros"][c]["esxpReflecEspec"];
+			cilin.fracReflecEspec = data["cilindros"][c]["fracReflecEspec"];
+			cilin.colorReflecEspecR = data["cilindros"][c]["colorReflecEspecR"];
+			cilin.colorReflecEspecG = data["cilindros"][c]["colorReflecEspecG"];
+			cilin.colorReflecEspecB = data["cilindros"][c]["colorReflecEspecB"];
+			cilin.sesibilidad = data["cilindros"][c]["sensibilidad"];
+			this->cilins.push_back(cilin);
+		}
 	}
 
 	for (int tr = 0; tr < data["triangulos"].size(); tr++) {
-		MathVector	vA = { data["triangulos"][tr]["xV1"], data["triangulos"][tr]["yV1"], data["triangulos"][tr]["zV1"] };
-		MathVector  vC = { data["triangulos"][tr]["xV2"], data["triangulos"][tr]["yV2"], data["triangulos"][tr]["zV2"] };
-		MathVector  vB = { data["triangulos"][tr]["xV3"], data["triangulos"][tr]["yV3"], data["triangulos"][tr]["zV3"] };
-		Color col = { data["triangulos"][tr]["r"], data["triangulos"][tr]["g"], data["triangulos"][tr]["b"] };
-		Triangulo* tri = new Triangulo(vA, vB, vC, col);
-		tri->setAtenuacion(data["triangulos"][tr]["atConst"], data["triangulos"][tr]["atLineal"], data["triangulos"][tr]["atCuadr"]);
-		tri->setParametrosEspeculares(data["triangulos"][tr]["esxpReflecEspec"], data["triangulos"][tr]["fracReflecEspec"], { data["triangulos"][tr]["colorReflecEspecR"], data["triangulos"][tr]["colorReflecEspecG"], data["triangulos"][tr]["colorReflecEspecB"] });
+		if (data["triangulos"][tr]["name"] != "ign") {
+			MathVector	vA = { data["triangulos"][tr]["xV1"], data["triangulos"][tr]["yV1"], data["triangulos"][tr]["zV1"] };
+			MathVector  vC = { data["triangulos"][tr]["xV2"], data["triangulos"][tr]["yV2"], data["triangulos"][tr]["zV2"] };
+			MathVector  vB = { data["triangulos"][tr]["xV3"], data["triangulos"][tr]["yV3"], data["triangulos"][tr]["zV3"] };
+			Color col = { data["triangulos"][tr]["r"], data["triangulos"][tr]["g"], data["triangulos"][tr]["b"] };
+			Triangulo* tri = new Triangulo(vA, vB, vC, col);
+			tri->setAtenuacion(data["triangulos"][tr]["atConst"], data["triangulos"][tr]["atLineal"], data["triangulos"][tr]["atCuadr"]);
+			tri->setParametrosEspeculares(data["triangulos"][tr]["esxpReflecEspec"], data["triangulos"][tr]["fracReflecEspec"], { data["triangulos"][tr]["colorReflecEspecR"], data["triangulos"][tr]["colorReflecEspecG"], data["triangulos"][tr]["colorReflecEspecB"] });
 
-		/*data["triangulos"][tr]["Refleccion"];
-		data["triangulos"][tr]["Refraccion"];
-		data["triangulos"][tr]["Transparencia"];
-		data["triangulos"][tr]["sensibilidad"];*/
-		this->paredes.push_back(tri);
+			/*data["triangulos"][tr]["Refleccion"];
+			data["triangulos"][tr]["Refraccion"];
+			data["triangulos"][tr]["Transparencia"];
+			data["triangulos"][tr]["sensibilidad"];*/
+			this->paredes.push_back(tri);
+		}
 	}
 
 	this->ubCam = { data["camara"][0]["x"], data["camara"][0]["y"], data["camara"][0]["z"] };
@@ -217,9 +227,9 @@ int CargaArchivo::getCantLuces()
 	return this->luces.size();
 }
 
-std::vector<float> CargaArchivo::getLuzAmb()
+MathVector CargaArchivo::getLuzAmb()
 {
-	return this->luzAmb;
+	return { this->luzAmb[0] , this->luzAmb[1] , this->luzAmb[2] };
 }
 
 std::vector<Cilinder> CargaArchivo::getCilindros()
