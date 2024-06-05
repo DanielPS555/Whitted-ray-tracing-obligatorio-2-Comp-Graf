@@ -131,51 +131,7 @@ Camara* ejemplo4() {
 }
 
 Camara* ejemplo3() {
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
-
-    Esfera* eferaPrueba1 = new Esfera({ -200,120,100}, 100.0f, {90,180,15});
-    eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
-    eferaPrueba1->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
-    eferaPrueba1->coeficienteReflexion = 0.0f;
-    eferaPrueba1->coeficienteTransparencia = 0.0f;
-
-    Esfera* eferaPrueba2 = new Esfera({ 200,120,100}, 100.0f, { 220,220,220 });
-    eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
-    eferaPrueba1->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
-    eferaPrueba2->coeficienteReflexion = 1.0f;
-    eferaPrueba2->coeficienteTransparencia = 0.0f;
-
-    MathVector v1 = { 800, 0, 0 };
-    MathVector v2 = { -800, 0, 0 };
-    MathVector v3 = { -800, 100, 400 };
-    MathVector v4 = { 800, 100, 400 };
-
-    Triangulo* triangulo1 = new Triangulo(v1,v2,v3, { 0,200,150 });
-    triangulo1->setAtenuacion(0, 0.001, 0.00001f);
-    triangulo1->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
-
-    Triangulo* triangulo2 = new Triangulo(v1, v3, v4, { 0,200,150 });
-    triangulo2->setAtenuacion(0, 0.001, 0.00001f);
-    triangulo2->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
-
-    //eferaPrueba5->sensibilidad_luz_difusa = 0;
-
-
-    Objeto** elementos2 = new Objeto * [5];
-    elementos2[0] = eferaPrueba1;
-    elementos2[1] = eferaPrueba2;
-    elementos2[2] = triangulo1;
-    elementos2[3] = triangulo2;
-
-    ObjetosEscena::getInstancia()->setElementos(4, elementos2);
-    ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
-
-    LuzPuntual* luces = new LuzPuntual[3];
-    luces[0] = { {255.f,    255.f,  255.f}, {0.f   ,500.f,  100.f} };
-    ObjetosEscena::getInstancia()->lucesDifusas = luces;
-    ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
-
-
+   
     CargaArchivo* carga = new CargaArchivo("EscenaEjemplo.json");
 
     Camara* camaraPtr2 = new Camara(carga->getDirACam(), carga->getDirPVCam(), carga->getUbCam());
@@ -230,7 +186,7 @@ int main() {
     int w = (int)ObjetosEscena::getInstancia()->resolucionX;
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
-    Camara* camaraEj = ejemplo1();
+    Camara* camaraEj = ejemplo3();
    
 
     for (int y = 0; y < h; y++) {
