@@ -82,19 +82,25 @@ Camara* ejemplo2() {
 }
 
 Camara* ejemplo4() {
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
 
-    Esfera* eferaPrueba1 = new Esfera({ -200,120,110 }, 100.0f, { 90,180,15 });
+
+    Triangulo* triangulo10 = new Triangulo({100,0,100}, {300,0,100}, {200,240,100}, {255,0,0});
+    triangulo10->setAtenuacion(0, 0.001, 0.00001f);
+    triangulo10->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
+
+    Esfera* eferaPrueba1 = new Esfera({ 270,120,500 }, 50.0f, { 90,180,15 });
     eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
     eferaPrueba1->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
     eferaPrueba1->coeficienteReflexion = 0.0f;
-    eferaPrueba1->coeficienteTransparencia = 0.0f;
+    eferaPrueba1->coeficienteTransparencia = 0.f;
 
     Esfera* eferaPrueba2 = new Esfera({ 200,120,100 }, 100.0f, { 255.f,255.f,255.f});
     eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
     eferaPrueba1->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
-    eferaPrueba2->coeficienteReflexion = 0.7f;
-    eferaPrueba2->coeficienteTransparencia = 0.0f;
+    eferaPrueba2->coeficienteReflexion = 0.0f;
+    eferaPrueba2->coeficienteTransparencia =0.8f;
+
 
     MathVector v1 = { 800, 0, 0 };
     MathVector v2 = { -800, 0, 0 };
@@ -117,8 +123,9 @@ Camara* ejemplo4() {
     elementos[1] = eferaPrueba2;
     elementos[2] = triangulo1;
     elementos[3] = triangulo2;
+    elementos[4] = triangulo10;
 
-    ObjetosEscena::getInstancia()->setElementos(4, elementos);
+    ObjetosEscena::getInstancia()->setElementos(5, elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
 
     LuzPuntual* luces = new LuzPuntual[3];
@@ -230,7 +237,7 @@ int main() {
     int w = (int)ObjetosEscena::getInstancia()->resolucionX;
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
-    Camara* camaraEj = ejemplo1();
+    Camara* camaraEj = ejemplo4();
    
 
     for (int y = 0; y < h; y++) {

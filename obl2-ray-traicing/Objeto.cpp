@@ -145,10 +145,11 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 			MathVector I = normalizar(rayo.dirrecion);
 			MathVector N = normalizar(normal);
 
-			float cosi = fmax(-1.0f, fmin(1.0f, productoEscalar(I, N)));
+			// si el coseno es negativo -> el rayo viene de afuera hacia adentro del objeto.
+			float cosi = productoEscalar(I, N);
 			if (cosi < 0) {
 				cosi = -cosi;
-			}
+			} // si el coseno es positivo -> el rayo viene de adentro del objeto hacia afuera.
 			else {
 				std::swap(n1, n2);
 				N = multiplicarPorEscalar(N, -1);
@@ -166,9 +167,9 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 
 				Color color_t = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
 
-				colorTotal.r += color_t.r * coeficienteTransparencia;
-				colorTotal.g += color_t.g * coeficienteTransparencia;
-				colorTotal.b += color_t.b * coeficienteTransparencia;
+				colorTotal.r += color_t.r * coeficiente_transaccion_corregido;
+				colorTotal.g += color_t.g * coeficiente_transaccion_corregido;
+				colorTotal.b += color_t.b * coeficiente_transaccion_corregido;
 			}
 		}
 	}
