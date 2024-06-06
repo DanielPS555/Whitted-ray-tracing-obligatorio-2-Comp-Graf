@@ -59,14 +59,12 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 
 	// ----- Calculo luz ambiente -----
 
-	Color luzDifusaEspecularAmbiente = { 0.0f, 0.0f, 0.0f };
+	Color luzColorAmbiente = { 0.0f, 0.0f, 0.0f };
+	Color luzColorDifusa = { 0.0f, 0.0f, 0.0f };
+	Color luzColorEspecular = { 0.0f, 0.0f, 0.0f };
 
-	LuzAmbiente luzAmbiente = ObjetosEscena::getInstancia()->luzAmbiente;
-	Color colorConLuzAmbiente = getLuzAmbientePorObjeto(luzAmbiente, colorBase, sensibilidad_luz_ambiente);
-
-	luzDifusaEspecularAmbiente.r = colorConLuzAmbiente.r;
-	luzDifusaEspecularAmbiente.g = colorConLuzAmbiente.g;
-	luzDifusaEspecularAmbiente.b = colorConLuzAmbiente.b;
+	LuzAmbiente luzFuenteAmbiente = ObjetosEscena::getInstancia()->luzAmbiente;
+	luzColorAmbiente = getLuzAmbientePorObjeto(luzFuenteAmbiente, colorBase, sensibilidad_luz_ambiente);
 	
 	// ----- Calculo luz difuza y especular -----
 
@@ -97,22 +95,43 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 		coeficienteEspecular = fmax(coeficienteEspecular, 0.f);
 
 
-		Color luzDifusaYEspecularPorLuz = {
-						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.r / 255.f)) * (colorBase.r * coeficienteDifusa * sensibilidad_luz_difusa + coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.r),
-						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.g / 255.f)) * (colorBase.g * coeficienteDifusa * sensibilidad_luz_difusa + coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.g),
-						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.b / 255.f)) * (colorBase.b * coeficienteDifusa * sensibilidad_luz_difusa + coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.b),
+		Color luzColorDifusaPorLuz = {
+						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.r / 255.f)) * (colorBase.r * coeficienteDifusa * sensibilidad_luz_difusa),
+						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.g / 255.f)) * (colorBase.g * coeficienteDifusa * sensibilidad_luz_difusa),
+						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.b / 255.f)) * (colorBase.b * coeficienteDifusa * sensibilidad_luz_difusa),
 		};
 
-		luzDifusaEspecularAmbiente.r += luzDifusaYEspecularPorLuz.r;
-		luzDifusaEspecularAmbiente.g += luzDifusaYEspecularPorLuz.g;
-		luzDifusaEspecularAmbiente.b += luzDifusaYEspecularPorLuz.b;
+		Color luzColorEspecularPorLuz = {
+						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.r / 255.f)) * (coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.r),
+						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.g / 255.f)) * (coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.g),
+						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.b / 255.f)) * (coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.b),
+		};
+
+		luzColorDifusa.r += luzColorDifusaPorLuz.r;
+		luzColorDifusa.g += luzColorDifusaPorLuz.g;
+		luzColorDifusa.b += luzColorDifusaPorLuz.b;
+
+		luzColorEspecular.r += luzColorEspecularPorLuz.r;
+		luzColorEspecular.g += luzColorEspecularPorLuz.g;
+		luzColorEspecular.b += luzColorEspecularPorLuz.b;
+
 	}
 
-	luzDifusaEspecularAmbiente = corregirColorMaximos(luzDifusaEspecularAmbiente);
+	luzColorAmbiente = corregirColorMaximos(luzColorAmbiente);
+	luzColorDifusa = corregirColorMaximos(luzColorDifusa);
+	luzColorEspecular = corregirColorMaximos(luzColorEspecular);
 
-	colorTotal.r += luzDifusaEspecularAmbiente.r * coeficiente_difusa_especular_corregido;
-	colorTotal.g += luzDifusaEspecularAmbiente.g * coeficiente_difusa_especular_corregido;
-	colorTotal.b += luzDifusaEspecularAmbiente.b * coeficiente_difusa_especular_corregido;
+	colorTotal.r += luzColorAmbiente.r * coeficiente_difusa_especular_corregido;
+	colorTotal.g += luzColorAmbiente.g * coeficiente_difusa_especular_corregido;
+	colorTotal.b += luzColorAmbiente.b * coeficiente_difusa_especular_corregido;
+
+	colorTotal.r += luzColorDifusa.r * coeficiente_difusa_especular_corregido;
+	colorTotal.g += luzColorDifusa.g * coeficiente_difusa_especular_corregido;
+	colorTotal.b += luzColorDifusa.b * coeficiente_difusa_especular_corregido;
+
+	colorTotal.r += luzColorEspecular.r;
+	colorTotal.g += luzColorEspecular.g;
+	colorTotal.b += luzColorEspecular.b;
 
 
 

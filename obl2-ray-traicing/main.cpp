@@ -51,13 +51,13 @@ Camara* ejemplo1() {
 
 
 Camara* ejemplo2() {
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { -1.0f, 0.0f, -1.0f }, { 100.0f, 0.0f, 100.0f });
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { -1.0f, 0.0f, -1.0f }, { 1000.0f, 0.0f, 1000.0f });
 
     Esfera* eferaPrueba1 = new Esfera({ 0,0,0}, 40.0f, { 90,180,15 });
     eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
     eferaPrueba1->setParametrosEspeculares(29, 0.9, {255.f, 0.f, 0.f});
-    eferaPrueba1->coeficienteReflexion = 0.2;
-    eferaPrueba1->coeficienteTransparencia = 0.9;
+    eferaPrueba1->coeficienteReflexion = 0.0;
+    eferaPrueba1->coeficienteTransparencia = 0.0;
 
     Triangulo* triangulo2 = new Triangulo({ -500,-500,-100 }, { 500,-500,-100 }, { 0,500,-100 }, { 255,0,0 });
     triangulo2->setAtenuacion(0, 0.001, 0.00001f);
@@ -72,7 +72,7 @@ Camara* ejemplo2() {
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
 
     LuzPuntual* luces = new LuzPuntual[1];
-    luces[0] = { {200.f,  200.f,  200.f}, {0.f   ,0.f,   200.f} };
+    luces[0] = { {200.f,  200.f,  200.f}, {200.f   ,200.f,   200.f} };
 
     ObjetosEscena::getInstancia()->lucesDifusas = luces;
     ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
@@ -196,7 +196,7 @@ int main() {
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
 
-    Camara* camaraEj = ejemplo3();
+    Camara* camaraEj = ejemplo2();
 
 
     for (int y = 0; y < h; y++) {
