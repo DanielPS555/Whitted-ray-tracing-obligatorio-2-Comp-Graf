@@ -96,6 +96,9 @@
     <ClCompile Include="Color.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
+    <ClCompile Include="objloader.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CargaArchivo.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="Cilindro.h">
       <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+    <ClInclude Include="objloader.h">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
