@@ -155,15 +155,19 @@ Camara* ejemplo3() {
     Camara* camaraPtr2 = new Camara(carga->getDirACam(), carga->getDirPVCam(), carga->getUbCam());
 
     std::vector<Sphear> esferas = carga->getEsferas();
-    std::vector<Objeto*> tris = carga->getPlanos();
+    std::vector<Triangle> tris = carga->getPlanos();
     std::vector<Cilinder> cilins = carga->getCilindros();
-    LuzPuntual* luces2 = carga->getLuces();
+    std::vector<LuzPunt> lucesPunt = carga->getLuces();
     
 
     Objeto** elementos = new Objeto * [esferas.size() + tris.size() + cilins.size()];
 
     for (int t = 0; t < tris.size(); t++) { 
-        elementos[t] = tris[t]; 
+        elementos[t] = new Triangulo(tris[t].V1, tris[t].V2, tris[t].V3, { tris[t].r, tris[t].g, tris[t].b });
+        elementos[t]->setAtenuacion(tris[t].atConst, tris[t].atLineal, tris[t].atCuadr);
+        elementos[t]->setParametrosEspeculares(tris[t].esxpReflecEspec, tris[t].fracReflecEspec, { tris[t].colorReflecEspecR, tris[t].colorReflecEspecG, tris[t].colorReflecEspecB });
+        elementos[t]->coeficienteReflexion = tris[t].Refleccion;
+        elementos[t]->coeficienteTransparencia = tris[t].Transparencia;
     } 
 
     for (int e = 0; e < esferas.size(); e++) { 
@@ -178,10 +182,17 @@ Camara* ejemplo3() {
         elementos[c + esferas.size() + tris.size()] = new Cilindro({ cilins[c].x, cilins[c].y, cilins[c].z }, cilins[c].radio, cilins[c].altura, { cilins[c].r, cilins[c].g, cilins[c].b });
         elementos[c + esferas.size() + tris.size()]->setAtenuacion(cilins[c].atConst, cilins[c].atLineal, cilins[c].atCuadr);
         elementos[c + esferas.size() + tris.size()]->setParametrosEspeculares(cilins[c].esxpReflecEspec, cilins[c].fracReflecEspec, { cilins[c].colorReflecEspecR, cilins[c].colorReflecEspecG, cilins[c].colorReflecEspecB });
+        elementos[c + esferas.size() + tris.size()]->coeficienteReflexion = esferas[c].Refleccion;
+        elementos[c + esferas.size() + tris.size()]->coeficienteTransparencia = esferas[c].Transparencia;
     }
 
     ObjetosEscena::getInstancia()->setElementos(esferas.size() + tris.size() + cilins.size(), elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { carga->getLuzAmb().x, carga->getLuzAmb().y , carga->getLuzAmb().z };
+
+    LuzPuntual* luces2 = new LuzPuntual[lucesPunt.size()];
+    for (int l = 0; l < lucesPunt.size(); l++) {
+        luces2[l] = { {lucesPunt[l].r, lucesPunt[l].g, lucesPunt[l].b}, lucesPunt[l].pos};
+    }
 
     ObjetosEscena::getInstancia()->lucesDifusas = luces2;
     ObjetosEscena::getInstancia()->numeroLucesDifusas = carga->getCantLuces();
@@ -198,16 +209,19 @@ Camara* blancoyNegroTransp() {
     Camara* camaraPtrBNT = new Camara(cargaBNT->getDirACam(), cargaBNT->getDirPVCam(), cargaBNT->getUbCam());
 
     std::vector<Sphear> esferasBNT = cargaBNT->getEsferas();
-    std::vector<Objeto*> trisBNT = cargaBNT->getPlanos();
+    std::vector<Triangle> trisBNT = cargaBNT->getPlanos();
     std::vector<Cilinder> cilinsBNT = cargaBNT->getCilindros();
-    LuzPuntual* lucesBNT = cargaBNT->getLuces();
+    std::vector<LuzPunt> lucesBNT = cargaBNT->getLuces();
 
 
     Objeto** elementosBNT = new Objeto * [esferasBNT.size() + trisBNT.size() + cilinsBNT.size()];
 
     for (int t = 0; t < trisBNT.size(); t++) {
-        elementosBNT[t] = trisBNT[t];
-        elementosBNT[t]->setColorBase({ (trisBNT[t]->indiceTransparencia * 255), (trisBNT[t]->indiceTransparencia * 255), (trisBNT[t]->indiceTransparencia * 255) });
+        elementosBNT[t] = new Triangulo(trisBNT[t].V1, trisBNT[t].V2, trisBNT[t].V3, { trisBNT[t].Transparencia * 255, trisBNT[t].Transparencia * 255, trisBNT[t].Transparencia * 255 });
+        elementosBNT[t]->setAtenuacion(trisBNT[t].atConst, trisBNT[t].atLineal, trisBNT[t].atCuadr);
+        elementosBNT[t]->setParametrosEspeculares(trisBNT[t].esxpReflecEspec, trisBNT[t].fracReflecEspec, { trisBNT[t].colorReflecEspecR, trisBNT[t].colorReflecEspecG, trisBNT[t].colorReflecEspecB });
+        elementosBNT[t]->coeficienteReflexion = trisBNT[t].Refleccion;
+        elementosBNT[t]->coeficienteTransparencia = trisBNT[t].Transparencia;
     }
 
     for (int e = 0; e < esferasBNT.size(); e++) {
@@ -222,12 +236,19 @@ Camara* blancoyNegroTransp() {
         elementosBNT[c + esferasBNT.size() + trisBNT.size()] = new Cilindro({ cilinsBNT[c].x, cilinsBNT[c].y, cilinsBNT[c].z }, cilinsBNT[c].radio, cilinsBNT[c].altura, { (cilinsBNT[c].Transparencia * 255), (cilinsBNT[c].Transparencia * 255), (cilinsBNT[c].Transparencia * 255) });
         elementosBNT[c + esferasBNT.size() + trisBNT.size()]->setAtenuacion(cilinsBNT[c].atConst, cilinsBNT[c].atLineal, cilinsBNT[c].atCuadr);
         elementosBNT[c + esferasBNT.size() + trisBNT.size()]->setParametrosEspeculares(cilinsBNT[c].esxpReflecEspec, cilinsBNT[c].fracReflecEspec, { cilinsBNT[c].colorReflecEspecR, cilinsBNT[c].colorReflecEspecG, cilinsBNT[c].colorReflecEspecB });
+        //elementosBNT[c + esferasBNT.size() + trisBNT.size()]->coeficienteReflexion = cilinsBNT[c].Refleccion;
+        //elementosBNT[c + esferasBNT.size() + trisBNT.size()]->coeficienteTransparencia = cilinsBNT[c].Transparencia;
     }
 
     ObjetosEscena::getInstancia()->setElementos(esferasBNT.size() + trisBNT.size() + cilinsBNT.size(), elementosBNT);
     ObjetosEscena::getInstancia()->luzAmbiente = { cargaBNT->getLuzAmb().x, cargaBNT->getLuzAmb().y , cargaBNT->getLuzAmb().z };
 
-    ObjetosEscena::getInstancia()->lucesDifusas = lucesBNT;
+
+    LuzPuntual* lucesBNT2 = new LuzPuntual[lucesBNT.size()];
+    for (int l = 0; l < lucesBNT.size(); l++) {
+        lucesBNT2[l] = { {lucesBNT[l].r, lucesBNT[l].g, lucesBNT[l].b}, lucesBNT[l].pos };
+    }
+    ObjetosEscena::getInstancia()->lucesDifusas = lucesBNT2;
     ObjetosEscena::getInstancia()->numeroLucesDifusas = cargaBNT->getCantLuces();
 
 
@@ -242,36 +263,46 @@ Camara* blancoyNegroRef() {
     Camara* camaraPtrBNR = new Camara(cargaBNR->getDirACam(), cargaBNR->getDirPVCam(), cargaBNR->getUbCam());
 
     std::vector<Sphear> esferasBNR = cargaBNR->getEsferas();
-    std::vector<Objeto*> trisBNR = cargaBNR->getPlanos();
+    std::vector<Triangle> trisBNR = cargaBNR->getPlanos();
     std::vector<Cilinder> cilinsBNR = cargaBNR->getCilindros();
-    LuzPuntual* lucesBNR = cargaBNR->getLuces();
+    std::vector<LuzPunt> lucesBNR = cargaBNR->getLuces();
 
 
     Objeto** elementosBNR = new Objeto * [esferasBNR.size() + trisBNR.size() + cilinsBNR.size()];
 
     for (int t = 0; t < trisBNR.size(); t++) {
-        elementosBNR[t] = trisBNR[t];
-        elementosBNR[t]->setColorBase({ trisBNR[t]->indiceTransparencia * 255, trisBNR[t]->indiceTransparencia * 255 , trisBNR[t]->indiceTransparencia * 255 });
+        elementosBNR[t] = new Triangulo(trisBNR[t].V1, trisBNR[t].V2, trisBNR[t].V3, { trisBNR[t].Refleccion * 255, trisBNR[t].Refleccion * 255, trisBNR[t].Refleccion * 255 });
+        elementosBNR[t]->setAtenuacion(trisBNR[t].atConst, trisBNR[t].atLineal, trisBNR[t].atCuadr);
+        elementosBNR[t]->setParametrosEspeculares(trisBNR[t].esxpReflecEspec, trisBNR[t].fracReflecEspec, { trisBNR[t].colorReflecEspecR, trisBNR[t].colorReflecEspecG, trisBNR[t].colorReflecEspecB });
+        //elementosBNR[t]->coeficienteReflexion = trisBNR[t].Refleccion;
+        //elementosBNR[t]->coeficienteTransparencia = trisBNR[t].Transparencia;
     }
 
     for (int e = 0; e < esferasBNR.size(); e++) {
         elementosBNR[e + trisBNR.size()] = new Esfera({ esferasBNR[e].x, esferasBNR[e].y, esferasBNR[e].z }, esferasBNR[e].radio, { esferasBNR[e].Transparencia * 255, esferasBNR[e].Transparencia * 255, esferasBNR[e].Transparencia * 255 });
         elementosBNR[e + trisBNR.size()]->setAtenuacion(esferasBNR[e].atConst, esferasBNR[e].atLineal, esferasBNR[e].atCuadr);
         elementosBNR[e + trisBNR.size()]->setParametrosEspeculares(esferasBNR[e].esxpReflecEspec, esferasBNR[e].fracReflecEspec, { esferasBNR[e].colorReflecEspecR, esferasBNR[e].colorReflecEspecG, esferasBNR[e].colorReflecEspecB });
-        elementosBNR[e + trisBNR.size()]->coeficienteReflexion = esferasBNR[e].Refleccion;
-        elementosBNR[e + trisBNR.size()]->coeficienteTransparencia = esferasBNR[e].Transparencia;
+        //elementosBNR[e + trisBNR.size()]->coeficienteReflexion = esferasBNR[e].Refleccion;
+        //elementosBNR[e + trisBNR.size()]->coeficienteTransparencia = esferasBNR[e].Transparencia;
     }
 
     for (int c = 0; c < cilinsBNR.size(); c++) {
         elementosBNR[c + esferasBNR.size() + trisBNR.size()] = new Cilindro({ cilinsBNR[c].x, cilinsBNR[c].y, cilinsBNR[c].z }, cilinsBNR[c].radio, cilinsBNR[c].altura, { cilinsBNR[c].Transparencia * 255, cilinsBNR[c].Transparencia * 255, cilinsBNR[c].Transparencia * 255 });
         elementosBNR[c + esferasBNR.size() + trisBNR.size()]->setAtenuacion(cilinsBNR[c].atConst, cilinsBNR[c].atLineal, cilinsBNR[c].atCuadr);
         elementosBNR[c + esferasBNR.size() + trisBNR.size()]->setParametrosEspeculares(cilinsBNR[c].esxpReflecEspec, cilinsBNR[c].fracReflecEspec, { cilinsBNR[c].colorReflecEspecR, cilinsBNR[c].colorReflecEspecG, cilinsBNR[c].colorReflecEspecB });
+        //elementosBNR[c + esferasBNR.size() + trisBNR.size()]->coeficienteReflexion = cilinsBNR[c].Refleccion;
+        //elementosBNR[c + esferasBNR.size() + trisBNR.size()]->coeficienteTransparencia = cilinsBNR[c].Transparencia;
     }
 
     ObjetosEscena::getInstancia()->setElementos(esferasBNR.size() + trisBNR.size() + cilinsBNR.size(), elementosBNR);
     ObjetosEscena::getInstancia()->luzAmbiente = { cargaBNR->getLuzAmb().x, cargaBNR->getLuzAmb().y , cargaBNR->getLuzAmb().z };
 
-    ObjetosEscena::getInstancia()->lucesDifusas = lucesBNR;
+
+    LuzPuntual* lucesBNR2 = new LuzPuntual[lucesBNR.size()];
+    for (int l = 0; l < lucesBNR.size(); l++) {
+        lucesBNR2[l] = { {lucesBNR[l].r, lucesBNR[l].g, lucesBNR[l].b}, lucesBNR[l].pos };
+    }
+    ObjetosEscena::getInstancia()->lucesDifusas = lucesBNR2;
     ObjetosEscena::getInstancia()->numeroLucesDifusas = cargaBNR->getCantLuces();
 
 
@@ -293,7 +324,7 @@ int main() {
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
 
-    Camara* camaraEj = blancoyNegroTransp();
+    Camara* camaraEj = ejemplo3();
 
 
     for (int y = 0; y < h; y++) {

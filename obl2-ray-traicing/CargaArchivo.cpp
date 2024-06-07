@@ -116,16 +116,24 @@ CargaArchivo::CargaArchivo(std::string file)
 
 	for (int tr = 0; tr < data["triangulos"].size(); tr++) {
 		if (data["triangulos"][tr]["name"] != "ign") {
-			MathVector	vA = { data["triangulos"][tr]["xV1"], data["triangulos"][tr]["yV1"], data["triangulos"][tr]["zV1"] };
-			MathVector  vC = { data["triangulos"][tr]["xV2"], data["triangulos"][tr]["yV2"], data["triangulos"][tr]["zV2"] };
-			MathVector  vB = { data["triangulos"][tr]["xV3"], data["triangulos"][tr]["yV3"], data["triangulos"][tr]["zV3"] };
-			Color col = { data["triangulos"][tr]["r"], data["triangulos"][tr]["g"], data["triangulos"][tr]["b"] };
-			Triangulo* tri = new Triangulo(vA, vB, vC, col);
-			tri->setAtenuacion(data["triangulos"][tr]["atConst"], data["triangulos"][tr]["atLineal"], data["triangulos"][tr]["atCuadr"]);
-			tri->setParametrosEspeculares(data["triangulos"][tr]["esxpReflecEspec"], data["triangulos"][tr]["fracReflecEspec"], { data["triangulos"][tr]["colorReflecEspecR"], data["triangulos"][tr]["colorReflecEspecG"], data["triangulos"][tr]["colorReflecEspecB"] });
-			tri->coeficienteReflexion = data["triangulos"][tr]["Refleccion"];
+			Triangle tri;
+			tri.V1 = { data["triangulos"][tr]["xV1"], data["triangulos"][tr]["yV1"], data["triangulos"][tr]["zV1"] };
+			tri.V2 = { data["triangulos"][tr]["xV2"], data["triangulos"][tr]["yV2"], data["triangulos"][tr]["zV2"] };
+			tri.V3 = { data["triangulos"][tr]["xV3"], data["triangulos"][tr]["yV3"], data["triangulos"][tr]["zV3"] };
+			tri.r = data["triangulos"][tr]["r"];
+			tri.g = data["triangulos"][tr]["g"];
+			tri.b = data["triangulos"][tr]["b"];
+			tri.atConst = data["triangulos"][tr]["atConst"];
+			tri.atLineal = data["triangulos"][tr]["atLineal"];
+			tri.atCuadr = data["triangulos"][tr]["atCuadr"];
+			tri.esxpReflecEspec = data["triangulos"][tr]["esxpReflecEspec"];
+			tri.fracReflecEspec = data["triangulos"][tr]["fracReflecEspec"];
+			tri.colorReflecEspecR = data["triangulos"][tr]["colorReflecEspecR"]; 
+			tri.colorReflecEspecG = data["triangulos"][tr]["colorReflecEspecG"];
+			tri.colorReflecEspecB = data["triangulos"][tr]["colorReflecEspecB"];
+			tri.Refleccion = data["triangulos"][tr]["Refleccion"];
 			//data["triangulos"][tr]["Refraccion"];
-			tri->coeficienteTransparencia = data["triangulos"][tr]["Transparencia"];
+			tri.Transparencia = data["triangulos"][tr]["Transparencia"];
 			//data["triangulos"][tr]["sensibilidad"];
 			this->paredes.push_back(tri);
 		}
@@ -141,9 +149,11 @@ CargaArchivo::CargaArchivo(std::string file)
 	this->luzAmb.push_back(data["luzAmbiente"][0]["intb"]);
 
 	for (int l = 0; l < data["lucesPuntuales"].size(); l++) {
-		LuzPuntual lp;
-		lp.intensidad = { data["lucesPuntuales"][l]["intr"], data["lucesPuntuales"][l]["intg"], data["lucesPuntuales"][l]["intb"]};
-		lp.posicion = { data["lucesPuntuales"][l]["posX"], data["lucesPuntuales"][l]["posY"], data["lucesPuntuales"][l]["posZ"]};
+		LuzPunt lp;
+		lp.r = data["lucesPuntuales"][l]["intr"]; 
+		lp.g = data["lucesPuntuales"][l]["intg"]; 
+		lp.b = data["lucesPuntuales"][l]["intb"];
+		lp.pos = { data["lucesPuntuales"][l]["posX"], data["lucesPuntuales"][l]["posY"], data["lucesPuntuales"][l]["posZ"]};
 		this->luces.push_back(lp);
 	}
 
@@ -174,7 +184,7 @@ std::vector<Sphear> CargaArchivo::getEsferas()
 	return this->sphears;
 }
 
-std::vector<Objeto*> CargaArchivo::getPlanos()
+std::vector<Triangle> CargaArchivo::getPlanos()
 {
 	for (int t = 0; t < this->cuarto.size(); t++) {
 		MathVector v0, v1, v2, v3;
@@ -194,13 +204,35 @@ std::vector<Objeto*> CargaArchivo::getPlanos()
 			v2 = { this->cuarto[t].x, this->cuarto[t].y + this->cuarto[t].ancho, this->cuarto[t].z};
 			v3 = { this->cuarto[t].x, this->cuarto[t].y + this->cuarto[t].ancho, this->cuarto[t].z + this->cuarto[t].altura};
 		}
-		Color c = { this->cuarto[t].r, this->cuarto[t].g, this->cuarto[t].b };
-		Triangulo* t1 = new Triangulo(v0, v1, v2, c);
-		Triangulo* t2 = new Triangulo(v3, v1, v2, c);
-		t1->setAtenuacion(this->cuarto[t].atConst, this->cuarto[t].atLineal, this->cuarto[t].atCuadr);
-		t1->setParametrosEspeculares(this->cuarto[t].esxpReflecEspec, this->cuarto[t].fracReflecEspec, {this->cuarto[t].colorReflecEspecR, this->cuarto[t].colorReflecEspecG, this->cuarto[t].colorReflecEspecB });
-		t2->setAtenuacion(this->cuarto[t].atConst, this->cuarto[t].atLineal, this->cuarto[t].atCuadr);
-		t2->setParametrosEspeculares(this->cuarto[t].esxpReflecEspec, this->cuarto[t].fracReflecEspec, { this->cuarto[t].colorReflecEspecR, this->cuarto[t].colorReflecEspecG, this->cuarto[t].colorReflecEspecB });
+		Triangle t1, t2;
+		t1.V1 = v0; 
+		t1.V2 = v1; 
+		t1.V3 = v2; 
+		t2.V1 = v3; 
+		t2.V2 = v1; 
+		t2.V3 = v2; 
+		t1.r = this->cuarto[t].r; 
+		t1.g = this->cuarto[t].g; 
+		t1.b = this->cuarto[t].b;
+		t2.r = this->cuarto[t].r; 
+		t2.g = this->cuarto[t].g; 
+		t2.b = this->cuarto[t].b; 
+		t1.atConst = this->cuarto[t].atConst; 
+		t1.atLineal = this->cuarto[t].atLineal; 
+		t1.atCuadr = this->cuarto[t].atCuadr;
+		t2.atConst = this->cuarto[t].atConst;
+		t2.atLineal = this->cuarto[t].atLineal;
+		t2.atCuadr = this->cuarto[t].atCuadr;
+		t1.esxpReflecEspec = this->cuarto[t].esxpReflecEspec; 
+		t1.fracReflecEspec = this->cuarto[t].fracReflecEspec;
+		t1.colorReflecEspecR = this->cuarto[t].colorReflecEspecR; 
+		t1.colorReflecEspecG = this->cuarto[t].colorReflecEspecG; 
+		t1.colorReflecEspecB = this->cuarto[t].colorReflecEspecB;
+		t2.esxpReflecEspec = this->cuarto[t].esxpReflecEspec;
+		t2.fracReflecEspec = this->cuarto[t].fracReflecEspec;
+		t2.colorReflecEspecR = this->cuarto[t].colorReflecEspecR;
+		t2.colorReflecEspecG = this->cuarto[t].colorReflecEspecG;
+		t2.colorReflecEspecB = this->cuarto[t].colorReflecEspecB;
 		this->paredes.push_back(t1);
 		this->paredes.push_back(t2);
 	}
@@ -212,13 +244,9 @@ std::vector<Rectangulo> CargaArchivo::getPrismas()
 	return this->rects;
 }
 
-LuzPuntual* CargaArchivo::getLuces()
+std::vector<LuzPunt> CargaArchivo::getLuces()
 {	
-	LuzPuntual* lucesPunt = new LuzPuntual[luces.size()];
-	for (int l = 0; l < luces.size(); l++) {
-		lucesPunt[l] = this->luces[l];
-	}
-	return lucesPunt;
+	return this->luces;
 }
 
 int CargaArchivo::getCantLuces()

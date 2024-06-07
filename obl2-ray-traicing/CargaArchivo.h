@@ -107,15 +107,9 @@ struct Cilinder
 
 
 struct Triangle {
-	float xV1;
-	float yV1;
-	float zV1;
-	float xV2;
-	float yV2;
-	float zV2;
-	float xV3;
-	float yV3;
-	float zV3;
+	MathVector V1;
+	MathVector V2;
+	MathVector V3;
 	float r;
 	float g;
 	float b;
@@ -134,19 +128,26 @@ struct Triangle {
 	float sesibilidad;
 };
 
+struct LuzPunt {
+	MathVector pos;
+	float r;
+	float g;
+	float b;
+};
+
 class CargaArchivo
 {
 	private:
 
 		json data;
-		std::vector<Objeto*> paredes;
+		std::vector<Triangle> paredes;
 		std::vector<Plano> cuarto;
 		std::vector<Rectangulo> rects;
 		std::vector<Sphear> sphears;
 		std::vector<Cilinder> cilins;
 		MathVector dirACam, dirPVCam, ubCam;
 		std::vector<float> luzAmb;
-		std::vector<LuzPuntual> luces;
+		std::vector<LuzPunt> luces;
 		int resolucion;
 
 	public:
@@ -163,11 +164,11 @@ class CargaArchivo
 
 		std::vector<Sphear> getEsferas();
 
-		std::vector<Objeto*> getPlanos();
+		std::vector<Triangle> getPlanos();
 
 		std::vector<Rectangulo> getPrismas();
 
-		LuzPuntual* getLuces();
+		std::vector<LuzPunt> getLuces();
 		int getCantLuces();
 
 		MathVector getLuzAmb();
