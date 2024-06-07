@@ -12,8 +12,19 @@
 #include "CargaArchivo.h"
 #include "Cilindro.h"
 #include "Triangulo.h"
+#include "objloader.h"
+#include "glm/glm.hpp"
+
+
 
 Camara* ejemplo1() {
+
+    std::vector<unsigned short> indices;
+    std::vector<glm::vec3> verticess;
+    std::vector<glm::vec2> uvs;
+    std::vector<glm::vec3> normals;
+    loadAssImp("assets/b.obj", indices, verticess, uvs, normals);
+
     Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
 
     Esfera* eferaPrueba1 = new Esfera({ 250,250,500 }, 200.0f, { 90,180,15 });
