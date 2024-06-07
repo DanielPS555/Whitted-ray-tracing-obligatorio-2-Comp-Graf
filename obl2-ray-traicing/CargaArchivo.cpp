@@ -123,11 +123,10 @@ CargaArchivo::CargaArchivo(std::string file)
 			Triangulo* tri = new Triangulo(vA, vB, vC, col);
 			tri->setAtenuacion(data["triangulos"][tr]["atConst"], data["triangulos"][tr]["atLineal"], data["triangulos"][tr]["atCuadr"]);
 			tri->setParametrosEspeculares(data["triangulos"][tr]["esxpReflecEspec"], data["triangulos"][tr]["fracReflecEspec"], { data["triangulos"][tr]["colorReflecEspecR"], data["triangulos"][tr]["colorReflecEspecG"], data["triangulos"][tr]["colorReflecEspecB"] });
-
-			/*data["triangulos"][tr]["Refleccion"];
-			data["triangulos"][tr]["Refraccion"];
-			data["triangulos"][tr]["Transparencia"];
-			data["triangulos"][tr]["sensibilidad"];*/
+			tri->coeficienteReflexion = data["triangulos"][tr]["Refleccion"];
+			//data["triangulos"][tr]["Refraccion"];
+			tri->coeficienteTransparencia = data["triangulos"][tr]["Transparencia"];
+			//data["triangulos"][tr]["sensibilidad"];
 			this->paredes.push_back(tri);
 		}
 	}
