@@ -88,5 +88,26 @@ Color Triangulo::getColor(Rayo rayo, float t,int profundidad){
 }
 
 MathVector Triangulo::getNormal(MathVector punto) {
-    return vectorNormalV0; //ToDo Pendiente
+
+    MathVector u0 = restar(v1, v0);
+    MathVector u1 = restar(v2, v0);
+    MathVector u2 = restar(punto, v0);
+
+    float dot00 = productoEscalar(u0, u0);
+    float dot01 = productoEscalar(u0, u1);
+    float dot11 = productoEscalar(u1, u1);
+    float dot02 = productoEscalar(u0, u2);
+    float dot12 = productoEscalar(u1, u2);
+
+    double invD = 1.0 / (dot00 * dot11 - dot01 * dot01);
+
+    float lambdav2 = (dot00 * dot12 - dot01 * dot02) * invD;
+    float lambdav1 = (dot11 * dot02 - dot01 * dot12) * invD;
+    float lambdav0 = 1.0f - lambdav1 - lambdav2;
+
+    MathVector n0_b = multiplicarPorEscalar(vectorNormalV0, lambdav0);
+    MathVector n1_b = multiplicarPorEscalar(vectorNormalV1, lambdav1);
+    MathVector n2_b = multiplicarPorEscalar(vectorNormalV2, lambdav2);
+
+    return sumar(n0_b, sumar(n1_b, n2_b));
 }
