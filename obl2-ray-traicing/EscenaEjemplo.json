@@ -109,7 +109,7 @@
 
   "triangulos": [
     {
-      "name": "tri",
+      "name": "ign",
       "xV1": 0,
       "yV1": 0,
       "zV1": 0,
@@ -174,8 +174,8 @@
       "r": 234,
       "g": 195,
       "b": 184,
-      "Transparencia": 0.80,
-      "Refleccion": 0.20,
+      "Transparencia": 0.30,
+      "Refleccion": 0.10,
       "Refraccion": 0,
       "atConst": 0,
       "atLineal": 0.01,
@@ -218,11 +218,11 @@
       "altura": 33,
       "x": 80,
       "y": 110,
-      "z": 44,
+      "z": 60,
       "r": 0,
       "g": 222,
       "b": 0,
-      "Transparencia": 0.20,
+      "Transparencia": 0.01,
       "Refleccion": 0,
       "Refraccion": 0,
       "atConst": 0,

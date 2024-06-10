@@ -13,7 +13,7 @@ Cilindro::Cilindro(MathVector centro, float radio, float altura, Color color)
 float Cilindro::intersepcion(Rayo rayo)
 {
 	/*
-	La ecuacion de la esfera es asi:
+	La ecuacion del cilindro es asi:
 		(x - c_x)^2 + (y - c_y)^2 = r^2, con altura > z > centro.z
 
 		Utilizando  x = x_0 + t*v_x (notar que x_0 es la posicion del pixel en el frame)
@@ -42,9 +42,9 @@ float Cilindro::intersepcion(Rayo rayo)
 	float c = powf(rayo.puntoAnclaje.x - centro.x, 2)
 		+ powf(rayo.puntoAnclaje.y - centro.y, 2)
 		- powf(radio, 2);
-
-	if (((rayo.dirrecion.z + rayo.puntoAnclaje.z) <= (centro.z + altura)) && ((rayo.dirrecion.z + rayo.puntoAnclaje.z) >= centro.z)) {
-		return obtenerMenorRaizPositivaBhaskara(a, b, c);
+	float t = obtenerMenorRaizPositivaBhaskara(a, b, c);
+	if ((((rayo.dirrecion.z * t) + rayo.puntoAnclaje.z) <= (centro.z + altura)) && (((rayo.dirrecion.z * t) + rayo.puntoAnclaje.z) >= centro.z)) {
+		return t;
 	}
 	else {
 		return -1;
