@@ -20,7 +20,7 @@ FIBITMAP* crearImagenVacia(int width,int height) {
     return bitmap;
 }
 
-void guardarImagen(FIBITMAP* bitmap) {
+void guardarImagen(FIBITMAP* bitmap, std::string sufix_nombre) {
     //-----GUARDAR IMAGEN GENERADA-----
     std::string filename = "generadas/" + getCurrentDateTime() + ".png";
     if (FreeImage_Save(FIF_PNG, bitmap, filename.c_str(), 0)) {
