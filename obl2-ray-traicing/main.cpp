@@ -255,142 +255,70 @@ Camara* ejemplo3() {
 }
 
 
-Camara* blancoyNegroTransp() {
-
-    CargaArchivo* cargaBNT = new CargaArchivo("MetaDatas.json");
-
-    Camara* camaraPtrBNT = new Camara(cargaBNT->getDirACam(), cargaBNT->getDirPVCam(), cargaBNT->getUbCam());
-
-    std::vector<Sphear> esferasBNT = cargaBNT->getEsferas();
-    std::vector<Triangle> trisBNT = cargaBNT->getPlanos();
-    std::vector<Cilinder> cilinsBNT = cargaBNT->getCilindros();
-    std::vector<LuzPunt> lucesBNT = cargaBNT->getLuces();
-
-
-    Objeto** elementosBNT = new Objeto * [esferasBNT.size() + trisBNT.size() + cilinsBNT.size()];
-
-    for (int t = 0; t < trisBNT.size(); t++) {
-        elementosBNT[t] = new Triangulo(trisBNT[t].V1, trisBNT[t].V2, trisBNT[t].V3, { trisBNT[t].Transparencia * 255, trisBNT[t].Transparencia * 255, trisBNT[t].Transparencia * 255 });
-        elementosBNT[t]->setAtenuacion(trisBNT[t].atConst, trisBNT[t].atLineal, trisBNT[t].atCuadr);
-        elementosBNT[t]->setParametrosEspeculares(trisBNT[t].esxpReflecEspec, trisBNT[t].fracReflecEspec, { trisBNT[t].colorReflecEspecR, trisBNT[t].colorReflecEspecG, trisBNT[t].colorReflecEspecB });
-        elementosBNT[t]->coeficienteReflexion = trisBNT[t].Refleccion;
-        elementosBNT[t]->coeficienteTransparencia = trisBNT[t].Transparencia;
-    }
-
-    for (int e = 0; e < esferasBNT.size(); e++) {
-        elementosBNT[e + trisBNT.size()] = new Esfera({ esferasBNT[e].x, esferasBNT[e].y, esferasBNT[e].z }, esferasBNT[e].radio, { (esferasBNT[e].Transparencia * 255), (esferasBNT[e].Transparencia * 255), (esferasBNT[e].Transparencia * 255) });
-        //elementosBNT[e + trisBNT.size()]->setAtenuacion(esferasBNT[e].atConst, esferasBNT[e].atLineal, esferasBNT[e].atCuadr);
-        //elementosBNT[e + trisBNT.size()]->setParametrosEspeculares(esferasBNT[e].esxpReflecEspec, esferasBNT[e].fracReflecEspec, { esferasBNT[e].colorReflecEspecR, esferasBNT[e].colorReflecEspecG, esferasBNT[e].colorReflecEspecB });
-        //elementosBNT[e + trisBNT.size()]->coeficienteReflexion = esferasBNT[e].Refleccion;
-        //elementosBNT[e + trisBNT.size()]->coeficienteTransparencia = esferasBNT[e].Transparencia;
-    }
-
-    for (int c = 0; c < cilinsBNT.size(); c++) {
-        elementosBNT[c + esferasBNT.size() + trisBNT.size()] = new Cilindro({ cilinsBNT[c].x, cilinsBNT[c].y, cilinsBNT[c].z }, cilinsBNT[c].radio, cilinsBNT[c].altura, { (cilinsBNT[c].Transparencia * 255), (cilinsBNT[c].Transparencia * 255), (cilinsBNT[c].Transparencia * 255) });
-        elementosBNT[c + esferasBNT.size() + trisBNT.size()]->setAtenuacion(cilinsBNT[c].atConst, cilinsBNT[c].atLineal, cilinsBNT[c].atCuadr);
-        elementosBNT[c + esferasBNT.size() + trisBNT.size()]->setParametrosEspeculares(cilinsBNT[c].esxpReflecEspec, cilinsBNT[c].fracReflecEspec, { cilinsBNT[c].colorReflecEspecR, cilinsBNT[c].colorReflecEspecG, cilinsBNT[c].colorReflecEspecB });
-        //elementosBNT[c + esferasBNT.size() + trisBNT.size()]->coeficienteReflexion = cilinsBNT[c].Refleccion;
-        //elementosBNT[c + esferasBNT.size() + trisBNT.size()]->coeficienteTransparencia = cilinsBNT[c].Transparencia;
-    }
-
-    ObjetosEscena::getInstancia()->setElementos(esferasBNT.size() + trisBNT.size() + cilinsBNT.size(), elementosBNT);
-    ObjetosEscena::getInstancia()->luzAmbiente = { cargaBNT->getLuzAmb().x, cargaBNT->getLuzAmb().y , cargaBNT->getLuzAmb().z };
-
-
-    LuzPuntual* lucesBNT2 = new LuzPuntual[lucesBNT.size()];
-    for (int l = 0; l < lucesBNT.size(); l++) {
-        lucesBNT2[l] = { {lucesBNT[l].r, lucesBNT[l].g, lucesBNT[l].b}, lucesBNT[l].pos };
-    }
-    ObjetosEscena::getInstancia()->lucesDifusas = lucesBNT2;
-    ObjetosEscena::getInstancia()->numeroLucesDifusas = cargaBNT->getCantLuces();
-
-
-    return camaraPtrBNT;
-
-}
-
-Camara* blancoyNegroRef() {
-
-    CargaArchivo* cargaBNR = new CargaArchivo("MetaDatas.json");
-
-    Camara* camaraPtrBNR = new Camara(cargaBNR->getDirACam(), cargaBNR->getDirPVCam(), cargaBNR->getUbCam());
-
-    std::vector<Sphear> esferasBNR = cargaBNR->getEsferas();
-    std::vector<Triangle> trisBNR = cargaBNR->getPlanos();
-    std::vector<Cilinder> cilinsBNR = cargaBNR->getCilindros();
-    std::vector<LuzPunt> lucesBNR = cargaBNR->getLuces();
-
-
-    Objeto** elementosBNR = new Objeto * [esferasBNR.size() + trisBNR.size() + cilinsBNR.size()];
-
-    for (int t = 0; t < trisBNR.size(); t++) {
-        elementosBNR[t] = new Triangulo(trisBNR[t].V1, trisBNR[t].V2, trisBNR[t].V3, { trisBNR[t].Refleccion * 255, trisBNR[t].Refleccion * 255, trisBNR[t].Refleccion * 255 });
-        elementosBNR[t]->setAtenuacion(trisBNR[t].atConst, trisBNR[t].atLineal, trisBNR[t].atCuadr);
-        elementosBNR[t]->setParametrosEspeculares(trisBNR[t].esxpReflecEspec, trisBNR[t].fracReflecEspec, { trisBNR[t].colorReflecEspecR, trisBNR[t].colorReflecEspecG, trisBNR[t].colorReflecEspecB });
-        elementosBNR[t]->coeficienteReflexion = trisBNR[t].Refleccion;
-        elementosBNR[t]->coeficienteTransparencia = trisBNR[t].Transparencia;
-    }
-
-    for (int e = 0; e < esferasBNR.size(); e++) {
-        elementosBNR[e + trisBNR.size()] = new Esfera({ esferasBNR[e].x, esferasBNR[e].y, esferasBNR[e].z }, esferasBNR[e].radio, { esferasBNR[e].Transparencia * 255, esferasBNR[e].Transparencia * 255, esferasBNR[e].Transparencia * 255 });
-        elementosBNR[e + trisBNR.size()]->setAtenuacion(esferasBNR[e].atConst, esferasBNR[e].atLineal, esferasBNR[e].atCuadr);
-        elementosBNR[e + trisBNR.size()]->setParametrosEspeculares(esferasBNR[e].esxpReflecEspec, esferasBNR[e].fracReflecEspec, { esferasBNR[e].colorReflecEspecR, esferasBNR[e].colorReflecEspecG, esferasBNR[e].colorReflecEspecB });
-        elementosBNR[e + trisBNR.size()]->coeficienteReflexion = esferasBNR[e].Refleccion;
-        elementosBNR[e + trisBNR.size()]->coeficienteTransparencia = esferasBNR[e].Transparencia;
-    }
-
-    for (int c = 0; c < cilinsBNR.size(); c++) {
-        elementosBNR[c + esferasBNR.size() + trisBNR.size()] = new Cilindro({ cilinsBNR[c].x, cilinsBNR[c].y, cilinsBNR[c].z }, cilinsBNR[c].radio, cilinsBNR[c].altura, { cilinsBNR[c].Transparencia * 255, cilinsBNR[c].Transparencia * 255, cilinsBNR[c].Transparencia * 255 });
-        elementosBNR[c + esferasBNR.size() + trisBNR.size()]->setAtenuacion(cilinsBNR[c].atConst, cilinsBNR[c].atLineal, cilinsBNR[c].atCuadr);
-        elementosBNR[c + esferasBNR.size() + trisBNR.size()]->setParametrosEspeculares(cilinsBNR[c].esxpReflecEspec, cilinsBNR[c].fracReflecEspec, { cilinsBNR[c].colorReflecEspecR, cilinsBNR[c].colorReflecEspecG, cilinsBNR[c].colorReflecEspecB });
-        elementosBNR[c + esferasBNR.size() + trisBNR.size()]->coeficienteReflexion = cilinsBNR[c].Refleccion;
-        elementosBNR[c + esferasBNR.size() + trisBNR.size()]->coeficienteTransparencia = cilinsBNR[c].Transparencia;
-    }
-
-    ObjetosEscena::getInstancia()->setElementos(esferasBNR.size() + trisBNR.size() + cilinsBNR.size(), elementosBNR);
-    ObjetosEscena::getInstancia()->luzAmbiente = { cargaBNR->getLuzAmb().x, cargaBNR->getLuzAmb().y , cargaBNR->getLuzAmb().z };
-
-
-    LuzPuntual* lucesBNR2 = new LuzPuntual[lucesBNR.size()];
-    for (int l = 0; l < lucesBNR.size(); l++) {
-        lucesBNR2[l] = { {lucesBNR[l].r, lucesBNR[l].g, lucesBNR[l].b}, lucesBNR[l].pos };
-    }
-    ObjetosEscena::getInstancia()->lucesDifusas = lucesBNR2;
-    ObjetosEscena::getInstancia()->numeroLucesDifusas = cargaBNR->getCantLuces();
-
-
-    return camaraPtrBNR;
-
-}
-
 
 
 // Main function
 int main() {
-    ObjetosEscena::getInstancia()->resolucionX = 600.f;
+    ObjetosEscena::getInstancia()->resolucionX = 1000.f;
     ObjetosEscena::getInstancia()->resolucionY =  600.f;
 
     FIBITMAP* bitmap = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
+        ObjetosEscena::getInstancia()->resolucionY);
+
+    FIBITMAP* bitmapTrans = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
+        ObjetosEscena::getInstancia()->resolucionY);
+
+    FIBITMAP* bitmapRef = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
+        ObjetosEscena::getInstancia()->resolucionY);
+
+    FIBITMAP* bitmapAmb = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
+        ObjetosEscena::getInstancia()->resolucionY);
+
+    FIBITMAP* bitmapEspec = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
+        ObjetosEscena::getInstancia()->resolucionY);
+
+    FIBITMAP* bitmapDif = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
         ObjetosEscena::getInstancia()->resolucionY);
 
     int w = (int)ObjetosEscena::getInstancia()->resolucionX;
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
 
-    Camara* camaraEj = ejemploObj();
+    Camara* camaraEj = ejemplo3();
 
 
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
-
-            printf("%.2f\n", (float)(y * w + x) / (float)(w * h));
-
+        
+           printf("%.2f\n", (float)(y * w + x) / (float)(w * h));
             //Implementacion de  anti-aliasing
 
 
             int r_c = 0;
             int g_c = 0;
             int b_c = 0;
+
+            int r_t = 0;
+            int g_t = 0;
+            int b_t = 0;
+
+            int r_r = 0;
+            int g_r = 0;
+            int b_r = 0;
+
+            int r_e = 0;
+            int g_e = 0;
+            int b_e = 0;
+
+            int r_a = 0;
+            int g_a = 0;
+            int b_a = 0;
+
+
+            int r_d = 0;
+            int g_d = 0;
+            int b_d = 0;
+
 
             for (int y_s = 0; y_s <= 1; y_s++){
                 for (int x_s = 0; x_s <= 1; x_s++) {
@@ -400,35 +328,140 @@ int main() {
 
                     Rayo r = camaraEj->getRayo(x + x_delta, y + y_delta);
 
-                    Color color = ObjetosEscena::getInstancia()->getPixelPorRayo(r, 1);
+                    ColorCoef color = ObjetosEscena::getInstancia()->getPixelPorRayo(r, 1);
 
-                    if (color.r > 255) {
-                        color.r = 255.0f;
+                    if (color.base.r > 255) {
+                        color.base.r = 255.0f;
                     }
 
-                    if (color.g > 255) {
-                        color.g = 255.0f;
+                    if (color.base.g > 255) {
+                        color.base.g = 255.0f;
                     }
 
-                    if (color.b > 255) {
-                        color.b = 255.0f;
+                    if (color.base.b > 255) {
+                        color.base.b = 255.0f;
                     }
 
-                    r_c += color.r;
-                    g_c += color.g;
-                    b_c += color.b;
+                    r_c += color.base.r;
+                    g_c += color.base.g;
+                    b_c += color.base.b;
+
+                    if (color.transp.r > 255) {
+                        color.transp.r = 255.0f;
+                    }
+
+
+                    if (color.transp.g > 255) {
+                        color.transp.g = 255.0f;
+                    }
+
+
+                    if (color.transp.b > 255) {
+                        color.transp.b = 255.0f;
+                    }
+
+                    r_t += color.transp.r;
+                    g_t += color.transp.g;
+                    b_t += color.transp.b;
+
+                    if (color.reflecc.r > 255) {
+                        color.reflecc.r = 255.0f;
+                    }
+
+
+                    if (color.reflecc.g > 255) {
+                        color.reflecc.g = 255.0f;
+                    }
+
+
+                    if (color.reflecc.b > 255) {
+                        color.reflecc.b = 255.0f;
+                    }
+
+                    r_r += color.reflecc.r;
+                    g_r += color.reflecc.g;
+                    b_r += color.reflecc.b;
+
+
+                    if (color.espec.r > 255) {
+                        color.espec.r = 255.0f;
+                    }
+           
+
+            //Implementacion de  anti-aliasing
+
+                    if (color.espec.g > 255) {
+                        color.espec.g = 255.0f;
+                    }
+
+                    if (color.espec.b > 255) {
+                        color.espec.b = 255.0f;
+                    }
+
+                    r_e += color.espec.r;
+                    g_e += color.espec.g;
+                    b_e += color.espec.b;
+
+                    if (color.ambient.r > 255) {
+                        color.ambient.r = 255.0f;
+                    }
+
+                    if (color.ambient.g > 255) {
+                        color.ambient.g = 255.0f;
+                    }
+
+                    if (color.ambient.b > 255) {
+                        color.ambient.b = 255.0f;
+                    }
+
+                    r_a += color.ambient.r;
+                    g_a += color.ambient.g;
+                    b_a += color.ambient.b;
+
+                    if (color.difus.r > 255) {
+                        color.difus.r = 255.0f;
+                    }
+
+                    if (color.difus.g > 255) {
+                        color.difus.g = 255.0f;
+                    }
+
+                    if (color.difus.b > 255) {
+                        color.difus.b = 255.0f;
+                    }
+
+                    r_d += color.difus.r;
+                    g_d += color.difus.g;
+                    b_d += color.difus.b;
                 }
             }
 
             RGBQUAD rgbColor = { (BYTE)(b_c / 4), (BYTE)(g_c / 4), (BYTE)(r_c / 4) };
 
+            RGBQUAD rgbColorTransp = { (BYTE)(b_t / 4), (BYTE)(g_t / 4), (BYTE)(r_t / 4) };
+            RGBQUAD rgbColorReflec = { (BYTE)(b_r / 4), (BYTE)(g_r / 4), (BYTE)(r_r / 4) };
+            RGBQUAD rgbColorAmbient = { (BYTE)(b_a / 4), (BYTE)(g_a / 4), (BYTE)(r_a / 4) };
+            RGBQUAD rgbColorEspec = { (BYTE)(b_e / 4), (BYTE)(g_e / 4), (BYTE)(r_e / 4) };
+            RGBQUAD rgbColorDifus = { (BYTE)(b_d / 4), (BYTE)(g_d / 4), (BYTE)(r_d / 4) };
+
             FreeImage_SetPixelColor(bitmap, x, y, &rgbColor);
+
+            FreeImage_SetPixelColor(bitmapTrans, x, y, &rgbColorTransp);
+            FreeImage_SetPixelColor(bitmapRef, x, y, &rgbColorReflec);
+            FreeImage_SetPixelColor(bitmapAmb, x, y, &rgbColorAmbient);
+            FreeImage_SetPixelColor(bitmapEspec, x, y, &rgbColorEspec);
+            FreeImage_SetPixelColor(bitmapDif, x, y, &rgbColorDifus);
         }
     }
 
     /* --------------------------------------- */
-
-    guardarImagen(bitmap);
+    std::string dt = getCurrentDateTime();
+    guardarImagen(bitmap, "Base");// , dt);
+    guardarImagen(bitmapTrans, "Transp");//, dt);
+    guardarImagen(bitmapRef, "Reflec");//, dt);
+    guardarImagen(bitmapAmb, "Amb");//, dt);
+    guardarImagen(bitmapEspec, "Espec");//, dt);
+    guardarImagen(bitmapDif, "Difus");//, dt);
 
     return 0;
 }

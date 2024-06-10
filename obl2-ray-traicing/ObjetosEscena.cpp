@@ -19,15 +19,21 @@ void ObjetosEscena::getIntersepcionMasCercana(Rayo rayo, int& indiceObjeto, floa
 
 }
 
-Color ObjetosEscena::getPixelPorRayo(Rayo rayo, int profundidad) {
+ColorCoef ObjetosEscena::getPixelPorRayo(Rayo rayo, int profundidad) {
 
 	int indiceObjetoMasCercano = -1;
 	float t_min = -1;
-
+	ColorCoef bgf;
+	bgf.base = bgColor;
+	bgf.difus = bgColor;
+	bgf.reflecc = bgColor;
+	bgf.espec = bgColor;
+	bgf.ambient = bgColor;
+	bgf.transp = bgColor;
 	getIntersepcionMasCercana(rayo, indiceObjetoMasCercano, t_min);
 
 	if (indiceObjetoMasCercano == -1) {
-		return bgColor;
+		return bgf;
 	}
 	else {
 		return elementos[indiceObjetoMasCercano]->getColor(rayo, t_min,profundidad);

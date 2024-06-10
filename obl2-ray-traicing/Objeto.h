@@ -20,6 +20,15 @@
 #define INDICE_TRANSPARENCIA 1.5; //n2
 
 
+struct ColorCoef {
+	Color base;
+	Color transp;
+	Color reflecc;
+	Color espec;
+	Color ambient;
+	Color difus;
+};
+
 
 class Objeto{
 
@@ -42,7 +51,7 @@ public:
 	float sensibilidad_luz_difusa = SENSIBILIDAD_LUZ_DIFUSA_POR_DEFECTO;
 	virtual float intersepcion(Rayo rayo) = 0;
 	
-	Color getColor(Rayo rayo, float t, int profundidad);
+	ColorCoef getColor(Rayo rayo, float t, int profundidad);
 
 	virtual MathVector getNormal(MathVector punto) = 0;
 
