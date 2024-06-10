@@ -3,7 +3,7 @@
 #include "ObjetosEscena.h"
 #include "LuzAmbiente.h"
 
-Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
+Color Objeto::getColor(Rayo rayo, float t, int profundidad){
 
 	Color colorTotal = { 0.0f,0.f,0.f };
 
@@ -27,7 +27,7 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 
 	int numeroLuces = ObjetosEscena::getInstancia()->numeroLucesDifusas;
 
-	float* coeficienteDeIntersepcion = new float[numeroLuces];
+	Color* coloresLucesInterseptadas = new Color[numeroLuces];
 	
 	for (int i = 0; i < numeroLuces; i++) {
 		LuzPuntual ld = ObjetosEscena::getInstancia()->lucesDifusas[i];
@@ -37,26 +37,31 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 
 		Rayo rayoAuxiliar = { posicionIntersepcion , posicionLuzSegunPixel };
 		MathVector puntoDeAnclajeSeparadoDeFigura = getPosicion(rayoAuxiliar, 1.0f, 0);
+
+
+		//Primer rayo
 		Rayo rayoIntersepcion = { puntoDeAnclajeSeparadoDeFigura , posicionLuzSegunPixel };
 
-		int numero_objeto_mas_cercano_interseptado = -1;
-		float t_minimo = -1;
+		float distanciaConLuz = norma(restar(posicionIntersepcion, ld.posicion));
 
-		ObjetosEscena::getInstancia()->getIntersepcionMasCercana(rayoIntersepcion, numero_objeto_mas_cercano_interseptado, t_minimo);
+		std::vector<Objeto*> objetosInterseptadosHastaLuz = ObjetosEscena::getInstancia()->getIntersepcionesHastaDistancia(rayoIntersepcion, distanciaConLuz);
 
-		if (numero_objeto_mas_cercano_interseptado != -1) {
-			MathVector posicionIntersepcionMasCercana = getPosicion(rayoIntersepcion, t_minimo, 0);
-			float distanciaObjetoMasCercano = norma(restar(posicionIntersepcion, posicionIntersepcionMasCercana));
-			float distanciaConLuz = norma(restar(posicionIntersepcion, ld.posicion));
+		float intersepcionCanalR = 1.0;
+		float intersepcionCanalG = 1.0;
+		float intersepcionCanalB = 1.0;
 
-			if (distanciaConLuz > distanciaObjetoMasCercano) {
-				coeficiente_luz_por_obstruccion = 0.0f;
-			}
+		for (Objeto* objetoI : objetosInterseptadosHastaLuz) {
+
+			float transparenciaYDifusa = objetoI->coeficienteTransparencia * 2 * (fmax(0.0f, 1.0f - objetoI->coeficienteTransparencia - objetoI->coeficienteReflexion));
+
+			intersepcionCanalR *= transparenciaYDifusa * (objetoI->colorBase.r / 255.f);
+			intersepcionCanalG *= transparenciaYDifusa * (objetoI->colorBase.g / 255.f);
+			intersepcionCanalB *= transparenciaYDifusa * (objetoI->colorBase.b / 255.f);
 		}
 
-		coeficienteDeIntersepcion[i] = coeficiente_luz_por_obstruccion;
+		Color c = { intersepcionCanalR , intersepcionCanalG, intersepcionCanalB };
+		coloresLucesInterseptadas[i] = c;
 	}
-
 	// ----- Calculo luz ambiente -----
 
 	Color luzColorAmbiente = { 0.0f, 0.0f, 0.0f };
@@ -74,8 +79,6 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 	for (int i = 0; i < numeroLuces; i++) {
 		LuzPuntual ld = ObjetosEscena::getInstancia()->lucesDifusas[i];
 		MathVector posicionLuzSegunPixel = normalizar(restar(ld.posicion, posicionIntersepcion));
-
-		float coeficiente_luz_por_obstruccion = coeficienteDeIntersepcion[i];
 
 		MathVector vectorALaLuz = restar(posicionIntersepcion, ld.posicion);
 
@@ -96,15 +99,15 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 
 
 		Color luzColorDifusaPorLuz = {
-						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.r / 255.f)) * (colorBase.r * coeficienteDifusa * sensibilidad_luz_difusa),
-						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.g / 255.f)) * (colorBase.g * coeficienteDifusa * sensibilidad_luz_difusa),
-						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.b / 255.f)) * (colorBase.b * coeficienteDifusa * sensibilidad_luz_difusa),
+						(coloresLucesInterseptadas[i].r * atenuacion * (ld.intensidad.r / 255.f)) * (colorBase.r * coeficienteDifusa * sensibilidad_luz_difusa),
+						(coloresLucesInterseptadas[i].g * atenuacion * (ld.intensidad.g / 255.f)) * (colorBase.g * coeficienteDifusa * sensibilidad_luz_difusa),
+						(coloresLucesInterseptadas[i].b * atenuacion * (ld.intensidad.b / 255.f)) * (colorBase.b * coeficienteDifusa * sensibilidad_luz_difusa),
 		};
 
 		Color luzColorEspecularPorLuz = {
-						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.r / 255.f)) * (coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.r),
-						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.g / 255.f)) * (coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.g),
-						(coeficiente_luz_por_obstruccion * atenuacion * (ld.intensidad.b / 255.f)) * (coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.b),
+						(coloresLucesInterseptadas[i].r * atenuacion * (ld.intensidad.r / 255.f)) * (coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.r),
+						(coloresLucesInterseptadas[i].g * atenuacion * (ld.intensidad.g / 255.f)) * (coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.g),
+						(coloresLucesInterseptadas[i].b * atenuacion * (ld.intensidad.b / 255.f)) * (coeficienteEspecular * fracionLuzReflejadaEspecular * colorEspecular.b),
 		};
 
 		luzColorDifusa.r += luzColorDifusaPorLuz.r;
@@ -133,7 +136,7 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad) {
 	colorTotal.g += luzColorEspecular.g;
 	colorTotal.b += luzColorEspecular.b;
 
-
+	delete coloresLucesInterseptadas;
 
 	if (profundidad < PROFUNDIDAD_MAX) {
 		if (coeficiente_reflexion_corregido > 0) {

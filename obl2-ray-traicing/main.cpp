@@ -64,22 +64,37 @@ Camara* ejemplo1() {
 Camara* ejemplo2() {
     Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { -1.0f, 0.0f, -1.0f }, { 1000.0f, 0.0f, 1000.0f });
 
-    Esfera* eferaPrueba1 = new Esfera({ 0,0,0}, 40.0f, { 90,180,15 });
+    Esfera* eferaPrueba1 = new Esfera({ -100,0,0}, 40.0f, { 90,180,15 });
     eferaPrueba1->setAtenuacion(0, 0.001, 0.00001f);
     eferaPrueba1->setParametrosEspeculares(29, 0.9, {255.f, 0.f, 0.f});
     eferaPrueba1->coeficienteReflexion = 0.0;
-    eferaPrueba1->coeficienteTransparencia = 0.0;
+    eferaPrueba1->coeficienteTransparencia = 0.6;
 
-    Triangulo* triangulo2 = new Triangulo({ -500,-500,-100 }, { 500,-500,-100 }, { 0,500,-100 }, { 255,0,0 });
+    Esfera* eferaPrueba2 = new Esfera({ 50,0,0 }, 40.0f, { 255,0,0 });
+    eferaPrueba2->setAtenuacion(0, 0.001, 0.00001f);
+    eferaPrueba2->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
+    eferaPrueba2->coeficienteReflexion = 0.0;
+    eferaPrueba2->coeficienteTransparencia = 0.6;
+
+    Esfera* eferaPrueba3 = new Esfera({ 200,0,0 }, 40.0f, { 255,255,0 });
+    eferaPrueba3->setAtenuacion(0, 0.001, 0.00001f);
+    eferaPrueba3->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
+    eferaPrueba3->coeficienteReflexion = 0.0;
+    eferaPrueba3->coeficienteTransparencia = 1.0;
+
+
+    Triangulo* triangulo2 = new Triangulo({ -500,-500,-100 }, { 500,-500,-100 }, { 0,500,-100 }, { 255,255,255 });
     triangulo2->setAtenuacion(0, 0.001, 0.00001f);
     triangulo2->setParametrosEspeculares(29, 0.9, { 255.f, 0.f, 0.f });
 
 
-    Objeto** elementos = new Objeto * [2];
+    Objeto** elementos = new Objeto * [4];
     elementos[0] = eferaPrueba1;
     elementos[1] = triangulo2;
+    elementos[2] = eferaPrueba2;
+    elementos[3] = eferaPrueba3;
 
-    ObjetosEscena::getInstancia()->setElementos(2, elementos);
+    ObjetosEscena::getInstancia()->setElementos(4, elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
 
     LuzPuntual* luces = new LuzPuntual[1];

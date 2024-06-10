@@ -4,6 +4,7 @@
 #include "Color.h"
 #include "LuzAmbiente.h"
 #include "LuzPuntual.h"
+#include "vector"
 
 #ifndef OBJECTO_ESCENA_CLASS
 #define OBJECTO_ESCENA_CLASS
@@ -51,6 +52,8 @@ public:
 	Color getPixelPorRayo(Rayo rayo,int profundidad);
 
 	void getIntersepcionMasCercana(Rayo rayo, int& indiceObjeto, float& t_intersepcion);
+
+	std::vector<Objeto*> getIntersepcionesHastaDistancia(Rayo rayo, float distanciaMaxima);
 
 };
 
