@@ -47,7 +47,17 @@ float Cilindro::intersepcion(Rayo rayo)
 		return t;
 	}
 	else {
-		return -1;
+		//if (((rayo.dirrecion.z * t) + rayo.puntoAnclaje.z) > (centro.z + altura)) {
+
+//		}
+	//	else {
+		//	if (((rayo.dirrecion.z * t) + rayo.puntoAnclaje.z) < centro.z) {
+				 
+			//}
+			//else {
+				return -1;
+			//}
+	//	}
 	}
 	
 }

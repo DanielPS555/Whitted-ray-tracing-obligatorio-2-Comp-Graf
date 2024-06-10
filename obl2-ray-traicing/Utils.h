@@ -1,3 +1,5 @@
+ 
+#include <direct.h> 
 #include <iostream>
 #include "Freeimage.h"
 
@@ -20,7 +22,7 @@ FIBITMAP* crearImagenVacia(int width, int height);
 float gradosToRadianes(float grados);
 
 
-void guardarImagen(FIBITMAP* bitmap);
+void guardarImagen(FIBITMAP* bitmap, std::string sufix_nombre);// , std::string dateTime1);
 
 
 // Retora unicamente raices positivas (utilizado para las intersepciones mas cercanas, pero positivas)

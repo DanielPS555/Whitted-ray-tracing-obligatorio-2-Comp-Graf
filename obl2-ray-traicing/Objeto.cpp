@@ -3,9 +3,15 @@
 #include "ObjetosEscena.h"
 #include "LuzAmbiente.h"
 
-Color Objeto::getColor(Rayo rayo, float t, int profundidad){
+ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 
-	Color colorTotal = { 0.0f,0.f,0.f };
+	ColorCoef colorTotal;
+	colorTotal.base = { 0.0f,0.f,0.f };
+	colorTotal.transp = { 0.0f,0.f,0.f };
+	colorTotal.reflecc = { 0.0f,0.f,0.f };
+	colorTotal.espec = { 0.0f,0.f,0.f };
+	colorTotal.ambient = { 0.0f,0.f,0.f };
+	colorTotal.difus = { 0.0f,0.f,0.f };
 
 	// La suma de coeficiente_difusa_especular + coeficiente_reflexion + coeficiente_transaccion debe ser 1, cada color debe aportar esto
 	float coeficiente_difusa_especular_corregido;
@@ -124,18 +130,21 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad){
 	luzColorDifusa = corregirColorMaximos(luzColorDifusa);
 	luzColorEspecular = corregirColorMaximos(luzColorEspecular);
 
-	colorTotal.r += luzColorAmbiente.r * coeficiente_difusa_especular_corregido;
-	colorTotal.g += luzColorAmbiente.g * coeficiente_difusa_especular_corregido;
-	colorTotal.b += luzColorAmbiente.b * coeficiente_difusa_especular_corregido;
+	colorTotal.base.r += luzColorAmbiente.r * coeficiente_difusa_especular_corregido;
+	colorTotal.base.g += luzColorAmbiente.g * coeficiente_difusa_especular_corregido;
+	colorTotal.base.b += luzColorAmbiente.b * coeficiente_difusa_especular_corregido;
 
-	colorTotal.r += luzColorDifusa.r * coeficiente_difusa_especular_corregido;
-	colorTotal.g += luzColorDifusa.g * coeficiente_difusa_especular_corregido;
-	colorTotal.b += luzColorDifusa.b * coeficiente_difusa_especular_corregido;
+	colorTotal.base.r += luzColorDifusa.r * coeficiente_difusa_especular_corregido;
+	colorTotal.base.g += luzColorDifusa.g * coeficiente_difusa_especular_corregido;
+	colorTotal.base.b += luzColorDifusa.b * coeficiente_difusa_especular_corregido;
 
-	colorTotal.r += luzColorEspecular.r;
-	colorTotal.g += luzColorEspecular.g;
-	colorTotal.b += luzColorEspecular.b;
+	colorTotal.base.r += luzColorEspecular.r;
+	colorTotal.base.g += luzColorEspecular.g;
+	colorTotal.base.b += luzColorEspecular.b;
 
+	colorTotal.ambient = luzColorAmbiente;
+	colorTotal.espec = luzColorEspecular; 
+	colorTotal.difus = luzColorDifusa; 
 	delete coloresLucesInterseptadas;
 
 	if (profundidad < PROFUNDIDAD_MAX) {
@@ -148,11 +157,11 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad){
 			MathVector puntoAnclajeAux = getPosicion(aux, 1.0f, 0);
 			Rayo r = { puntoAnclajeAux , vectorReflexion };
 
-			Color color_r = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
+			ColorCoef color_r = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
 
-			colorTotal.r += color_r.r * coeficiente_reflexion_corregido;
-			colorTotal.g += color_r.g * coeficiente_reflexion_corregido;
-			colorTotal.b += color_r.b * coeficiente_reflexion_corregido;
+			colorTotal.base.r += color_r.base.r * coeficiente_reflexion_corregido;
+			colorTotal.base.g += color_r.base.g * coeficiente_reflexion_corregido;
+			colorTotal.base.b += color_r.base.b * coeficiente_reflexion_corregido;
 		}
 
 		//ley de snell dice que n1 sin01 = n2 sin02
@@ -187,14 +196,21 @@ Color Objeto::getColor(Rayo rayo, float t, int profundidad){
 				MathVector puntoAnclajeAux = getPosicion(aux2, 1.0f, 0);
 				Rayo r = { puntoAnclajeAux , refractada };
 
-				Color color_t = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
+				ColorCoef color_t = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
 
-				colorTotal.r += color_t.r * coeficiente_transaccion_corregido;
-				colorTotal.g += color_t.g * coeficiente_transaccion_corregido;
-				colorTotal.b += color_t.b * coeficiente_transaccion_corregido;
+				colorTotal.base.r += color_t.base.r * coeficiente_transaccion_corregido;
+				colorTotal.base.g += color_t.base.g * coeficiente_transaccion_corregido;
+				colorTotal.base.b += color_t.base.b * coeficiente_transaccion_corregido;
 			}
 		}
 	}
+
+	colorTotal.transp.r = 255 * coeficiente_transaccion_corregido;
+	colorTotal.transp.g = 255 * coeficiente_transaccion_corregido;
+	colorTotal.transp.b = 255 * coeficiente_transaccion_corregido;
+	colorTotal.reflecc.r = 255 * coeficiente_reflexion_corregido;
+	colorTotal.reflecc.g = 255 * coeficiente_reflexion_corregido;
+	colorTotal.reflecc.b = 255 * coeficiente_reflexion_corregido;
 
 
 	return colorTotal;
