@@ -17,13 +17,51 @@
 
 
 
-Camara* ejemplo1() {
+Camara* ejemploObj() {
+
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, -1.0f }, { 0.0f, 100.0f, 700.0f });
 
     std::vector<unsigned short> indices;
     std::vector<glm::vec3> verticess;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
-    loadAssImp("assets/b.obj", indices, verticess, uvs, normals);
+    loadAssImp("Horse.obj", indices, verticess, uvs, normals);
+
+    int cantTriangulos = verticess.size() / 3;
+
+    float escalar = 3;
+
+
+    Objeto** elementos = new Objeto * [cantTriangulos];
+
+    for (int i = 0; i < cantTriangulos; i ++) {
+
+        MathVector v1 = { verticess[i * 3].x * escalar      , verticess[i * 3].y * escalar    , verticess[i * 3].z * escalar };
+        MathVector v2 = { verticess[i * 3 + 1].x * escalar  , verticess[i * 3 + 1].y * escalar, verticess[i * 3 + 1].z * escalar };
+        MathVector v3 = { verticess[i * 3 + 2].x * escalar  , verticess[i * 3 + 2].y * escalar, verticess[i * 3 + 2].z * escalar };
+
+        MathVector n_v1 = { normals[i * 3].x    , normals[i * 3].y     , normals[i * 3].z    };
+        MathVector n_v2 = { normals[i * 3 + 1].x, normals[i * 3 + 1].y , normals[i * 3 + 1].z};
+        MathVector n_v3 = { normals[i * 3 + 2].x, normals[i * 3 + 2].y , normals[i * 3 + 2].z};
+
+
+        elementos[i] = new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, { 255,255,255 });
+    }
+
+    ObjetosEscena::getInstancia()->setElementos(cantTriangulos, elementos);
+    ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
+
+    LuzPuntual* luces = new LuzPuntual[1];
+    luces[0] = { {255.f,    255.f,  255.f}, {0.f   ,0.f,   300.f} };
+    ObjetosEscena::getInstancia()->lucesDifusas = luces;
+    ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
+
+    return camaraPtr;
+}
+
+Camara* ejemplo1() {
+
+
 
     Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
 
@@ -251,7 +289,8 @@ int main() {
 
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
-
+        
+           printf("%.2f\n", (float)(y * w + x) / (float)(w * h));
             //Implementacion de  anti-aliasing
 
 
@@ -274,6 +313,7 @@ int main() {
             int r_a = 0;
             int g_a = 0;
             int b_a = 0;
+
 
             int r_d = 0;
             int g_d = 0;
@@ -310,9 +350,11 @@ int main() {
                         color.transp.r = 255.0f;
                     }
 
+
                     if (color.transp.g > 255) {
                         color.transp.g = 255.0f;
                     }
+
 
                     if (color.transp.b > 255) {
                         color.transp.b = 255.0f;
@@ -326,9 +368,11 @@ int main() {
                         color.reflecc.r = 255.0f;
                     }
 
+
                     if (color.reflecc.g > 255) {
                         color.reflecc.g = 255.0f;
                     }
+
 
                     if (color.reflecc.b > 255) {
                         color.reflecc.b = 255.0f;
@@ -338,9 +382,13 @@ int main() {
                     g_r += color.reflecc.g;
                     b_r += color.reflecc.b;
 
+
                     if (color.espec.r > 255) {
                         color.espec.r = 255.0f;
                     }
+           
+
+            //Implementacion de  anti-aliasing
 
                     if (color.espec.g > 255) {
                         color.espec.g = 255.0f;
