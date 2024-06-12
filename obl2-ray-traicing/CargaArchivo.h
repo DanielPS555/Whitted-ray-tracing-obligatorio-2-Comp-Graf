@@ -10,7 +10,7 @@ using json = nlohmann::json;
 #ifndef CARGA_CLASS 
 #define CARGA_CLASS 
 
-struct Plano
+struct Cara
 {
 	float ancho;
 	float largo;
@@ -135,19 +135,42 @@ struct LuzPunt {
 	float b;
 };
 
+struct Plane {
+	MathVector puntoBase;
+	float D;
+	float r;
+	float g;
+	float b;
+
+	float Transparencia;
+	float Refleccion;
+	float Refraccion;
+
+	float atConst;
+	float atLineal;
+	float atCuadr;
+	float esxpReflecEspec;
+	float fracReflecEspec;
+	float colorReflecEspecR;
+	float colorReflecEspecG;
+	float colorReflecEspecB;
+	float sesibilidad;
+};
+
 class CargaArchivo
 {
 	private:
 
 		json data;
 		std::vector<Triangle> paredes;
-		std::vector<Plano> cuarto;
+		std::vector<Cara> cuarto;
 		std::vector<Rectangulo> rects;
 		std::vector<Sphear> sphears;
 		std::vector<Cilinder> cilins;
 		MathVector dirACam, dirPVCam, ubCam;
 		std::vector<float> luzAmb;
 		std::vector<LuzPunt> luces;
+		std::vector<Plane> planos;
 		int resolucion;
 
 	public:
@@ -162,9 +185,11 @@ class CargaArchivo
 
 		int getRes();
 
+		std::vector<Plane> getPlanos();
+
 		std::vector<Sphear> getEsferas();
 
-		std::vector<Triangle> getPlanos();
+		std::vector<Triangle> getCaras();
 
 		std::vector<Rectangulo> getPrismas();
 

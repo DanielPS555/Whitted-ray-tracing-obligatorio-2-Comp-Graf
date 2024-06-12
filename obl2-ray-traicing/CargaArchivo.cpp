@@ -8,28 +8,51 @@ CargaArchivo::CargaArchivo(std::string file)
 	std::ifstream f(file);
 	json data = json::parse(f);
 
-	for (int i = 0; i < data["planos"].size(); i++) {
-		if (data["planos"][i]["name"] != "ign") {
-			Plano p;
-			p.altura = data["planos"][i]["altura"];
-			p.ancho = data["planos"][i]["ancho"];
-			p.largo = data["planos"][i]["largo"];
-			p.x = data["planos"][i]["x"];
-			p.y = data["planos"][i]["y"];
-			p.z = data["planos"][i]["z"];
-			p.r = data["planos"][i]["r"];
-			p.g = data["planos"][i]["g"];
-			p.b = data["planos"][i]["b"];
-			p.atConst = data["planos"][i]["atConst"];
-			p.atLineal = data["planos"][i]["atLineal"];
-			p.atCuadr = data["planos"][i]["atCuadr"];
-			p.esxpReflecEspec = data["planos"][i]["esxpReflecEspec"];
-			p.fracReflecEspec = data["planos"][i]["fracReflecEspec"];
-			p.colorReflecEspecR = data["planos"][i]["colorReflecEspecR"];
-			p.colorReflecEspecG = data["planos"][i]["colorReflecEspecG"];
-			p.colorReflecEspecB = data["planos"][i]["colorReflecEspecB"];
-			p.sesibilidad = data["planos"][i]["sensibilidad"];
+	for (int i = 0; i < data["caras"].size(); i++) {
+		if (data["caras"][i]["name"] != "ign") {
+			Cara p;
+			p.altura = data["caras"][i]["altura"];
+			p.ancho = data["caras"][i]["ancho"];
+			p.largo = data["caras"][i]["largo"];
+			p.x = data["caras"][i]["x"];
+			p.y = data["caras"][i]["y"];
+			p.z = data["caras"][i]["z"];
+			p.r = data["caras"][i]["r"];
+			p.g = data["caras"][i]["g"];
+			p.b = data["caras"][i]["b"];
+			p.atConst = data["caras"][i]["atConst"];
+			p.atLineal = data["caras"][i]["atLineal"];
+			p.atCuadr = data["caras"][i]["atCuadr"];
+			p.esxpReflecEspec = data["caras"][i]["esxpReflecEspec"];
+			p.fracReflecEspec = data["caras"][i]["fracReflecEspec"];
+			p.colorReflecEspecR = data["caras"][i]["colorReflecEspecR"];
+			p.colorReflecEspecG = data["caras"][i]["colorReflecEspecG"];
+			p.colorReflecEspecB = data["caras"][i]["colorReflecEspecB"];
+			p.sesibilidad = data["caras"][i]["sensibilidad"];
 			this->cuarto.push_back(p);
+		}
+	}
+
+	for (int p = 0; p < data["planos"].size(); p++) {
+		if (data["caras"][p]["name"] != "ign") {
+			Plane pla;
+			pla.D = data["caras"][p]["D"];
+			pla.puntoBase.x = data["caras"][p]["x"];
+			pla.puntoBase.y = data["caras"][p]["y"];
+			pla.puntoBase.z = data["caras"][p]["z"];
+			pla.r = data["caras"][p]["r"];
+			pla.g = data["caras"][p]["g"];
+			pla.b = data["caras"][p]["b"];
+			pla.atConst = data["caras"][p]["atConst"];
+			pla.atLineal = data["caras"][p]["atLineal"];
+			pla.atCuadr = data["caras"][p]["atCuadr"];
+			pla.esxpReflecEspec = data["caras"][p]["esxpReflecEspec"];
+			pla.fracReflecEspec = data["caras"][p]["fracReflecEspec"];
+			pla.colorReflecEspecR = data["caras"][p]["colorReflecEspecR"];
+			pla.colorReflecEspecG = data["caras"][p]["colorReflecEspecG"];
+			pla.colorReflecEspecB = data["caras"][p]["colorReflecEspecB"];
+			pla.sesibilidad = data["caras"][p]["sensibilidad"];
+			this->planos.push_back(pla);
 		}
 	}
 
@@ -179,12 +202,17 @@ int CargaArchivo::getRes()
 	return this->resolucion;
 }
 
+std::vector<Plane> CargaArchivo::getPlanos()
+{
+	return this->planos;
+}
+
 std::vector<Sphear> CargaArchivo::getEsferas()
 {
 	return this->sphears;
 }
 
-std::vector<Triangle> CargaArchivo::getPlanos()
+std::vector<Triangle> CargaArchivo::getCaras()
 {
 	for (int t = 0; t < this->cuarto.size(); t++) {
 		MathVector v0, v1, v2, v3;

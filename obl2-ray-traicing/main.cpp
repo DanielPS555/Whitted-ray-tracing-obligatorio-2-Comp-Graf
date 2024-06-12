@@ -6,6 +6,7 @@
 #include "Utils.h"
 #include "ObjetosEscena.h"
 #include "Camara.h"
+#include "Plano.h"
 #include "Esfera.h"
 #include "Objeto.h"
 #include "Color.h"
@@ -208,9 +209,10 @@ Camara* ejemplo3() {
     Camara* camaraPtr2 = new Camara(carga->getDirACam(), carga->getDirPVCam(), carga->getUbCam());
 
     std::vector<Sphear> esferas = carga->getEsferas();
-    std::vector<Triangle> tris = carga->getPlanos();
+    std::vector<Triangle> tris = carga->getCaras();
     std::vector<Cilinder> cilins = carga->getCilindros();
     std::vector<LuzPunt> lucesPunt = carga->getLuces();
+    std::vector<Plane> plans = carga->getPlanos();
     
 
     Objeto** elementos = new Objeto * [esferas.size() + tris.size() + cilins.size()];
@@ -235,11 +237,19 @@ Camara* ejemplo3() {
         elementos[c + esferas.size() + tris.size()] = new Cilindro({ cilins[c].x, cilins[c].y, cilins[c].z }, cilins[c].radio, cilins[c].altura, { cilins[c].r, cilins[c].g, cilins[c].b });
         elementos[c + esferas.size() + tris.size()]->setAtenuacion(cilins[c].atConst, cilins[c].atLineal, cilins[c].atCuadr);
         elementos[c + esferas.size() + tris.size()]->setParametrosEspeculares(cilins[c].esxpReflecEspec, cilins[c].fracReflecEspec, { cilins[c].colorReflecEspecR, cilins[c].colorReflecEspecG, cilins[c].colorReflecEspecB });
-        elementos[c + esferas.size() + tris.size()]->coeficienteReflexion = esferas[c].Refleccion;
-        elementos[c + esferas.size() + tris.size()]->coeficienteTransparencia = esferas[c].Transparencia;
+        elementos[c + esferas.size() + tris.size()]->coeficienteReflexion = cilins[c].Refleccion;
+        elementos[c + esferas.size() + tris.size()]->coeficienteTransparencia = cilins[c].Transparencia;
     }
 
-    ObjetosEscena::getInstancia()->setElementos(esferas.size() + tris.size() + cilins.size(), elementos);
+    for (int p = 0; p < plans.size(); p++) {
+        elementos[p + esferas.size() + tris.size() + cilins.size()] = new Plano(plans[p].puntoBase, plans[p].D, {plans[p].r, plans[p].g, plans[p].b});
+        elementos[p + esferas.size() + tris.size() + cilins.size()]->setAtenuacion(plans[p].atConst, plans[p].atLineal, plans[p].atCuadr);
+        elementos[p + esferas.size() + tris.size() + cilins.size()]->setParametrosEspeculares(plans[p].esxpReflecEspec, plans[p].fracReflecEspec, { plans[p].colorReflecEspecR, plans[p].colorReflecEspecG, plans[p].colorReflecEspecB });
+        elementos[p + esferas.size() + tris.size() + cilins.size()]->coeficienteReflexion = plans[p].Refleccion;
+        elementos[p + esferas.size() + tris.size() + cilins.size()]->coeficienteTransparencia = plans[p].Transparencia;
+    }
+
+    ObjetosEscena::getInstancia()->setElementos(esferas.size() + tris.size() + cilins.size() + plans.size(), elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { carga->getLuzAmb().x, carga->getLuzAmb().y , carga->getLuzAmb().z };
 
     LuzPuntual* luces2 = new LuzPuntual[lucesPunt.size()];

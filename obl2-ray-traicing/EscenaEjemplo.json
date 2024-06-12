@@ -1,5 +1,5 @@
 {
-  "planos": [
+  "caras": [
     {
       "name": "Piso",
       "ancho": 200,
@@ -104,6 +104,28 @@
       "colorReflecEspecG": 255,
       "colorReflecEspecB": 255,
       "sensibilidad": 0.3
+    }
+  ],
+
+  "planos": [
+    {
+      "name": "ign",
+      "D": 0,
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "atConst": 0,
+      "atLineal": 0,
+      "atCuadr": 0,
+      "esxpReflecEspec": 0,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
+      "sensibilidad": 0
     }
   ],
 

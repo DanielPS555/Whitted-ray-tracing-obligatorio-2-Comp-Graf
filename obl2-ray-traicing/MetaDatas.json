@@ -1,5 +1,5 @@
 {
-  "planos": [
+  "caras": [
     {
       "name": "ign",
       "ancho": 0,
@@ -19,6 +19,28 @@
       "colorReflecEspecR": 0,
       "colorReflecEspecG": 0,
       "colorReflecEspecB": 0,
+      "sensibilidad": 0
+    }
+  ],
+
+  "planos": [
+    {
+      "name": "planeTest",
+      "D": 10,
+      "x": 170,
+      "y": 225,
+      "z": -100,
+      "r": 122,
+      "g": 233,
+      "b": 161,
+      "atConst": 0,
+      "atLineal": 0.001,
+      "atCuadr": 0.00001,
+      "esxpReflecEspec": 29,
+      "fracReflecEspec": 0.9,
+      "colorReflecEspecR": 122,
+      "colorReflecEspecG": 233,
+      "colorReflecEspecB": 161,
       "sensibilidad": 0
     }
   ],
@@ -134,9 +156,9 @@
   "camara": [
     {
       "Resolucion": 720,
-      "x": 1000,
+      "x": 6000,
       "y": 0,
-      "z": 1000,
+      "z": 6000,
       "dirAx": 0,
       "dirAy": 1,
       "dirAz": 0,
