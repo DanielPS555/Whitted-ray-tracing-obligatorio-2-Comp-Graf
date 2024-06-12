@@ -34,53 +34,53 @@ CargaArchivo::CargaArchivo(std::string file)
 	}
 
 	for (int p = 0; p < data["planos"].size(); p++) {
-		if (data["caras"][p]["name"] != "ign") {
+		if (data["planos"][p]["name"] != "ign") {
 			Plane pla;
-			pla.D = data["caras"][p]["D"];
-			pla.puntoBase.x = data["caras"][p]["x"];
-			pla.puntoBase.y = data["caras"][p]["y"];
-			pla.puntoBase.z = data["caras"][p]["z"];
-			pla.r = data["caras"][p]["r"];
-			pla.g = data["caras"][p]["g"];
-			pla.b = data["caras"][p]["b"];
-			pla.atConst = data["caras"][p]["atConst"];
-			pla.atLineal = data["caras"][p]["atLineal"];
-			pla.atCuadr = data["caras"][p]["atCuadr"];
-			pla.esxpReflecEspec = data["caras"][p]["esxpReflecEspec"];
-			pla.fracReflecEspec = data["caras"][p]["fracReflecEspec"];
-			pla.colorReflecEspecR = data["caras"][p]["colorReflecEspecR"];
-			pla.colorReflecEspecG = data["caras"][p]["colorReflecEspecG"];
-			pla.colorReflecEspecB = data["caras"][p]["colorReflecEspecB"];
-			pla.sesibilidad = data["caras"][p]["sensibilidad"];
+			pla.D = data["planos"][p]["D"];
+			pla.puntoBase.x = data["planos"][p]["x"];
+			pla.puntoBase.y = data["planos"][p]["y"];
+			pla.puntoBase.z = data["planos"][p]["z"];
+			pla.r = data["planos"][p]["r"];
+			pla.g = data["planos"][p]["g"];
+			pla.b = data["planos"][p]["b"];
+			pla.atConst = data["planos"][p]["atConst"];
+			pla.atLineal = data["planos"][p]["atLineal"];
+			pla.atCuadr = data["planos"][p]["atCuadr"];
+			pla.esxpReflecEspec = data["planos"][p]["esxpReflecEspec"];
+			pla.fracReflecEspec = data["planos"][p]["fracReflecEspec"];
+			pla.colorReflecEspecR = data["planos"][p]["colorReflecEspecR"];
+			pla.colorReflecEspecG = data["planos"][p]["colorReflecEspecG"];
+			pla.colorReflecEspecB = data["planos"][p]["colorReflecEspecB"];
+			pla.sesibilidad = data["planos"][p]["sensibilidad"];
 			this->planos.push_back(pla);
 		}
 	}
 
-	for (int r = 0; r < data["rectangulos"].size(); r++) {
-		if (data["rectangulos"][r]["name"] != "ign") {
-			Rectangulo rect;
-			rect.altura = data["rectangulos"][r]["altura"];
-			rect.ancho = data["rectangulos"][r]["ancho"];
-			rect.largo = data["rectangulos"][r]["largo"];
-			rect.r = data["rectangulos"][r]["r"];
-			rect.g = data["rectangulos"][r]["g"];
-			rect.b = data["rectangulos"][r]["b"];
-			rect.Refleccion = data["rectangulos"][r]["Refleccion"];
-			rect.Refraccion = data["rectangulos"][r]["Refraccion"];
-			rect.Transparencia = data["rectangulos"][r]["Transparencia"];
-			rect.x = data["rectangulos"][r]["x"];
-			rect.y = data["rectangulos"][r]["y"];
-			rect.z = data["rectangulos"][r]["z"];
-			rect.atConst = data["rectangulos"][r]["atConst"];
-			rect.atLineal = data["rectangulos"][r]["atLineal"];
-			rect.atCuadr = data["rectangulos"][r]["atCuadr"];
-			rect.esxpReflecEspec = data["rectangulos"][r]["esxpReflecEspec"];
-			rect.fracReflecEspec = data["rectangulos"][r]["fracReflecEspec"];
-			rect.colorReflecEspecR = data["rectangulos"][r]["colorReflecEspecR"];
-			rect.colorReflecEspecG = data["rectangulos"][r]["colorReflecEspecG"];
-			rect.colorReflecEspecB = data["rectangulos"][r]["colorReflecEspecB"];
-			rect.sesibilidad = data["rectangulos"][r]["sensibilidad"];
-			this->rects.push_back(rect);
+	for (int r = 0; r < data["malla"].size(); r++) {
+		if (data["malla"][r]["name"] != "ign") {
+			Malla rect;
+			rect.altura = data["malla"][r]["altura"];
+			rect.ancho = data["malla"][r]["ancho"];
+			rect.largo = data["malla"][r]["largo"];
+			rect.r = data["malla"][r]["r"];
+			rect.g = data["malla"][r]["g"];
+			rect.b = data["malla"][r]["b"];
+			rect.Refleccion = data["malla"][r]["Refleccion"];
+			rect.Refraccion = data["malla"][r]["Refraccion"];
+			rect.Transparencia = data["malla"][r]["Transparencia"];
+			rect.x = data["malla"][r]["x"];
+			rect.y = data["malla"][r]["y"];
+			rect.z = data["malla"][r]["z"];
+			rect.atConst = data["malla"][r]["atConst"];
+			rect.atLineal = data["malla"][r]["atLineal"];
+			rect.atCuadr = data["malla"][r]["atCuadr"];
+			rect.esxpReflecEspec = data["malla"][r]["esxpReflecEspec"];
+			rect.fracReflecEspec = data["malla"][r]["fracReflecEspec"];
+			rect.colorReflecEspecR = data["malla"][r]["colorReflecEspecR"];
+			rect.colorReflecEspecG = data["malla"][r]["colorReflecEspecG"];
+			rect.colorReflecEspecB = data["malla"][r]["colorReflecEspecB"];
+			rect.sesibilidad = data["malla"][r]["sensibilidad"];
+			this->mallas.push_back(rect);
 		}
 	}
 
@@ -268,9 +268,9 @@ std::vector<Triangle> CargaArchivo::getCaras()
 	return this->paredes;
 }
 
-std::vector<Rectangulo> CargaArchivo::getPrismas()
+std::vector<Malla> CargaArchivo::getPrismas()
 {
-	return this->rects;
+	return this->mallas;
 }
 
 std::vector<LuzPunt> CargaArchivo::getLuces()

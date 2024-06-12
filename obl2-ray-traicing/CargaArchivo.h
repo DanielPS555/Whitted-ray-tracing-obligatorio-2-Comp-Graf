@@ -32,7 +32,7 @@ struct Cara
 	float sesibilidad;
 };
 
-struct Rectangulo
+struct Malla
 {
 	float ancho;
 	float largo;
@@ -164,7 +164,7 @@ class CargaArchivo
 		json data;
 		std::vector<Triangle> paredes;
 		std::vector<Cara> cuarto;
-		std::vector<Rectangulo> rects;
+		std::vector<Malla> mallas;
 		std::vector<Sphear> sphears;
 		std::vector<Cilinder> cilins;
 		MathVector dirACam, dirPVCam, ubCam;
@@ -191,7 +191,7 @@ class CargaArchivo
 
 		std::vector<Triangle> getCaras();
 
-		std::vector<Rectangulo> getPrismas();
+		std::vector<Malla> getPrismas();
 
 		std::vector<LuzPunt> getLuces();
 		int getCantLuces();

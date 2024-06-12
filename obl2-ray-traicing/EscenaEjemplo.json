@@ -159,9 +159,9 @@
     }
   ],
 
-  "rectangulos": [
+  "malla": [
     {
-      "name": "Rec1",
+      "name": "ign",
       "ancho": 140,
       "largo": 75,
       "altura": 60,
