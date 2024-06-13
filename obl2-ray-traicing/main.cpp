@@ -128,8 +128,8 @@ Camara* ejemploObligatorio() {
     esferaEspejo->coeficienteReflexion = 1.0f;
 
     Esfera* esferaTransparente = new Esfera({ -120,-100,400 }, 120.0f, { 255,198,198});
-    esferaTransparente->coeficienteTransparencia = 0.6f;
-    esferaTransparente->coeficienteReflexion = 0.2f;
+    esferaTransparente->coeficienteTransparencia = .60f;
+    esferaTransparente->coeficienteReflexion = 0.0f;
 
     std::vector<Objeto*> elementos;
 

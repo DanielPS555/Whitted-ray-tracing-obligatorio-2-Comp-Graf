@@ -16,15 +16,15 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 	// La suma de coeficiente_difusa_especular + coeficiente_reflexion + coeficiente_transaccion debe ser 1, cada color debe aportar esto
 	float coeficiente_difusa_especular_corregido;
 	float coeficiente_reflexion_corregido = this->coeficienteReflexion;
-	float coeficiente_transaccion_corregido = this->coeficienteTransparencia;
+	float coeficiente_transparencia_corregido = this->coeficienteTransparencia;
 
-	if (coeficiente_reflexion_corregido + coeficiente_transaccion_corregido > 1.0) {
-		coeficiente_reflexion_corregido = coeficiente_reflexion_corregido / (coeficiente_reflexion_corregido + coeficiente_transaccion_corregido);
-		coeficiente_transaccion_corregido = coeficiente_transaccion_corregido / (coeficiente_reflexion_corregido + coeficiente_transaccion_corregido);
+	if (coeficiente_reflexion_corregido + coeficiente_transparencia_corregido > 1.0) {
+		coeficiente_reflexion_corregido = coeficiente_reflexion_corregido / (coeficiente_reflexion_corregido + coeficiente_transparencia_corregido);
+		coeficiente_transparencia_corregido = coeficiente_transparencia_corregido / (coeficiente_reflexion_corregido + coeficiente_transparencia_corregido);
 		coeficiente_difusa_especular_corregido = 0.0f;
 	}
 	else {
-		coeficiente_difusa_especular_corregido = 1.0f - (coeficiente_reflexion_corregido + coeficiente_transaccion_corregido);
+		coeficiente_difusa_especular_corregido = 1.0f - (coeficiente_reflexion_corregido + coeficiente_transparencia_corregido);
 	}
 
 	MathVector posicionIntersepcion = getPosicion(rayo, t, EPSILON);
@@ -58,11 +58,11 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 
 		for (Objeto* objetoI : objetosInterseptadosHastaLuz) {
 
-			float transparenciaYDifusa = objetoI->coeficienteTransparencia * 2 * (fmax(0.0f, 1.0f - objetoI->coeficienteTransparencia - objetoI->coeficienteReflexion));
+			float coef_difusa_otro = 1.0f - objetoI->coeficienteReflexion - objetoI->coeficienteTransparencia;
 
-			intersepcionCanalR *= transparenciaYDifusa * (objetoI->colorBase.r / 255.f);
-			intersepcionCanalG *= transparenciaYDifusa * (objetoI->colorBase.g / 255.f);
-			intersepcionCanalB *= transparenciaYDifusa * (objetoI->colorBase.b / 255.f);
+			intersepcionCanalR *= objetoI->coeficienteTransparencia * (objetoI->coeficienteTransparencia + coef_difusa_otro *objetoI->colorBase.r / 255.f);
+			intersepcionCanalG *= objetoI->coeficienteTransparencia * (objetoI->coeficienteTransparencia + coef_difusa_otro *objetoI->colorBase.g / 255.f);
+			intersepcionCanalB *= objetoI->coeficienteTransparencia * (objetoI->coeficienteTransparencia + coef_difusa_otro *objetoI->colorBase.b / 255.f);
 		}
 
 		Color c = { intersepcionCanalR , intersepcionCanalG, intersepcionCanalB };
@@ -199,16 +199,16 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 
 				ColorCoef color_t = ObjetosEscena::getInstancia()->getPixelPorRayo(r, profundidad + 1);
 
-				colorTotal.base.r += color_t.base.r * coeficiente_transaccion_corregido;
-				colorTotal.base.g += color_t.base.g * coeficiente_transaccion_corregido;
-				colorTotal.base.b += color_t.base.b * coeficiente_transaccion_corregido;
+				colorTotal.base.r += color_t.base.r * coeficiente_transparencia_corregido;
+				colorTotal.base.g += color_t.base.g * coeficiente_transparencia_corregido;
+				colorTotal.base.b += color_t.base.b * coeficiente_transparencia_corregido;
 			}
 		}
 	}
 
-	colorTotal.transp.r = 255 * coeficiente_transaccion_corregido;
-	colorTotal.transp.g = 255 * coeficiente_transaccion_corregido;
-	colorTotal.transp.b = 255 * coeficiente_transaccion_corregido;
+	colorTotal.transp.r = 255 * coeficiente_transparencia_corregido;
+	colorTotal.transp.g = 255 * coeficiente_transparencia_corregido;
+	colorTotal.transp.b = 255 * coeficiente_transparencia_corregido;
 	colorTotal.reflecc.r = 255 * coeficiente_reflexion_corregido;
 	colorTotal.reflecc.g = 255 * coeficiente_reflexion_corregido;
 	colorTotal.reflecc.b = 255 * coeficiente_reflexion_corregido;
