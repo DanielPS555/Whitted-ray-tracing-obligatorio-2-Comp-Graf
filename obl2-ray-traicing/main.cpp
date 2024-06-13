@@ -16,21 +16,27 @@
 #include "objloader.h"
 #include "glm/glm.hpp"
 
+#include "SDL.h"
 
 
 Camara* ejemploObj() {
 
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, -1.0f }, { 0.0f, 100.0f, 700.0f });
+
+    ObjetosEscena::getInstancia()->resolucionX = 500;
+    ObjetosEscena::getInstancia()->resolucionY = 500;
+
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 100.0f , -700.0f });
 
     std::vector<unsigned short> indices;
     std::vector<glm::vec3> verticess;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
-    loadAssImp("Horse.obj", indices, verticess, uvs, normals);
+    //loadAssImp("Horse.obj", indices, verticess, uvs, normals);
+    loadAssImp("m.obj", indices, verticess, uvs, normals);
 
     int cantTriangulos = verticess.size() / 3;
 
-    float escalar = 3;
+    float escalar = 80;
 
 
     Objeto** elementos = new Objeto * [cantTriangulos];
@@ -78,7 +84,7 @@ Camara* ejemplo1() {
     //eferaPrueba5->sensibilidad_luz_difusa = 0;
 
 
-    Objeto** elementos = new Objeto * [5];
+    Objeto** elementos = new Objeto * [6];
     elementos[0] = cilindroPrueba;
     elementos[1] = eferaPrueba2;
     elementos[2] = eferaPrueba3;
@@ -95,6 +101,88 @@ Camara* ejemplo1() {
     luces[2] = { {255.f,    0.f,  255.f},  {-700.f ,0.f,   400.f} };
     ObjetosEscena::getInstancia()->lucesDifusas = luces;
     ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
+
+
+    return camaraPtr;
+}
+
+
+Camara* ejemploObligatorio() {
+
+    ObjetosEscena::getInstancia()->resolucionX = 1000;
+    ObjetosEscena::getInstancia()->resolucionY = 1000;
+
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
+
+    
+    Plano* pared_piso      = new Plano({ 0.0f, -350.0f, 0.0f }, { 0, 0, 1 }, { 1, 0, 0 } , { 255, 255, 255 });
+    Plano* pared_techo     = new Plano({ 0.0f,  350.0f, 0.0f}, { 1, 0, 0 }, { 0, 0, 1 }, { 100, 100, 100 });
+    Plano* pared_derecha   = new Plano({ 350.0f, 0.0f, 0.0f }, { 0, -1, 0 }, { 0, 0, 1 }, { 0, 100, 0 });
+    Plano* pared_isquierda = new Plano({ -350.0f, 0.0f, 0.0f }, { 0, 1, 0 }, { 0, 0, 1 }, { 100, 0, 0 });
+    Plano* fondo = new Plano({ 00.0f, 0.0f, 800.0f }, { 0,1, 0 }, { 1, 0, 0 }, { 255, 255, 255 });
+    Plano* frente = new Plano({ 00.0f, 0.0f, -1050.0f }, { 0,1, 0 }, { -1, 0, 0 }, { 0, 0, 0 });
+
+    Esfera* esferaEspejo = new Esfera({ 140,-150,400 }, 70.0f, { 255,255,255 });
+    esferaEspejo->coeficienteTransparencia = 0.0f;
+    esferaEspejo->coeficienteReflexion = 1.0f;
+
+    Esfera* esferaTransparente = new Esfera({ -120,-100,400 }, 120.0f, { 255,198,198});
+    esferaTransparente->coeficienteTransparencia = 0.6f;
+    esferaTransparente->coeficienteReflexion = 0.0f;
+
+    std::vector<Objeto*> elementos;
+
+
+    elementos.push_back(pared_piso);
+    elementos.push_back(pared_techo);
+    elementos.push_back(pared_derecha);
+    elementos.push_back(pared_isquierda);
+    elementos.push_back(fondo);
+    elementos.push_back(frente);
+    elementos.push_back(esferaEspejo);
+    elementos.push_back(esferaTransparente);
+
+    std::vector<unsigned short> indices;
+    std::vector<glm::vec3> verticess;
+    std::vector<glm::vec2> uvs;
+    std::vector<glm::vec3> normals;
+    loadAssImp("m.obj", indices, verticess, uvs, normals);
+
+    int cantTriangulos = verticess.size() / 3;
+
+    float escalar = 85;
+    MathVector trasladar = { 0.f, -300.f, 350.f };
+
+    for (int i = 0; i < cantTriangulos; i++) {
+
+        MathVector v1 = { verticess[i * 3].x     * escalar + trasladar.x , verticess[i * 3].y     * escalar + trasladar.y   , verticess[i * 3]    .z * escalar + trasladar.z };
+        MathVector v2 = { verticess[i * 3 + 1].x * escalar + trasladar.x , verticess[i * 3 + 1].y * escalar + trasladar.y   , verticess[i * 3 + 1].z * escalar + trasladar.z };
+        MathVector v3 = { verticess[i * 3 + 2].x * escalar + trasladar.x , verticess[i * 3 + 2].y * escalar + trasladar.y   , verticess[i * 3 + 2].z * escalar + trasladar.z };
+
+        MathVector n_v1 = { normals[i * 3].x    , normals[i * 3].y     , normals[i * 3].z };
+        MathVector n_v2 = { normals[i * 3 + 1].x, normals[i * 3 + 1].y , normals[i * 3 + 1].z };
+        MathVector n_v3 = { normals[i * 3 + 2].x, normals[i * 3 + 2].y , normals[i * 3 + 2].z };
+
+
+        elementos.push_back(new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, { 255,255,255 }));
+    }
+
+
+    Objeto** elementosArray = new Objeto * [elementos.size()];
+    for (int i = 0; i < elementos.size(); i++) {
+        elementosArray[i] = elementos[i];
+    }
+    
+    ObjetosEscena::getInstancia()->setElementos(elementos.size(), elementosArray);
+    ObjetosEscena::getInstancia()->luzAmbiente = { 80.0f,80.0f,80.0f };
+
+    LuzPuntual* luces = new LuzPuntual[2];
+    luces[0] = { {255.f,  255.f,  255.f}, {0.f  , 300.f,   200.f} };
+
+    luces[1] = { {255.f,  255.f,  255.f}, {0.f  , 300.f,   500.f} };
+    
+    ObjetosEscena::getInstancia()->lucesDifusas = luces;
+    ObjetosEscena::getInstancia()->numeroLucesDifusas = 2;
 
 
     return camaraPtr;
@@ -203,7 +291,8 @@ Camara* ejemplo4() {
     return camaraPtr;
 }
 
-Camara* ejemplo3() {
+/*
+Camara* cargarEscena() {
    
     CargaArchivo* carga = new CargaArchivo("MetaDatas.json");
 
@@ -214,6 +303,9 @@ Camara* ejemplo3() {
     std::vector<Cilinder> cilins = carga->getCilindros();
     std::vector<LuzPunt> lucesPunt = carga->getLuces();
     std::vector<Plane> plans = carga->getPlanos();
+
+    ObjetosEscena::getInstancia()->resolucionX = carga->getResX();
+    ObjetosEscena::getInstancia()->resolucionY = carga->getResY();
     
 
     Objeto** elementos = new Objeto * [esferas.size() + tris.size() + cilins.size()];
@@ -241,14 +333,16 @@ Camara* ejemplo3() {
         //elementos[c + esferas.size() + tris.size()]->coeficienteReflexion = cilins[c].Refleccion;
         //elementos[c + esferas.size() + tris.size()]->coeficienteTransparencia = cilins[c].Transparencia;
     }
-
+  
     for (int p = 0; p < plans.size(); p++) {
         elementos[p + esferas.size() + tris.size() + cilins.size()] = new Plano(plans[p].puntoBase, plans[p].D, {plans[p].r, plans[p].g, plans[p].b});
         elementos[p + esferas.size() + tris.size() + cilins.size()]->setAtenuacion(plans[p].atConst, plans[p].atLineal, plans[p].atCuadr);
         elementos[p + esferas.size() + tris.size() + cilins.size()]->setParametrosEspeculares(plans[p].esxpReflecEspec, plans[p].fracReflecEspec, { plans[p].colorReflecEspecR, plans[p].colorReflecEspecG, plans[p].colorReflecEspecB });
         elementos[p + esferas.size() + tris.size() + cilins.size()]->coeficienteReflexion = plans[p].Refleccion;
         elementos[p + esferas.size() + tris.size() + cilins.size()]->coeficienteTransparencia = plans[p].Transparencia;
+        
     }
+  
 
     ObjetosEscena::getInstancia()->setElementos(esferas.size() + tris.size() + cilins.size() + plans.size(), elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { carga->getLuzAmb().x, carga->getLuzAmb().y , carga->getLuzAmb().z };
@@ -265,13 +359,19 @@ Camara* ejemplo3() {
     return camaraPtr2;
 }
 
-
+*/
 
 
 // Main function
 int main() {
-    ObjetosEscena::getInstancia()->resolucionX = 1000.f;
-    ObjetosEscena::getInstancia()->resolucionY =  600.f;
+
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        cerr << "No se pudo iniciar SDL: " << SDL_GetError() << endl;
+        return 1;
+    }
+
+
+    Camara* camaraEj = ejemploObligatorio();
 
     FIBITMAP* bitmap = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
         ObjetosEscena::getInstancia()->resolucionY);
@@ -295,13 +395,16 @@ int main() {
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
 
+<<<<<<< HEAD
     Camara* camaraEj = ejemplo1();
 
 
+=======
+>>>>>>> ecaab4301097d3c885bb5e4c07809ccca2a6533b
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
         
-           printf("%.2f\n", (float)(y * w + x) / (float)(w * h));
+           //printf("%.2f\n", (float)(y * w + x) / (float)(w * h));
             //Implementacion de  anti-aliasing
 
 
@@ -467,12 +570,14 @@ int main() {
 
     /* --------------------------------------- */
     std::string dt = getCurrentDateTime();
-    guardarImagen(bitmap, "Base");// , dt);
-    guardarImagen(bitmapTrans, "Transp");//, dt);
-    guardarImagen(bitmapRef, "Reflec");//, dt);
-    guardarImagen(bitmapAmb, "Amb");//, dt);
-    guardarImagen(bitmapEspec, "Espec");//, dt);
-    guardarImagen(bitmapDif, "Difus");//, dt);
+
+
+    guardarImagen(bitmap, dt,  "Base");// , dt);
+    guardarImagen(bitmapTrans, dt,  "Transp");//, dt);
+    guardarImagen(bitmapRef, dt, "Reflec");//, dt);
+    guardarImagen(bitmapAmb, dt, "Amb");//, dt);
+    guardarImagen(bitmapEspec, dt, "Espec");//, dt);
+    guardarImagen(bitmapDif, dt, "Difus");//, dt);
 
     return 0;
 }

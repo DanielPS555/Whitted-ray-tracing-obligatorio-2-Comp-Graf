@@ -261,7 +261,8 @@
 
   "camara": [
     {
-      "Resolucion": 720,
+      "ResolucionX": 720,
+      "ResolucionY": 720,
       "x": 910,
       "y": 110,
       "z": 150,

@@ -4,12 +4,16 @@
 class Plano : public Objeto
 {
 private:
-	MathVector puntoBase;
-	float D;
+	MathVector puntoDeAnclaje;
+	MathVector u;
+	MathVector v;
+
+
+	MathVector normalCalculada;
 
 public:
 
-	Plano(MathVector puntoBase, float D, Color color);
+	Plano(MathVector puntoDeAnclaje, MathVector vectorU, MathVector vectorV, Color color);
 
 	float intersepcion(Rayo rayo);
 

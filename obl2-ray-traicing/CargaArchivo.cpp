@@ -165,7 +165,8 @@ CargaArchivo::CargaArchivo(std::string file)
 	this->ubCam = { data["camara"][0]["x"], data["camara"][0]["y"], data["camara"][0]["z"] };
 	this->dirACam = {data["camara"][0]["dirAx"], data["camara"][0]["dirAy"], data["camara"][0]["dirAz"]};
 	this->dirPVCam = { data["camara"][0]["dirPVx"], data["camara"][0]["dirPVy"], data["camara"][0]["dirPVz"] };
-	this->resolucion = data["camara"][0]["Resolucion"];
+	this->resolucionX = data["camara"][0]["ResolucionX"];
+	this->resolucionY = data["camara"][0]["ResolucionY"];
 
 	this->luzAmb.push_back(data["luzAmbiente"][0]["intr"]);
 	this->luzAmb.push_back(data["luzAmbiente"][0]["intg"]);
@@ -197,9 +198,14 @@ MathVector CargaArchivo::getDirPVCam()
 	return this->dirPVCam;
 }
 
-int CargaArchivo::getRes()
+int CargaArchivo::getResX()
 {
-	return this->resolucion;
+	return this->resolucionX;
+}
+
+int CargaArchivo::getResY()
+{
+	return this->resolucionY;
 }
 
 std::vector<Plane> CargaArchivo::getPlanos()

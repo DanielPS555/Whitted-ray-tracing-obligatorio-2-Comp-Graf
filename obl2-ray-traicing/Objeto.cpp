@@ -120,9 +120,9 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 		luzColorDifusa.g += luzColorDifusaPorLuz.g;
 		luzColorDifusa.b += luzColorDifusaPorLuz.b;
 
-		luzColorEspecular.r += luzColorEspecularPorLuz.r;
-		luzColorEspecular.g += luzColorEspecularPorLuz.g;
-		luzColorEspecular.b += luzColorEspecularPorLuz.b;
+		luzColorEspecular.r += luzColorEspecularPorLuz.r * coeficiente_reflexion_corregido;
+		luzColorEspecular.g += luzColorEspecularPorLuz.g *coeficiente_reflexion_corregido;
+		luzColorEspecular.b += luzColorEspecularPorLuz.b *coeficiente_reflexion_corregido;
 
 	}
 
@@ -145,6 +145,7 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 	colorTotal.ambient = luzColorAmbiente;
 	colorTotal.espec = luzColorEspecular; 
 	colorTotal.difus = luzColorDifusa; 
+
 	delete coloresLucesInterseptadas;
 
 	if (profundidad < PROFUNDIDAD_MAX) {

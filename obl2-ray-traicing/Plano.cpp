@@ -1,9 +1,13 @@
 #include "Plano.h"
 
-Plano::Plano(MathVector puntoBase, float D, Color color)
-{
-	this->puntoBase = puntoBase;
-	this->D = D;
+Plano::Plano(MathVector puntoDeAnclaje, MathVector vectorU, MathVector vectorV, Color color){
+	
+	this->puntoDeAnclaje = puntoDeAnclaje;
+	this->u = vectorU;
+	this->v = vectorV;
+
+	this->normalCalculada = normalizar(productoVectorial(u, v));
+
 	setColorBase(color);
 }
 
@@ -26,17 +30,38 @@ float Plano::intersepcion(Rayo rayo)
 		  t= -(A*x_0+B*y_0+C*z_0+D)/(A*v_x+B*v_y+C*v_z)
 
 	*/
-	float t = -((puntoBase.x * rayo.puntoAnclaje.x) + (puntoBase.y * rayo.puntoAnclaje.y) + (puntoBase.z * rayo.puntoAnclaje.z) + D) / ((puntoBase.x * rayo.dirrecion.x) + (puntoBase.y * rayo.dirrecion.y) + (puntoBase.z * rayo.dirrecion.z));
 
-	if (t > 0) {
-		return t;
+
+	MathVector r = rayo.dirrecion;
+	MathVector rc = rayo.puntoAnclaje;
+	MathVector c = puntoDeAnclaje;
+
+
+	float detA = - u.x * v.y * r.z	-   u.y * v.z * r.x   -   u.z * v.x * r.y
+		         + r.x * v.y * u.z	+	r.y * v.z * u.x   +   r.z * v.x * u.y;
+
+	if (detA != 0) {
+
+		float f_x = -c.x + rc.x;
+		float f_y = -c.y + rc.y;
+		float f_z = -c.z + rc.z;
+
+		float det_z = + u.x * v.y * f_z   +	u.y * v.z * f_x	  +   u.z * v.x * f_y
+					  - f_x * v.y * u.z  -	f_y * v.z * u.x	  -	  f_z * v.x * u.y;
+
+		float t = det_z / detA;
+
+		return t > 0 ? t : -1;
+
 	}
 	else {
-		return -1.0;
+		return -1;
 	}
+
+	
 }
 
 MathVector Plano::getNormal(MathVector punto)
 {
-	return puntoBase;
+	return normalCalculada;
 }

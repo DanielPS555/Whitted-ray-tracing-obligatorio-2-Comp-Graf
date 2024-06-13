@@ -171,7 +171,8 @@ class CargaArchivo
 		std::vector<float> luzAmb;
 		std::vector<LuzPunt> luces;
 		std::vector<Plane> planos;
-		int resolucion;
+		int resolucionX;
+		int resolucionY;
 
 	public:
 
@@ -183,7 +184,8 @@ class CargaArchivo
 
 		MathVector getDirPVCam();
 
-		int getRes();
+		int getResX();
+		int getResY();
 
 		std::vector<Plane> getPlanos();
 

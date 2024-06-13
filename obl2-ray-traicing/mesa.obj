@@ -1,0 +1,13 @@
+# Blender 4.1.1
+# www.blender.org
+mtllib b.mtl
+o BezierCurve.001
+
+v -200 0 0
+v 200 80 0
+v 200 0 0
+
+
+vn 0 0 -1
+vn 0 0 -1
+vn 0 0 -1

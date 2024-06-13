@@ -145,6 +145,7 @@
     <ClCompile Include="LuzAmbiente.cpp" />
     <ClCompile Include="LuzPuntual.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Malla.cpp" />
     <ClCompile Include="MathVector.cpp" />
     <ClCompile Include="Objeto.cpp" />
     <ClCompile Include="ObjetosEscena.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Esfera.h" />
     <ClInclude Include="LuzAmbiente.h" />
     <ClInclude Include="LuzPuntual.h" />
+    <ClInclude Include="Malla.h" />
     <ClInclude Include="MathVector.h" />
     <ClInclude Include="Objeto.h" />
     <ClInclude Include="ObjetosEscena.h" />
