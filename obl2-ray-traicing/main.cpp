@@ -64,8 +64,9 @@ Camara* ejemplo1() {
 
 
 
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { .0f, .0f, -1000.0f });
 
+    Cilindro * cilindroPrueba = new Cilindro({ 0, 0, 0 }, { 0, 1, 1 }, 100,50, { 90,180,15 });
     Esfera* eferaPrueba1 = new Esfera({ 250,250,500 }, 200.0f, { 90,180,15 });
     Esfera* eferaPrueba2 = new Esfera({ 250,-250,500 }, 200.0f, { 232,158,15 });
     Esfera* eferaPrueba3 = new Esfera({ -250,-250,500 }, 200.0f, { 5,2,200 });
@@ -78,22 +79,22 @@ Camara* ejemplo1() {
 
 
     Objeto** elementos = new Objeto * [5];
-    elementos[0] = eferaPrueba1;
+    elementos[0] = cilindroPrueba;
     elementos[1] = eferaPrueba2;
     elementos[2] = eferaPrueba3;
     elementos[3] = eferaPrueba4;
     elementos[4] = eferaPrueba5;
     elementos[5] = triangulo2;
 
-    ObjetosEscena::getInstancia()->setElementos(6, elementos);
+    ObjetosEscena::getInstancia()->setElementos(1, elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
 
     LuzPuntual* luces = new LuzPuntual[3];
-    luces[0] = { {255.f,    255.f,  255.f}, {0.f   ,0.f,   100.f} };
+    luces[0] = { {255.f,    255.f,  255.f}, {0.f   ,0.f,   -200.f} };
     luces[1] = { {255.f,    0.f,  0.f} ,    {700.f ,0.f,   400.f} };
     luces[2] = { {255.f,    0.f,  255.f},  {-700.f ,0.f,   400.f} };
     ObjetosEscena::getInstancia()->lucesDifusas = luces;
-    ObjetosEscena::getInstancia()->numeroLucesDifusas = 3;
+    ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
 
 
     return camaraPtr;
@@ -234,11 +235,11 @@ Camara* ejemplo3() {
     }
     
     for (int c = 0; c < cilins.size(); c++) {
-        elementos[c + esferas.size() + tris.size()] = new Cilindro({ cilins[c].x, cilins[c].y, cilins[c].z }, cilins[c].radio, cilins[c].altura, { cilins[c].r, cilins[c].g, cilins[c].b });
-        elementos[c + esferas.size() + tris.size()]->setAtenuacion(cilins[c].atConst, cilins[c].atLineal, cilins[c].atCuadr);
-        elementos[c + esferas.size() + tris.size()]->setParametrosEspeculares(cilins[c].esxpReflecEspec, cilins[c].fracReflecEspec, { cilins[c].colorReflecEspecR, cilins[c].colorReflecEspecG, cilins[c].colorReflecEspecB });
-        elementos[c + esferas.size() + tris.size()]->coeficienteReflexion = cilins[c].Refleccion;
-        elementos[c + esferas.size() + tris.size()]->coeficienteTransparencia = cilins[c].Transparencia;
+        //elementos[c + esferas.size() + tris.size()] = new Cilindro({ cilins[c].x, cilins[c].y, cilins[c].z }, cilins[c].radio, cilins[c].altura, { cilins[c].r, cilins[c].g, cilins[c].b });
+        //elementos[c + esferas.size() + tris.size()]->setAtenuacion(cilins[c].atConst, cilins[c].atLineal, cilins[c].atCuadr);
+        //elementos[c + esferas.size() + tris.size()]->setParametrosEspeculares(cilins[c].esxpReflecEspec, cilins[c].fracReflecEspec, { cilins[c].colorReflecEspecR, cilins[c].colorReflecEspecG, cilins[c].colorReflecEspecB });
+        //elementos[c + esferas.size() + tris.size()]->coeficienteReflexion = cilins[c].Refleccion;
+        //elementos[c + esferas.size() + tris.size()]->coeficienteTransparencia = cilins[c].Transparencia;
     }
 
     for (int p = 0; p < plans.size(); p++) {
@@ -294,7 +295,7 @@ int main() {
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
 
-    Camara* camaraEj = ejemplo3();
+    Camara* camaraEj = ejemplo1();
 
 
     for (int y = 0; y < h; y++) {

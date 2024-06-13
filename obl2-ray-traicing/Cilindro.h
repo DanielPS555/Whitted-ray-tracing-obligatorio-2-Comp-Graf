@@ -5,11 +5,12 @@ class Cilindro : public Objeto {
 private:
 	float radio, altura;
 	MathVector centro;
+	MathVector direccion;
 
 
 public:
 
-	Cilindro(MathVector centro, float radio, float altura, Color color);
+	Cilindro(MathVector centro, MathVector direccion, float radio, float altura, Color color);
 
 	float intersepcion(Rayo rayo);
 

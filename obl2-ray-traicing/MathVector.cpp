@@ -100,3 +100,7 @@ MathVector simetrico(MathVector ejeSimetria, MathVector vectorAInvetir) {
 	MathVector vec1 = multiplicarPorEscalar(normasEspejo, 2 * c);
 	return restar(vec1, vectorAInvetir);
 }
+
+float calcularMagniticudCuadrada(MathVector v) {
+	return v.x * v.x + v.y * v.y + v.z * v.z;
+}
