@@ -77,7 +77,7 @@ Camara* ejemplo1() {
     //eferaPrueba5->sensibilidad_luz_difusa = 0;
 
 
-    Objeto** elementos = new Objeto * [5];
+    Objeto** elementos = new Objeto * [6];
     elementos[0] = eferaPrueba1;
     elementos[1] = eferaPrueba2;
     elementos[2] = eferaPrueba3;
@@ -94,6 +94,39 @@ Camara* ejemplo1() {
     luces[2] = { {255.f,    0.f,  255.f},  {-700.f ,0.f,   400.f} };
     ObjetosEscena::getInstancia()->lucesDifusas = luces;
     ObjetosEscena::getInstancia()->numeroLucesDifusas = 3;
+
+
+    return camaraPtr;
+}
+
+
+Camara* ejemploPlano() {
+
+    ObjetosEscena::getInstancia()->resolucionX = 1000;
+    ObjetosEscena::getInstancia()->resolucionY = 1000;
+
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
+
+    
+    Plano* plano = new Plano ({ 0, 0, 0 }, { -1, 0, -1 } , { 0, 1, 0 } , { 255, 255, 255 });
+    plano->setAtenuacion(0.01, 0.0, 0.001);
+
+    Plano* plano2 = new Plano({ 0, 0, 0 }, { -1, 0, 1 }, { 0, 1, 0 } , { 255, 0, 0});
+    plano2->setAtenuacion(0.01, 0.0, 0.001);
+
+
+    Objeto** elementos = new Objeto * [2];
+    elementos[0] = plano;
+    elementos[1] = plano2;
+
+    ObjetosEscena::getInstancia()->setElementos(2, elementos);
+    ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
+
+    LuzPuntual* luces = new LuzPuntual[3];
+    luces[0] = { {255.f,    255.f,  255.f}, {0.f  , 0.f,   -100.f} };
+    
+    ObjetosEscena::getInstancia()->lucesDifusas = luces;
+    ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
 
 
     return camaraPtr;
@@ -202,7 +235,8 @@ Camara* ejemplo4() {
     return camaraPtr;
 }
 
-Camara* ejemplo3() {
+/*
+Camara* cargarEscena() {
    
     CargaArchivo* carga = new CargaArchivo("MetaDatas.json");
 
@@ -213,6 +247,9 @@ Camara* ejemplo3() {
     std::vector<Cilinder> cilins = carga->getCilindros();
     std::vector<LuzPunt> lucesPunt = carga->getLuces();
     std::vector<Plane> plans = carga->getPlanos();
+
+    ObjetosEscena::getInstancia()->resolucionX = carga->getResX();
+    ObjetosEscena::getInstancia()->resolucionY = carga->getResY();
     
 
     Objeto** elementos = new Objeto * [esferas.size() + tris.size() + cilins.size()];
@@ -240,14 +277,16 @@ Camara* ejemplo3() {
         elementos[c + esferas.size() + tris.size()]->coeficienteReflexion = cilins[c].Refleccion;
         elementos[c + esferas.size() + tris.size()]->coeficienteTransparencia = cilins[c].Transparencia;
     }
-
+  
     for (int p = 0; p < plans.size(); p++) {
         elementos[p + esferas.size() + tris.size() + cilins.size()] = new Plano(plans[p].puntoBase, plans[p].D, {plans[p].r, plans[p].g, plans[p].b});
         elementos[p + esferas.size() + tris.size() + cilins.size()]->setAtenuacion(plans[p].atConst, plans[p].atLineal, plans[p].atCuadr);
         elementos[p + esferas.size() + tris.size() + cilins.size()]->setParametrosEspeculares(plans[p].esxpReflecEspec, plans[p].fracReflecEspec, { plans[p].colorReflecEspecR, plans[p].colorReflecEspecG, plans[p].colorReflecEspecB });
         elementos[p + esferas.size() + tris.size() + cilins.size()]->coeficienteReflexion = plans[p].Refleccion;
         elementos[p + esferas.size() + tris.size() + cilins.size()]->coeficienteTransparencia = plans[p].Transparencia;
+        
     }
+  
 
     ObjetosEscena::getInstancia()->setElementos(esferas.size() + tris.size() + cilins.size() + plans.size(), elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { carga->getLuzAmb().x, carga->getLuzAmb().y , carga->getLuzAmb().z };
@@ -264,13 +303,13 @@ Camara* ejemplo3() {
     return camaraPtr2;
 }
 
-
+*/
 
 
 // Main function
 int main() {
-    ObjetosEscena::getInstancia()->resolucionX = 1000.f;
-    ObjetosEscena::getInstancia()->resolucionY =  600.f;
+
+    Camara* camaraEj = ejemploPlano();
 
     FIBITMAP* bitmap = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
         ObjetosEscena::getInstancia()->resolucionY);
@@ -294,13 +333,10 @@ int main() {
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
 
-    Camara* camaraEj = ejemplo3();
-
-
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
         
-           printf("%.2f\n", (float)(y * w + x) / (float)(w * h));
+           //printf("%.2f\n", (float)(y * w + x) / (float)(w * h));
             //Implementacion de  anti-aliasing
 
 
@@ -466,12 +502,14 @@ int main() {
 
     /* --------------------------------------- */
     std::string dt = getCurrentDateTime();
-    guardarImagen(bitmap, "Base");// , dt);
-    guardarImagen(bitmapTrans, "Transp");//, dt);
-    guardarImagen(bitmapRef, "Reflec");//, dt);
-    guardarImagen(bitmapAmb, "Amb");//, dt);
-    guardarImagen(bitmapEspec, "Espec");//, dt);
-    guardarImagen(bitmapDif, "Difus");//, dt);
+
+
+    guardarImagen(bitmap, dt,  "Base");// , dt);
+    guardarImagen(bitmapTrans, dt,  "Transp");//, dt);
+    guardarImagen(bitmapRef, dt, "Reflec");//, dt);
+    guardarImagen(bitmapAmb, dt, "Amb");//, dt);
+    guardarImagen(bitmapEspec, dt, "Espec");//, dt);
+    guardarImagen(bitmapDif, dt, "Difus");//, dt);
 
     return 0;
 }

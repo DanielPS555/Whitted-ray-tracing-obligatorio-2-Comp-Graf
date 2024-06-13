@@ -3,8 +3,8 @@
 #include <FreeImage.h>
 #include "Color.h"
 
-#ifndef OBJETO_CLASS
-#define OBJETO_CLASS
+#ifndef COLOR_COEF_STRUCT
+#define COLOR_COEF_STRUCT
 
 #define SENSIBILIDAD_LUZ_AMBIENTE_POR_DEFECTO 1.0f
 #define SENSIBILIDAD_LUZ_DIFUSA_POR_DEFECTO 0.9f
@@ -29,7 +29,11 @@ struct ColorCoef {
 	Color difus;
 };
 
+#endif 
 
+
+#ifndef OBJETO_CLASS
+#define OBJETO_CLASS
 class Objeto{
 
 protected: 
@@ -80,4 +84,5 @@ public:
 	}
 };
 
-#endif // !OBJETO_CLASS
+#endif 
+
