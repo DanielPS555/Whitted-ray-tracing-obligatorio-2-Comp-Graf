@@ -16,7 +16,6 @@
 #include "objloader.h"
 #include "glm/glm.hpp"
 
-#include "SDL.h"
 
 
 
@@ -115,7 +114,8 @@ Camara* ejemploObligatorio() {
 
     Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
 
-    
+    Cilindro * cilindro = new Cilindro({ -40,-220,400 }, { 0,1,0 }, 80, 180, { 0,255,0 });
+
     Plano* pared_piso      = new Plano({ 0.0f, -350.0f, 0.0f }, { 0, 0, 1 }, { 1, 0, 0 } , { 255, 255, 255 });
     Plano* pared_techo     = new Plano({ 0.0f,  350.0f, 0.0f}, { 1, 0, 0 }, { 0, 0, 1 }, { 100, 100, 100 });
     Plano* pared_derecha   = new Plano({ 350.0f, 0.0f, 0.0f }, { 0, -1, 0 }, { 0, 0, 1 }, { 0, 100, 0 });
@@ -129,7 +129,7 @@ Camara* ejemploObligatorio() {
 
     Esfera* esferaTransparente = new Esfera({ -120,-100,400 }, 120.0f, { 255,198,198});
     esferaTransparente->coeficienteTransparencia = 0.6f;
-    esferaTransparente->coeficienteReflexion = 0.0f;
+    esferaTransparente->coeficienteReflexion = 0.2f;
 
     std::vector<Objeto*> elementos;
 
@@ -142,6 +142,7 @@ Camara* ejemploObligatorio() {
     elementos.push_back(frente);
     elementos.push_back(esferaEspejo);
     elementos.push_back(esferaTransparente);
+    elementos.push_back(cilindro);
 
     std::vector<unsigned short> indices;
     std::vector<glm::vec3> verticess;
@@ -366,11 +367,12 @@ Camara* cargarEscena() {
 // Main function
 int main() {
 
+    /*
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         cerr << "No se pudo iniciar SDL: " << SDL_GetError() << endl;
         return 1;
     }
-
+    */
 
     Camara* camaraEj = ejemploObligatorio();
 
@@ -396,12 +398,9 @@ int main() {
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
 
-<<<<<<< HEAD
-    Camara* camaraEj = ejemplo1();
 
 
-=======
->>>>>>> ecaab4301097d3c885bb5e4c07809ccca2a6533b
+
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
         
