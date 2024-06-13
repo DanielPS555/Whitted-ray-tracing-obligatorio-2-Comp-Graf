@@ -16,21 +16,27 @@
 #include "objloader.h"
 #include "glm/glm.hpp"
 
+#include "SDL.h"
 
 
 Camara* ejemploObj() {
 
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, -1.0f }, { 0.0f, 100.0f, 700.0f });
+
+    ObjetosEscena::getInstancia()->resolucionX = 500;
+    ObjetosEscena::getInstancia()->resolucionY = 500;
+
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 100.0f , -700.0f });
 
     std::vector<unsigned short> indices;
     std::vector<glm::vec3> verticess;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
-    loadAssImp("Horse.obj", indices, verticess, uvs, normals);
+    //loadAssImp("Horse.obj", indices, verticess, uvs, normals);
+    loadAssImp("m.obj", indices, verticess, uvs, normals);
 
     int cantTriangulos = verticess.size() / 3;
 
-    float escalar = 3;
+    float escalar = 80;
 
 
     Objeto** elementos = new Objeto * [cantTriangulos];
@@ -100,7 +106,7 @@ Camara* ejemplo1() {
 }
 
 
-Camara* ejemploPlano() {
+Camara* ejemploObligatorio() {
 
     ObjetosEscena::getInstancia()->resolucionX = 1000;
     ObjetosEscena::getInstancia()->resolucionY = 1000;
@@ -108,25 +114,74 @@ Camara* ejemploPlano() {
     Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
 
     
-    Plano* plano = new Plano ({ 0, 0, 0 }, { -1, 0, -1 } , { 0, 1, 0 } , { 255, 255, 255 });
-    plano->setAtenuacion(0.01, 0.0, 0.001);
+    Plano* pared_piso      = new Plano({ 0.0f, -350.0f, 0.0f }, { 0, 0, 1 }, { 1, 0, 0 } , { 255, 255, 255 });
+    Plano* pared_techo     = new Plano({ 0.0f,  350.0f, 0.0f}, { 1, 0, 0 }, { 0, 0, 1 }, { 100, 100, 100 });
+    Plano* pared_derecha   = new Plano({ 350.0f, 0.0f, 0.0f }, { 0, -1, 0 }, { 0, 0, 1 }, { 0, 100, 0 });
+    Plano* pared_isquierda = new Plano({ -350.0f, 0.0f, 0.0f }, { 0, 1, 0 }, { 0, 0, 1 }, { 100, 0, 0 });
+    Plano* fondo = new Plano({ 00.0f, 0.0f, 800.0f }, { 0,1, 0 }, { 1, 0, 0 }, { 255, 255, 255 });
+    Plano* frente = new Plano({ 00.0f, 0.0f, -1050.0f }, { 0,1, 0 }, { -1, 0, 0 }, { 0, 0, 0 });
 
-    Plano* plano2 = new Plano({ 0, 0, 0 }, { -1, 0, 1 }, { 0, 1, 0 } , { 255, 0, 0});
-    plano2->setAtenuacion(0.01, 0.0, 0.001);
+    Esfera* esferaEspejo = new Esfera({ 140,-150,400 }, 70.0f, { 255,255,255 });
+    esferaEspejo->coeficienteTransparencia = 0.0f;
+    esferaEspejo->coeficienteReflexion = 1.0f;
+
+    Esfera* esferaTransparente = new Esfera({ -120,-100,400 }, 120.0f, { 255,198,198});
+    esferaTransparente->coeficienteTransparencia = 0.6f;
+    esferaTransparente->coeficienteReflexion = 0.0f;
+
+    std::vector<Objeto*> elementos;
 
 
-    Objeto** elementos = new Objeto * [2];
-    elementos[0] = plano;
-    elementos[1] = plano2;
+    elementos.push_back(pared_piso);
+    elementos.push_back(pared_techo);
+    elementos.push_back(pared_derecha);
+    elementos.push_back(pared_isquierda);
+    elementos.push_back(fondo);
+    elementos.push_back(frente);
+    elementos.push_back(esferaEspejo);
+    elementos.push_back(esferaTransparente);
 
-    ObjetosEscena::getInstancia()->setElementos(2, elementos);
-    ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
+    std::vector<unsigned short> indices;
+    std::vector<glm::vec3> verticess;
+    std::vector<glm::vec2> uvs;
+    std::vector<glm::vec3> normals;
+    loadAssImp("m.obj", indices, verticess, uvs, normals);
 
-    LuzPuntual* luces = new LuzPuntual[3];
-    luces[0] = { {255.f,    255.f,  255.f}, {0.f  , 0.f,   -100.f} };
+    int cantTriangulos = verticess.size() / 3;
+
+    float escalar = 85;
+    MathVector trasladar = { 0.f, -300.f, 350.f };
+
+    for (int i = 0; i < cantTriangulos; i++) {
+
+        MathVector v1 = { verticess[i * 3].x     * escalar + trasladar.x , verticess[i * 3].y     * escalar + trasladar.y   , verticess[i * 3]    .z * escalar + trasladar.z };
+        MathVector v2 = { verticess[i * 3 + 1].x * escalar + trasladar.x , verticess[i * 3 + 1].y * escalar + trasladar.y   , verticess[i * 3 + 1].z * escalar + trasladar.z };
+        MathVector v3 = { verticess[i * 3 + 2].x * escalar + trasladar.x , verticess[i * 3 + 2].y * escalar + trasladar.y   , verticess[i * 3 + 2].z * escalar + trasladar.z };
+
+        MathVector n_v1 = { normals[i * 3].x    , normals[i * 3].y     , normals[i * 3].z };
+        MathVector n_v2 = { normals[i * 3 + 1].x, normals[i * 3 + 1].y , normals[i * 3 + 1].z };
+        MathVector n_v3 = { normals[i * 3 + 2].x, normals[i * 3 + 2].y , normals[i * 3 + 2].z };
+
+
+        elementos.push_back(new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, { 255,255,255 }));
+    }
+
+
+    Objeto** elementosArray = new Objeto * [elementos.size()];
+    for (int i = 0; i < elementos.size(); i++) {
+        elementosArray[i] = elementos[i];
+    }
+    
+    ObjetosEscena::getInstancia()->setElementos(elementos.size(), elementosArray);
+    ObjetosEscena::getInstancia()->luzAmbiente = { 80.0f,80.0f,80.0f };
+
+    LuzPuntual* luces = new LuzPuntual[2];
+    luces[0] = { {255.f,  255.f,  255.f}, {0.f  , 300.f,   200.f} };
+
+    luces[1] = { {255.f,  255.f,  255.f}, {0.f  , 300.f,   500.f} };
     
     ObjetosEscena::getInstancia()->lucesDifusas = luces;
-    ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
+    ObjetosEscena::getInstancia()->numeroLucesDifusas = 2;
 
 
     return camaraPtr;
@@ -309,7 +364,13 @@ Camara* cargarEscena() {
 // Main function
 int main() {
 
-    Camara* camaraEj = ejemploPlano();
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        cerr << "No se pudo iniciar SDL: " << SDL_GetError() << endl;
+        return 1;
+    }
+
+
+    Camara* camaraEj = ejemploObligatorio();
 
     FIBITMAP* bitmap = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
         ObjetosEscena::getInstancia()->resolucionY);
