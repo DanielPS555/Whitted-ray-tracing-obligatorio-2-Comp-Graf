@@ -15,8 +15,31 @@
 #include "Triangulo.h"
 #include "objloader.h"
 
+#include "SDL.h"
+
+int render();
+
+int SDL_main(int argc, char* argv[]) {
+    // Tu código SDL aquí
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    // Ejemplo: Crear una ventana
+    SDL_Window* window = SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
+
+    // Bucle principal
+    bool quit = false;
+    SDL_Event e;
+
+    render();
 
 
+    // Liberar recursos
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    return 0;
+}
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 800
@@ -150,7 +173,7 @@ Camara* ejemploObligatorio() {
 using namespace std;
 
 // Main function
-int main() {
+int render() {
 
 
     /*if (SDL_Init(SDL_INIT_VIDEO) < 0) {
