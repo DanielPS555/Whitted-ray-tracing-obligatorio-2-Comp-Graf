@@ -16,11 +16,13 @@ protected:
 
 public:
 
-	Malla(std::string path, MathVector traslacion, float escalar);
+	Malla(const char* path, MathVector traslacion, float escalar);
 
 	float intersepcion(Rayo rayo);
 
 	MathVector getNormal(MathVector punto);
+
+	std::vector<Objeto*> getObjetosInternos();
 
 
 };
