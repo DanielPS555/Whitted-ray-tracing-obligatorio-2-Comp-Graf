@@ -209,6 +209,12 @@ int render() {
     FIBITMAP* bitmapDif = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
         ObjetosEscena::getInstancia()->resolucionY);
 
+    FIBITMAP* bitmapPriRecTrans = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
+        ObjetosEscena::getInstancia()->resolucionY);
+
+    FIBITMAP* bitmapPriRecRefle = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
+        ObjetosEscena::getInstancia()->resolucionY);
+
     int w = (int)ObjetosEscena::getInstancia()->resolucionX;
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
@@ -247,6 +253,14 @@ int render() {
             int r_d = 0;
             int g_d = 0;
             int b_d = 0;
+
+            int r_pr = 0;
+            int g_pr = 0;
+            int b_pr = 0;
+
+            int r_pt = 0;
+            int g_pt = 0;
+            int b_pt = 0;
 
 
             for (int y_s = 0; y_s <= 1; y_s++) {
@@ -362,6 +376,38 @@ int render() {
                     r_d += color.difus.r;
                     g_d += color.difus.g;
                     b_d += color.difus.b;
+
+                    if (color.primRecReflex.r > 255) {
+                        color.primRecReflex.r = 255.0f;
+                    }
+
+                    if (color.primRecReflex.g > 255) {
+                        color.primRecReflex.g = 255.0f;
+                    }
+
+                    if (color.primRecReflex.b > 255) {
+                        color.primRecReflex.b = 255.0f;
+                    }
+
+                    r_pr += color.primRecReflex.r;
+                    g_pr += color.primRecReflex.g;
+                    b_pr += color.primRecReflex.b;
+
+                    if (color.primRecTrans.r > 255) {
+                        color.primRecTrans.r = 255.0f;
+                    }
+
+                    if (color.primRecTrans.g > 255) {
+                        color.primRecTrans.g = 255.0f;
+                    }
+
+                    if (color.primRecTrans.b > 255) {
+                        color.primRecTrans.b = 255.0f;
+                    }
+
+                    r_pt += color.primRecTrans.r;
+                    g_pt += color.primRecTrans.g;
+                    b_pt += color.primRecTrans.b;
                 }
             }
 
@@ -372,6 +418,8 @@ int render() {
             RGBQUAD rgbColorAmbient = { (BYTE)(b_a / 4), (BYTE)(g_a / 4), (BYTE)(r_a / 4) };
             RGBQUAD rgbColorEspec = { (BYTE)(b_e / 4), (BYTE)(g_e / 4), (BYTE)(r_e / 4) };
             RGBQUAD rgbColorDifus = { (BYTE)(b_d / 4), (BYTE)(g_d / 4), (BYTE)(r_d / 4) };
+            RGBQUAD rgbColorPrimRecTrans = { (BYTE)(b_pt / 4), (BYTE)(g_pt / 4), (BYTE)(r_pt / 4) };
+            RGBQUAD rgbColorPrimRecReflex = { (BYTE)(b_pr / 4), (BYTE)(g_pr / 4), (BYTE)(r_pr / 4) };
 
             FreeImage_SetPixelColor(bitmap, x, y, &rgbColor);
 
@@ -380,6 +428,8 @@ int render() {
             FreeImage_SetPixelColor(bitmapAmb, x, y, &rgbColorAmbient);
             FreeImage_SetPixelColor(bitmapEspec, x, y, &rgbColorEspec);
             FreeImage_SetPixelColor(bitmapDif, x, y, &rgbColorDifus);
+            FreeImage_SetPixelColor(bitmapPriRecTrans, x, y, &rgbColorPrimRecTrans);
+            FreeImage_SetPixelColor(bitmapPriRecRefle, x, y, &rgbColorPrimRecReflex);
         }
     }
 
@@ -387,12 +437,14 @@ int render() {
     std::string dt = getCurrentDateTime();
 
 
-    guardarImagen(bitmap, dt, "Base");// , dt);
-    guardarImagen(bitmapTrans, dt, "Transp");//, dt);
-    guardarImagen(bitmapRef, dt, "Reflec");//, dt);
-    guardarImagen(bitmapAmb, dt, "Amb");//, dt);
-    guardarImagen(bitmapEspec, dt, "Espec");//, dt);
-    guardarImagen(bitmapDif, dt, "Difus");//, dt);
+    guardarImagen(bitmap, dt, "Base");
+    guardarImagen(bitmapTrans, dt, "Transp");
+    guardarImagen(bitmapRef, dt, "Reflec");
+    guardarImagen(bitmapAmb, dt, "Amb");
+    guardarImagen(bitmapEspec, dt, "Espec");
+    guardarImagen(bitmapDif, dt, "Difus");
+    guardarImagen(bitmapPriRecTrans, dt, "TranspPrimRecursion");
+    guardarImagen(bitmapPriRecRefle, dt, "ReflexPrimRecursion");
 
     return 0;
 }

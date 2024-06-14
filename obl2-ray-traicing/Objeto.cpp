@@ -14,6 +14,8 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 	colorTotal.espec = { 0.0f,0.f,0.f };
 	colorTotal.ambient = { 0.0f,0.f,0.f };
 	colorTotal.difus = { 0.0f,0.f,0.f };
+	colorTotal.primRecTrans = { 0.0f,0.f,0.f };
+	colorTotal.primRecReflex = { 0.0f,0.f,0.f };
 
 	// La suma de coeficiente_difusa_especular + coeficiente_reflexion + coeficiente_transaccion debe ser 1, cada color debe aportar esto
 	float coeficiente_difusa_especular_corregido;
@@ -165,6 +167,12 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 			colorTotal.base.r += color_r.base.r * coeficiente_reflexion_corregido;
 			colorTotal.base.g += color_r.base.g * coeficiente_reflexion_corregido;
 			colorTotal.base.b += color_r.base.b * coeficiente_reflexion_corregido;
+
+			ColorCoef color_r_pri = ObjetosEscena::getInstancia()->getPixelPorRayo(r, PROFUNDIDAD_MAX);
+
+			colorTotal.primRecReflex.r = color_r_pri.base.r * coeficiente_reflexion_corregido;
+			colorTotal.primRecReflex.g = color_r_pri.base.g * coeficiente_reflexion_corregido;
+			colorTotal.primRecReflex.b = color_r_pri.base.b * coeficiente_reflexion_corregido;
 		}
 
 		//ley de snell dice que n1 sin01 = n2 sin02
@@ -204,6 +212,12 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 				colorTotal.base.r += color_t.base.r * coeficiente_transparencia_corregido;
 				colorTotal.base.g += color_t.base.g * coeficiente_transparencia_corregido;
 				colorTotal.base.b += color_t.base.b * coeficiente_transparencia_corregido;
+
+				ColorCoef color_t_pri = ObjetosEscena::getInstancia()->getPixelPorRayo(r, PROFUNDIDAD_MAX);
+
+				colorTotal.primRecTrans.r = color_t_pri.base.r * coeficiente_transparencia_corregido;
+				colorTotal.primRecTrans.g = color_t_pri.base.g * coeficiente_transparencia_corregido;
+				colorTotal.primRecTrans.b = color_t_pri.base.b * coeficiente_transparencia_corregido;
 			}
 		}
 	}

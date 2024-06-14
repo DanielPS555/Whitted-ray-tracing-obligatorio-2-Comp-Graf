@@ -28,6 +28,8 @@ struct ColorCoef {
 	Color espec;
 	Color ambient;
 	Color difus;
+	Color primRecTrans;
+	Color primRecReflex;
 };
 
 #endif 
