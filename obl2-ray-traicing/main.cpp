@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cmath>
 #include <FreeImage.h>
-#include "ejemplo.h"
 #include <ctime>
 #include "Utils.h"
 #include "ObjetosEscena.h"
@@ -20,7 +19,7 @@
 int render();
 
 int SDL_main(int argc, char* argv[]) {
-    // Tu código SDL aquí
+    // Tu cï¿½digo SDL aquï¿½
 
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -46,8 +45,6 @@ int SDL_main(int argc, char* argv[]) {
 
 
 Camara* ejemploObj() {
-
-
     ObjetosEscena::getInstancia()->resolucionX = 500;
     ObjetosEscena::getInstancia()->resolucionY = 500;
 

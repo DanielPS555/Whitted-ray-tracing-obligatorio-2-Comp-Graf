@@ -51,9 +51,6 @@
     <ClCompile Include="ObjetosEscena.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DivisionEspacio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ejemplo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,9 +84,6 @@
     <ClCompile Include="LuzPuntual.cpp">
       <Filter>Source Files\iluminacion</Filter>
     </ClCompile>
-    <ClCompile Include="ConfiguracionEscena.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Cilindro.cpp">
       <Filter>Source Files\modelos</Filter>
     </ClCompile>
@@ -108,12 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ObjetosEscena.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DivisionEspacio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ejemplo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Camara.h">
@@ -148,9 +136,6 @@
     </ClInclude>
     <ClInclude Include="LuzPuntual.h">
       <Filter>Header Files\iluminacion</Filter>
-    </ClInclude>
-    <ClInclude Include="ConfiguracionEscena.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Cilindro.h">
       <Filter>Header Files\modelos</Filter>
