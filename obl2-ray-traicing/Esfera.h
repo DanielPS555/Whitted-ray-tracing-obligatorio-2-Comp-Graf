@@ -11,6 +11,9 @@ public:
 	Esfera(MathVector centro, float radio, Color color);
 
 	MathVector getNormal(MathVector punto);
-	float intersepcion(Rayo rayo);
+
+	std::vector<Objeto*> getObjetosInternos();
+
+	void intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t);
 };
 

@@ -15,7 +15,9 @@ public:
 
 	Plano(MathVector puntoDeAnclaje, MathVector vectorU, MathVector vectorV, Color color);
 
-	float intersepcion(Rayo rayo);
+	void intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t);
+
+	std::vector<Objeto*> getObjetosInternos();
 
 	MathVector getNormal(MathVector punto);
 };

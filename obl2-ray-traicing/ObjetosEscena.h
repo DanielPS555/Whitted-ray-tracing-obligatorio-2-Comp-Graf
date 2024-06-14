@@ -6,6 +6,8 @@
 #include "LuzPuntual.h"
 #include "vector"
 
+#include "map"
+
 #ifndef OBJECTO_ESCENA_CLASS
 #define OBJECTO_ESCENA_CLASS
 
@@ -14,13 +16,11 @@ class ObjetosEscena
 {
 private:
 
-	Objeto** elementos;
-	unsigned int numeroElementos;
-	
+	std::map<int, Objeto*> allObjetos;
+	std::vector<Objeto*> objetosPrimerNivel;
 
 	Color bgColor;
 
-	
 
 	ObjetosEscena() {
 		resolucionX = 0.0f;
@@ -47,11 +47,11 @@ public:
 	}
 
 	// La collecion de "elementos" debe estar creado y se va a utilizar de igual forma
-	void setElementos(unsigned numeroElementos, Objeto** elementos);
+	void setElementos(std::vector<Objeto*> elementosPrimerNivel);
 
 	ColorCoef getPixelPorRayo(Rayo rayo,int profundidad);
 
-	void getIntersepcionMasCercana(Rayo rayo, int& indiceObjeto, float& t_intersepcion);
+	void getIntersepcionMasCercana(Rayo rayo, int& idObjeto, float& t_intersepcion);
 
 	std::vector<Objeto*> getIntersepcionesHastaDistancia(Rayo rayo, float distanciaMaxima);
 

@@ -3,7 +3,8 @@
 #include "MathVector.h"
 #include "Utils.h"
 
-Cilindro::Cilindro(MathVector centro, MathVector direccion, float radio, float altura, Color color) {
+Cilindro::Cilindro(MathVector centro, MathVector direccion, float radio, float altura, Color color)
+    : Objeto() {
     this->altura = altura;
     this->centro = centro;
     this->radio = radio;
@@ -11,7 +12,7 @@ Cilindro::Cilindro(MathVector centro, MathVector direccion, float radio, float a
     setColorBase(color);
 }
 
-float Cilindro::intersepcion(Rayo rayo) {
+void Cilindro::intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t_int) {
 
     /*
     el rayo es P(t)= O + t.D 
@@ -37,7 +38,9 @@ float Cilindro::intersepcion(Rayo rayo) {
 
     float discriminante = b * b - 4 * a * c;
     if (discriminante < 0) {
-        return -1.0f;  //sin interseccion
+        t_int = -1.0f;  //sin interseccion
+        idObjetoInterseptado = -1;
+        return;
     }
 
     float sqrtDiscriminante = sqrtf(discriminante);
@@ -90,9 +93,6 @@ float Cilindro::intersepcion(Rayo rayo) {
         }
     }
 
-    
-
-    
     // interseccion tapa del cilindro
     MathVector topCenter = sumar(centro, multiplicarPorEscalar(direccion, altura));
     float t_superior = (productoEscalar(direccion, topCenter) - productoEscalar(direccion, rayo.puntoAnclaje)) / productoEscalar(direccion, rayo.dirrecion);
@@ -107,7 +107,8 @@ float Cilindro::intersepcion(Rayo rayo) {
         }
     }
     
-    return t;
+    t_int = t;
+    idObjetoInterseptado = t_int == -1 ? -1 : this->getId();
 }
 
 MathVector Cilindro::getNormal(MathVector punto) {
@@ -126,4 +127,11 @@ MathVector Cilindro::getNormal(MathVector punto) {
         MathVector projection = sumar(centro, multiplicarPorEscalar(direccion, productoEscalar(restar(punto, centro), direccion)));
         return normalizar(restar(punto, projection));
     }
+}
+
+
+std::vector<Objeto*> Cilindro::getObjetosInternos() {
+    std::vector<Objeto*> objetosInternos;
+    objetosInternos.push_back(this);
+    return objetosInternos;
 }

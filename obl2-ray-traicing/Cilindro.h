@@ -12,8 +12,11 @@ public:
 
 	Cilindro(MathVector centro, MathVector direccion, float radio, float altura, Color color);
 
-	float intersepcion(Rayo rayo);
+	void intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t);
 
 	MathVector getNormal(MathVector punto);
-	Color getColor(Rayo rayo, float t);
+
+	std::vector<Objeto*> getObjetosInternos();
+
+	Color getColor(Rayo rayo, float t_int);
 };

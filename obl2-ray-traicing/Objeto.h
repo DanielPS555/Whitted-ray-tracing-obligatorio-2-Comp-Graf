@@ -2,6 +2,7 @@
 #include "Rayo.h"
 #include <FreeImage.h>
 #include "Color.h"
+#include "vector"
 
 #ifndef COLOR_COEF_STRUCT
 #define COLOR_COEF_STRUCT
@@ -37,6 +38,9 @@ struct ColorCoef {
 class Objeto{
 
 protected: 
+	static int sigId;
+	int id;
+
 	Color colorBase;
 	float sensibilidad_luz_ambiente = SENSIBILIDAD_LUZ_AMBIENTE_POR_DEFECTO;
 
@@ -53,11 +57,17 @@ public:
 	float coeficienteReflexion = SENSIBLIDAD_LUZ_ESPECULAR_POR_DEFECTO; // ks
 	float coeficienteTransparencia = SENSIBILIDAD_TRANSPARENCIA; // kt
 	float sensibilidad_luz_difusa = SENSIBILIDAD_LUZ_DIFUSA_POR_DEFECTO;
-	virtual float intersepcion(Rayo rayo) = 0;
+	
+	Objeto() {
+		id = sigId;
+		sigId++;
+	}
 	
 	ColorCoef getColor(Rayo rayo, float t, int profundidad);
 
+	virtual void intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t) = 0;
 	virtual MathVector getNormal(MathVector punto) = 0;
+	virtual std::vector<Objeto*> getObjetosInternos() = 0;
 
 	void setAtenuacion(float atenuacionConstante, float atenuacionLineal, float atenuacionCuadratica) {
 		this->atenuacion_constante = atenuacionConstante;
@@ -82,7 +92,13 @@ public:
 	Color getColorBase() {
 		return colorBase;
 	}
+
+	int getId() {
+		return this->id;
+	}
 };
 
 #endif 
+
+
 

@@ -21,7 +21,9 @@ public:
 
 	MathVector getNormal(MathVector punto);
 
-	float intersepcion(Rayo rayo);
+	void intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t);
+
+	std::vector<Objeto*> getObjetosInternos();
 
 	Color getColor(Rayo rayo, float t, int profunidad);
 };

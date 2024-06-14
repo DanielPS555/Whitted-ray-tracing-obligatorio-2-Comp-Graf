@@ -5,13 +5,14 @@
 #include "ObjetosEscena.h"
 #include "LuzAmbiente.h"
 
-Esfera::Esfera(MathVector centro, float radio, Color color) {
+Esfera::Esfera(MathVector centro, float radio, Color color)
+	: Objeto() {
 	this->centro = centro;
 	this->radio = radio;
 	setColorBase(color);
 }
 
-float Esfera::intersepcion(Rayo ra) {
+void Esfera::intersepcion(Rayo ra, int& idObjetoInterseptado, float& t_int) {
 
 	/* 
 	La ecuacion de la esfera es asi:
@@ -48,12 +49,26 @@ float Esfera::intersepcion(Rayo ra) {
 				+ powf(ra.puntoAnclaje.z - centro.z, 2)
 				- powf(radio, 2);
 
-	return obtenerMenorRaizPositivaBhaskara(a, b, c);
+	t_int = obtenerMenorRaizPositivaBhaskara(a, b, c);
+	if (t_int == -1) {
+		idObjetoInterseptado = -1;
+	}
+	else {
+		idObjetoInterseptado = this->getId();
+	}
+
+
 
 }
 
 
 MathVector Esfera::getNormal(MathVector punto) {
 	return normalizar(restar(punto, centro));
+}
+
+std::vector<Objeto*> Esfera::getObjetosInternos() {
+	std::vector<Objeto*> objetosInternos;
+	objetosInternos.push_back(this);
+	return objetosInternos;
 }
 

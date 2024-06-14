@@ -3,6 +3,8 @@
 #include "ObjetosEscena.h"
 #include "LuzAmbiente.h"
 
+int Objeto::sigId = 0;
+
 ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 
 	ColorCoef colorTotal;

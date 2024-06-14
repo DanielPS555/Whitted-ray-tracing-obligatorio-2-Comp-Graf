@@ -2,7 +2,8 @@
 #include <cmath>
 #include "ObjetosEscena.h"
 
-Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2, Color color) {
+Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2, Color color) : Objeto()
+{
     Triangulo::v0 = v0;
     Triangulo::v1 = v1;
     Triangulo::v2 = v2;
@@ -32,7 +33,7 @@ Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2,
 
 // este metodo esta basado en el algoritmo Moller-trumbore.
 // para entenderlo completamente visitar https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm#Rust_implementation
-float Triangulo::intersepcion(Rayo rayo) {
+void Triangulo::intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t_int) {
     //calculos los vectores de las aristas del triangulo.
     MathVector edge1 = restar(v1,v0);
     MathVector edge2 = restar(v2,v0);
@@ -44,7 +45,9 @@ float Triangulo::intersepcion(Rayo rayo) {
     float a = productoEscalar(edge1,h);
 
     if (fabs(a) < EPSILON) {
-        return -1; 
+        idObjetoInterseptado = -1;
+        t_int = -1;
+        return;
     }
 
     // f es el factor inverso del determinante.
@@ -55,7 +58,9 @@ float Triangulo::intersepcion(Rayo rayo) {
     MathVector s = restar(rayo.puntoAnclaje, v0);
     float u = f * productoEscalar(s,h);
     if (u < 0.0f || u > 1.0f) {
-        return -1; 
+        idObjetoInterseptado = -1;
+        t_int = -1;
+        return;
     }
 
     // q es el vector perpendicular a s y edge1.
@@ -64,16 +69,22 @@ float Triangulo::intersepcion(Rayo rayo) {
     MathVector q = productoVectorial(s,edge1);
     float v = f * productoEscalar(rayo.dirrecion,q);
     if (v < 0.0f || u + v > 1.0f) {
-        return -1; 
+        idObjetoInterseptado = -1;
+        t_int = -1;
+        return;
     }
 
     // t es la distancia del origen del rayo hata el punto de intersección.
     float t = f * productoEscalar(edge2,q);
-    if (t > EPSILON) {
-        return t; 
+    if (t > EPSILON) { 
+        idObjetoInterseptado = this->getId();
+        t_int = t;
+        return;
     }
     else {
-        return -1; 
+        idObjetoInterseptado = -1;
+        t_int = -1;
+        return;
     }
 
 }
@@ -110,4 +121,10 @@ MathVector Triangulo::getNormal(MathVector punto) {
     MathVector n2_b = multiplicarPorEscalar(vectorNormalV2, lambdav2);
 
     return sumar(n0_b, sumar(n1_b, n2_b));
+}
+
+std::vector<Objeto*> Triangulo::getObjetosInternos() {
+    std::vector<Objeto*> objetosInternos;
+    objetosInternos.push_back(this);
+    return objetosInternos;
 }

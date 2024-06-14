@@ -1,6 +1,7 @@
 #include "Plano.h"
 
-Plano::Plano(MathVector puntoDeAnclaje, MathVector vectorU, MathVector vectorV, Color color){
+Plano::Plano(MathVector puntoDeAnclaje, MathVector vectorU, MathVector vectorV, Color color)
+: Objeto(){
 	
 	this->puntoDeAnclaje = puntoDeAnclaje;
 	this->u = vectorU;
@@ -11,7 +12,7 @@ Plano::Plano(MathVector puntoDeAnclaje, MathVector vectorU, MathVector vectorV, 
 	setColorBase(color);
 }
 
-float Plano::intersepcion(Rayo rayo)
+void Plano::intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t_int)
 {
 	/*
 	La ecuacion del plano es asi:
@@ -51,11 +52,21 @@ float Plano::intersepcion(Rayo rayo)
 
 		float t = det_z / detA;
 
-		return t > 0 ? t : -1;
-
+		if (t > 0) {
+			t_int = t;
+			idObjetoInterseptado = this->getId();
+			return;
+		}
+		else {
+			t_int = -1;
+			idObjetoInterseptado = -1;
+			return;
+		}
 	}
 	else {
-		return -1;
+		t_int = -1;
+		idObjetoInterseptado = -1;
+		return;
 	}
 
 	
@@ -64,4 +75,10 @@ float Plano::intersepcion(Rayo rayo)
 MathVector Plano::getNormal(MathVector punto)
 {
 	return normalCalculada;
+}
+
+std::vector<Objeto*> Plano::getObjetosInternos() {
+	std::vector<Objeto*> objetosInternos;
+	objetosInternos.push_back(this);
+	return objetosInternos;
 }

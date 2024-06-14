@@ -42,7 +42,7 @@ Camara* ejemploObj() {
     float escalar = 80;
 
 
-    Objeto** elementos = new Objeto * [cantTriangulos];
+    std::vector<Objeto*> elementos;
 
     for (int i = 0; i < cantTriangulos; i++) {
 
@@ -55,10 +55,10 @@ Camara* ejemploObj() {
         MathVector n_v3 = { normals[i * 3 + 2].x, normals[i * 3 + 2].y , normals[i * 3 + 2].z };
 
 
-        elementos[i] = new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, { 255,255,255 });
+        elementos.push_back(new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, { 255,255,255 }));
     }
 
-    ObjetosEscena::getInstancia()->setElementos(cantTriangulos, elementos);
+    ObjetosEscena::getInstancia()->setElementos(elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
 
     LuzPuntual* luces = new LuzPuntual[1];
@@ -132,13 +132,7 @@ Camara* ejemploObligatorio() {
         elementos.push_back(new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, { 255,255,255 }));
     }
 
-
-    Objeto** elementosArray = new Objeto * [elementos.size()];
-    for (int i = 0; i < elementos.size(); i++) {
-        elementosArray[i] = elementos[i];
-    }
-
-    ObjetosEscena::getInstancia()->setElementos(elementos.size(), elementosArray);
+    ObjetosEscena::getInstancia()->setElementos(elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { 80.0f,80.0f,80.0f };
 
     LuzPuntual* luces = new LuzPuntual[2];
