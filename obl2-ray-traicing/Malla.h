@@ -9,12 +9,15 @@
 class MallaClass : public Objeto{
 protected:	
 	std::vector<Triangulo*> triangulos;
+	std::vector<Triangulo*> volumenAcotante;
 
 public:
 	MallaClass(const char* path, MathVector traslacion, float escalar);
 	void intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t_int);
 	MathVector getNormal(MathVector punto);
 	std::vector<Objeto*> getObjetosInternos();
+
+	
 
 };
 

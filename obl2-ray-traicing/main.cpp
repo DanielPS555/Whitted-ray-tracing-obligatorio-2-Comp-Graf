@@ -36,7 +36,7 @@ Camara* ejemploObj() {
     ObjetosEscena::getInstancia()->resolucionX = 400;
     ObjetosEscena::getInstancia()->resolucionY = 400;
 
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, -1.0f }, { 0.0f, 100.0f , 700.0f });
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { -1.0f, -1.0f, -1.0f }, { 1200.0f, 1200.0f , 1200.0f });
 
  
     std::vector<Objeto*> elementos;
@@ -49,7 +49,7 @@ Camara* ejemploObj() {
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
 
     LuzPuntual* luces = new LuzPuntual[1];
-    luces[0] = { {255.f,    255.f,  255.f}, {0.f   ,0.f,   300.f} };
+    luces[0] = { {255.f,    255.f,  255.f}, {400.f   ,400.f,   400.f} };
     ObjetosEscena::getInstancia()->lucesDifusas = luces;
     ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
 
@@ -335,7 +335,7 @@ int SDL_main(int argc, char* argv[]) {
 
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    Camara* camaraEj = ejemploObligatorio();
+    Camara* camaraEj = ejemploObj();
 
     FIBITMAP* bitmap = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
         ObjetosEscena::getInstancia()->resolucionY);

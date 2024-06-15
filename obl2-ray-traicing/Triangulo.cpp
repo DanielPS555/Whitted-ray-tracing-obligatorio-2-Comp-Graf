@@ -19,7 +19,7 @@ Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2, Color color) :
 
 Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2,
                         MathVector vectorNormalV0, MathVector vectorNormalV1, MathVector vectorNormalV2,
-                        Color color) {
+                        Color color): Objeto() {
     Triangulo::v0 = v0;
     Triangulo::v1 = v1;
     Triangulo::v2 = v2;
