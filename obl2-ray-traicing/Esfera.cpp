@@ -72,3 +72,7 @@ std::vector<Objeto*> Esfera::getObjetosInternos() {
 	return objetosInternos;
 }
 
+Color Esfera::getColorBase(MathVector punto) {
+	return colorBase;
+}
+

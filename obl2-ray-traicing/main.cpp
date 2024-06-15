@@ -16,10 +16,12 @@
 #include "SDL.h"
 #include "Malla.h"
 
+#include "omp.h"
+
 #include "chrono"
 
 
-#define SCREEN_WIDTH 700
+#define SCREEN_WIDTH 900
 #define SCREEN_HEIGHT 700
 
 
@@ -33,25 +35,43 @@ using chrono::seconds;
 
 
 Camara* ejemploObj() {
-    ObjetosEscena::getInstancia()->resolucionX = 400;
-    ObjetosEscena::getInstancia()->resolucionY = 400;
+    ObjetosEscena::getInstancia()->resolucionX = 1920;
+    ObjetosEscena::getInstancia()->resolucionY = 1080;
 
     Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { -1.0f, -1.0f, -1.0f }, { 1200.0f, 1200.0f , 1200.0f });
 
  
     std::vector<Objeto*> elementos;
 
-    MallaClass* m = new MallaClass("Horse.obj", { 0.f, 0.f, 0.f }, 4.f);
+    MallaClass* m = new MallaClass("Horse.obj", { -100.f, 0.f, 0.f }, 4.f, "horsetexture.png");
+    MallaClass* m3 = new MallaClass("Horse.obj", { 300.f, 0.f, 400.f }, 4.f, "horsetexture.png");
 
-    elementos.push_back(m);
+
+    Esfera* esferaEspejo = new Esfera({ 500,200,0 }, 200.0f, { 255,255,255 });
+    esferaEspejo->coeficienteTransparencia = 0.0f;
+    esferaEspejo->coeficienteReflexion = 0.8f;
+    esferaEspejo->setParametrosEspeculares(23, 0.7, { 255,255,255 });
+
+    elementos.push_back(m); 
+    elementos.push_back(m3);
+    elementos.push_back(esferaEspejo);
+
+
+    Plano* pared_piso = new Plano({ 0.0f, 0.0f, 0.0f }, { 0, 0, 1 }, { 1, 0, 0 }, { 150, 0, 150});
+    elementos.push_back(pared_piso);
+
+    Plano* pared_techo = new Plano({ 0.0f, 2000.0f, 0.0f }, { 0, 0, 1 }, { 1, 0, 0 }, { 150, 0, 0 });
+    elementos.push_back(pared_techo);
 
     ObjetosEscena::getInstancia()->setElementos(elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
 
-    LuzPuntual* luces = new LuzPuntual[1];
-    luces[0] = { {255.f,    255.f,  255.f}, {400.f   ,400.f,   400.f} };
+    LuzPuntual* luces = new LuzPuntual[2];
+    luces[0] = { {255.f,    255.f,  255.f},{400.f   ,500.f,    0.f} };
+    luces[1] = { {255.f,    0.f,  255.f}, { 300.f   ,700.f,   700.f} };
+
     ObjetosEscena::getInstancia()->lucesDifusas = luces;
-    ObjetosEscena::getInstancia()->numeroLucesDifusas = 1;
+    ObjetosEscena::getInstancia()->numeroLucesDifusas = 2;
 
     return camaraPtr;
 }
@@ -95,7 +115,7 @@ Camara* ejemploObligatorio() {
     elementos.push_back(cilindro);
 
 
-    MallaClass* mesa = new MallaClass("m.obj", { 0.f, -300.f, 350.f }, 85.f);
+    MallaClass* mesa = new MallaClass("m.obj", { 0.f, -300.f, 350.f }, 85.f, nullptr);
 
     elementos.push_back(mesa);
 
@@ -312,20 +332,36 @@ void render(int x_p, int y_p, Camara* cam, FIBITMAP* bitmap, FIBITMAP* bitmapTra
 
     int y_inv = ObjetosEscena::getInstancia()->resolucionY - y_p - 1;
     
+    #pragma omp critical
     FreeImage_SetPixelColor(bitmap, x_p, y_p, &rgbColor);
+
+    #pragma omp critical
     FreeImage_SetPixelColor(preview, x_p, y_inv, &rgbColor);
 
-
+    #pragma omp critical
     FreeImage_SetPixelColor(bitmapTrans, x_p, y_p, &rgbColorTransp);
+
+    #pragma omp critical    
     FreeImage_SetPixelColor(bitmapRef, x_p, y_p, &rgbColorReflec);
+
+    #pragma omp critical
     FreeImage_SetPixelColor(bitmapAmb, x_p, y_p, &rgbColorAmbient);
+
+    #pragma omp critical
     FreeImage_SetPixelColor(bitmapEspec, x_p, y_p, &rgbColorEspec);
+
+    #pragma omp critical
     FreeImage_SetPixelColor(bitmapDif, x_p, y_p, &rgbColorDifus);
+
+    #pragma omp critical
     FreeImage_SetPixelColor(bitmapPriRecTrans, x_p, y_p, &rgbColorPrimRecTrans);
+
+    #pragma omp critical
     FreeImage_SetPixelColor(bitmapPriRecRefle, x_p, y_p, &rgbColorPrimRecReflex);
 }
 
 int SDL_main(int argc, char* argv[]) {
+
     // Tu c�digo SDL aqu�
 
     SDL_Init(SDL_INIT_VIDEO);
@@ -371,7 +407,7 @@ int SDL_main(int argc, char* argv[]) {
     SDL_Event evento;
 
     int inicio = 0;
-    int cant_a_procesar_por_refesh = 500;
+    int cant_a_procesar_por_refesh = 5000;
     bool primeraVezFin = false;
 
 
@@ -381,14 +417,19 @@ int SDL_main(int argc, char* argv[]) {
 
         int cant_pross = min(w * h - inicio, cant_a_procesar_por_refesh);
 
-        for (int h = 0; h < cant_pross; h++) {
-            int p = inicio + h;
+        #pragma omp parallel for num_threads (6)  schedule(dynamic,100)
 
-            int y = p / w;
-            int x = p % w;
+            for (int h = 0; h < cant_pross; h++) {
 
-            render(x, y, camaraEj, bitmap, bitmapTrans, bitmapRef, bitmapAmb, bitmapEspec, bitmapDif, bitmapPriRecTrans, bitmapPriRecRefle, bitmapPreview);
-        }
+                int id = omp_get_thread_num();                
+
+                int p = inicio + h;
+
+                int y = p / w;
+                int x = p % w;
+
+                render(x, y, camaraEj, bitmap, bitmapTrans, bitmapRef, bitmapAmb, bitmapEspec, bitmapDif, bitmapPriRecTrans, bitmapPriRecRefle, bitmapPreview);
+            }
 
         if (inicio < w * h) {
             void* datos = FreeImage_GetBits(bitmapPreview);

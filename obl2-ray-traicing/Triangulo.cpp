@@ -14,7 +14,11 @@ Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2, Color color) :
 
     vectorNormalV0 = normalizar(productoVectorial(t1, t2));
     vectorNormalV1 = vectorNormalV0;
-    vectorNormalV2 = vectorNormalV0;
+    vectorNormalV2 = vectorNormalV0;    
+
+    this->t_v0 = { 0,0,0 };
+    this->t_v1 = { 0,0,0 };
+    this->t_v2 = { 0,0,0 };
 }
 
 Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2,
@@ -27,8 +31,36 @@ Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2,
 
     this->vectorNormalV0 = vectorNormalV0;
     this->vectorNormalV1 = vectorNormalV1;
-    this->vectorNormalV2 = vectorNormalV2;
+    this->vectorNormalV2 = vectorNormalV2;   
+
+    this->t_v0 = {0,0,0};
+    this->t_v1 = { 0,0,0 };
+    this->t_v2 = { 0,0,0 };
 }
+
+Triangulo::Triangulo(MathVector v0, MathVector v1, MathVector v2,
+    MathVector n_v0, MathVector n_v1, MathVector n_v2,
+    MathVector t_v0, MathVector t_v1, MathVector t_v2, FIBITMAP* bitmap, Color color) {
+
+    Triangulo::v0 = v0;
+    Triangulo::v1 = v1;
+    Triangulo::v2 = v2;
+    setColorBase(color);
+
+    this->vectorNormalV0 = n_v0;
+    this->vectorNormalV1 = n_v1;
+    this->vectorNormalV2 = n_v2;
+
+    this->t_v0 = t_v0;
+    this->t_v1 = t_v1;
+    this->t_v2 = t_v2;
+
+    this->bitmap = bitmap;
+    this->widthBitmap = FreeImage_GetWidth(bitmap);
+    this->heightBitmap = FreeImage_GetHeight(bitmap);
+}
+
+
 
 
 // este metodo esta basado en el algoritmo Moller-trumbore.
@@ -98,8 +130,7 @@ Color Triangulo::getColor(Rayo rayo, float t,int profundidad){
     return colorConLuzAmbiente;
 }
 
-MathVector Triangulo::getNormal(MathVector punto) {
-
+void Triangulo::corrBarisentricas(MathVector punto, float& l_0, float& l_1, float& l_2) {
     MathVector u0 = restar(v1, v0);
     MathVector u1 = restar(v2, v0);
     MathVector u2 = restar(punto, v0);
@@ -112,9 +143,16 @@ MathVector Triangulo::getNormal(MathVector punto) {
 
     double invD = 1.0 / (dot00 * dot11 - dot01 * dot01);
 
-    float lambdav2 = (dot00 * dot12 - dot01 * dot02) * invD;
-    float lambdav1 = (dot11 * dot02 - dot01 * dot12) * invD;
-    float lambdav0 = 1.0f - lambdav1 - lambdav2;
+    l_2 = (dot00 * dot12 - dot01 * dot02) * invD;
+    l_1 = (dot11 * dot02 - dot01 * dot12) * invD;
+    l_0 = 1.0f - l_1 - l_2;
+}
+
+MathVector Triangulo::getNormal(MathVector punto) {
+    float lambdav0;
+    float lambdav1;
+    float lambdav2;
+    corrBarisentricas(punto, lambdav0, lambdav1, lambdav2);
 
     MathVector n0_b = multiplicarPorEscalar(vectorNormalV0, lambdav0);
     MathVector n1_b = multiplicarPorEscalar(vectorNormalV1, lambdav1);
@@ -127,4 +165,35 @@ std::vector<Objeto*> Triangulo::getObjetosInternos() {
     std::vector<Objeto*> objetosInternos;
     objetosInternos.push_back(this);
     return objetosInternos;
+}
+
+Color Triangulo::getColorBase(MathVector punto) {
+
+    if (bitmap == nullptr) {
+        return colorBase;
+    }
+    else {
+        float lambdav0;
+        float lambdav1;
+        float lambdav2;
+        corrBarisentricas(punto, lambdav0, lambdav1, lambdav2);
+
+        MathVector t_b_v0 = multiplicarPorEscalar(t_v0, lambdav0);
+        MathVector t_b_v1 = multiplicarPorEscalar(t_v1, lambdav1);
+        MathVector t_b_v2 = multiplicarPorEscalar(t_v2, lambdav2);
+
+        MathVector corrCalculadas = sumar(t_b_v0, sumar(t_b_v1, t_b_v2));
+
+        float corr_x = corrCalculadas.x * widthBitmap;
+        float corr_y = corrCalculadas.y * heightBitmap;
+
+        
+
+        RGBQUAD color;
+        FreeImage_GetPixelColor(bitmap, (int) corr_x, (int)corr_y, &color);
+
+        return { (float)color.rgbRed, (float)color.rgbBlue , (float)color.rgbBlue };
+
+    }
+    
 }

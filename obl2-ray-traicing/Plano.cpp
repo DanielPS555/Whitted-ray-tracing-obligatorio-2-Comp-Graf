@@ -82,3 +82,7 @@ std::vector<Objeto*> Plano::getObjetosInternos() {
 	objetosInternos.push_back(this);
 	return objetosInternos;
 }
+
+Color Plano::getColorBase(MathVector punto) {
+	return colorBase;
+}

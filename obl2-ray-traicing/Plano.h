@@ -20,5 +20,7 @@ public:
 	std::vector<Objeto*> getObjetosInternos();
 
 	MathVector getNormal(MathVector punto);
+
+	Color getColorBase(MathVector punto);
 };
 

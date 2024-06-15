@@ -30,7 +30,7 @@ void compute_max_min_vector(MathVector v, float& max_x, float& min_x,
 
 }
 
-MallaClass::MallaClass(const char* path, MathVector traslacion, float escalar) : Objeto() {
+MallaClass::MallaClass(const char* path, MathVector traslacion, float escalar, const char* nomArchivoTextura) : Objeto() {
     std::vector<unsigned short> indices;
     std::vector<glm::vec3> verticess;
     std::vector<glm::vec2> uvs;
@@ -44,6 +44,13 @@ MallaClass::MallaClass(const char* path, MathVector traslacion, float escalar) :
     float max_x, min_x; 
     float max_y, min_y;
     float max_z, min_z;
+
+    FIBITMAP* bitmap = nullptr;
+    
+    if (nomArchivoTextura != nullptr) {
+        bitmap  = cargarImagen(nomArchivoTextura);
+    }
+    
 
     for (int i = 0; i < cantTriangulos; i++) {
 
@@ -59,21 +66,23 @@ MallaClass::MallaClass(const char* path, MathVector traslacion, float escalar) :
         MathVector n_v1 = { normals[i * 3].x    , normals[i * 3].y     , normals[i * 3].z };
         MathVector n_v2 = { normals[i * 3 + 1].x, normals[i * 3 + 1].y , normals[i * 3 + 1].z };
         MathVector n_v3 = { normals[i * 3 + 2].x, normals[i * 3 + 2].y , normals[i * 3 + 2].z };
+        
+        if (nomArchivoTextura == nullptr) {
+            triangulos.push_back(new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, { 255,255,255 }));
+        }
+        else {      
+            MathVector t_v1 = { uvs[i * 3].x    , uvs[i * 3].y     , 0.0f };
+            MathVector t_v2 = { uvs[i * 3 + 1].x, uvs[i * 3 + 1].y , 0.0f };
+            MathVector t_v3 = { uvs[i * 3 + 2].x, uvs[i * 3 + 2].y , 0.0f };
 
 
-        triangulos.push_back(new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, { 255,255,255 }));
+            triangulos.push_back(new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, t_v1, t_v2, t_v3, bitmap, { 255,255,255 }));
+        }
+
+        
 
         first = false;
     }
-
-    printf("max_x %.2f\n", max_x);
-    printf("min_x %.2f\n", min_x);
-    
-    printf("max_y %.2f\n", max_y);
-    printf("min_y %.2f\n", min_y);
-    
-    printf("max_z %.2f\n", max_z);
-    printf("min_z %.2f\n", min_z);
     
 
     MathVector v0 = { max_x, min_y, min_z };
@@ -129,7 +138,7 @@ void MallaClass::intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t_int
         //printf("Salgo\n");
         idObjetoInterseptado = -1;
         t_int = -1;
-        //return;
+        return;
     }
 
     t_int = -1;
@@ -148,6 +157,10 @@ void MallaClass::intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t_int
 
 MathVector MallaClass::getNormal(MathVector punto) {
     return { 0,0,0 }; // No se usa porque depende de los triangulos
+}
+
+Color MallaClass::getColorBase(MathVector punto) {
+    return { 0,0,0 }; //o se usa porque depende de los triangulos
 }
 
 std::vector<Objeto*> MallaClass::getObjetosInternos() {

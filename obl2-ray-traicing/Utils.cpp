@@ -73,3 +73,10 @@ float obtenerMenorRaizPositivaBhaskara(float a, float b, float c) {
     }
 
 }
+
+
+FIBITMAP* cargarImagen(const char* nomArchivo) {
+    FREE_IMAGE_FORMAT fif = FreeImage_GetFIFFromFilename(nomArchivo);
+    FIBITMAP* bitmap = FreeImage_Load(fif, nomArchivo);
+    return FreeImage_ConvertTo32Bits(bitmap);
+}

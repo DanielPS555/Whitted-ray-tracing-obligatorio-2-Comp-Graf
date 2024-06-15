@@ -53,7 +53,7 @@ public:
 
 	void getIntersepcionMasCercana(Rayo rayo, int& idObjeto, float& t_intersepcion);
 
-	std::vector<Objeto*> getIntersepcionesHastaDistancia(Rayo rayo, float distanciaMaxima);
+	std::vector<std::pair< Objeto*, MathVector>> getIntersepcionesHastaDistancia(Rayo rayo, float distanciaMaxima);
 
 };
 

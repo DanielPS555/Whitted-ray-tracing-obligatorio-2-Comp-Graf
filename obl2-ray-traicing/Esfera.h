@@ -14,6 +14,8 @@ public:
 
 	std::vector<Objeto*> getObjetosInternos();
 
+	Color getColorBase(MathVector punto);
+
 	void intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t);
 };
 

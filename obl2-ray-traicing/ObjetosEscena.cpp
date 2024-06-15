@@ -49,8 +49,8 @@ ColorCoef ObjetosEscena::getPixelPorRayo(Rayo rayo, int profundidad) {
 	
 }
 
-std::vector<Objeto*> ObjetosEscena::getIntersepcionesHastaDistancia(Rayo rayo, float distanciaMaxima) {
-	std::vector<Objeto*> objetosInterseptados;
+std::vector<std::pair< Objeto*, MathVector>> ObjetosEscena::getIntersepcionesHastaDistancia(Rayo rayo, float distanciaMaxima) {
+	std::vector< std::pair< Objeto*, MathVector>> objetosInterseptados;
 	for (Objeto* elemento : objetosPrimerNivel) {
 
 		float t;
@@ -62,7 +62,10 @@ std::vector<Objeto*> ObjetosEscena::getIntersepcionesHastaDistancia(Rayo rayo, f
 			float distanciaHastaPuntoIntersepcion = norma(restar(puntoIntersepcion, rayo.puntoAnclaje));
 
 			if (distanciaMaxima > distanciaHastaPuntoIntersepcion) {
-				objetosInterseptados.push_back(allObjetos[id]);
+				std::pair< Objeto*, MathVector> parr;
+				parr.first = allObjetos[id];
+				parr.second = getPosicion(rayo, t, 0.0f);
+				objetosInterseptados.push_back(parr);
 			}
 		}
 	}

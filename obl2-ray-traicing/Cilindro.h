@@ -18,5 +18,7 @@ public:
 
 	std::vector<Objeto*> getObjetosInternos();
 
+	Color getColorBase(MathVector punto);
+
 	Color getColor(Rayo rayo, float t_int);
 };

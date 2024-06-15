@@ -2,6 +2,8 @@
 #include "MathVector.h"
 #include "Triangulo.h"
 #include "vector"
+#include "FreeImage.h"
+#include "Utils.h"
 
 #ifndef MALLA_CLASS_A
 #define MALLA_CLASS_A
@@ -12,11 +14,13 @@ protected:
 	std::vector<Triangulo*> volumenAcotante;
 
 public:
-	MallaClass(const char* path, MathVector traslacion, float escalar);
+	//Enviar nomArchivoTextura = nullptr cuando no haya textura que cargar
+	MallaClass(const char* path, MathVector traslacion, float escalar, const char* nomArchivoTextura);
+
 	void intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t_int);
 	MathVector getNormal(MathVector punto);
 	std::vector<Objeto*> getObjetosInternos();
-
+	Color getColorBase(MathVector punto);
 	
 
 };

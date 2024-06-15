@@ -24,6 +24,7 @@ float gradosToRadianes(float grados);
 
 void guardarImagen(FIBITMAP* bitmap, std::string time,  std::string sufix_nombre);// , std::string dateTime1);
 
+FIBITMAP* cargarImagen(const char* nomArchivo);
 
 // Retora unicamente raices positivas (utilizado para las intersepciones mas cercanas, pero positivas)
 // En caso de no haber raices con esas caracteristicas retorna -1

@@ -71,6 +71,10 @@ public:
 	virtual MathVector getNormal(MathVector punto) = 0;
 	virtual std::vector<Objeto*> getObjetosInternos() = 0;
 
+	//Si no hay textura, es el color base del objeto, si la hay es el color de la textura en ese punto
+	virtual Color getColorBase(MathVector punto) = 0;
+
+
 	void setAtenuacion(float atenuacionConstante, float atenuacionLineal, float atenuacionCuadratica) {
 		this->atenuacion_constante = atenuacionConstante;
 		this->antenuacion_lineal = atenuacionLineal;
@@ -89,10 +93,6 @@ public:
 
 	void setSensibilidadLuzAmbiente(float sensibilidad) {
 		sensibilidad_luz_ambiente = sensibilidad;
-	}
-
-	Color getColorBase() {
-		return colorBase;
 	}
 
 	int getId() {

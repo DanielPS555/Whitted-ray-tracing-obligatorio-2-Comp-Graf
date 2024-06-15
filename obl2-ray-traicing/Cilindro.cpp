@@ -135,3 +135,7 @@ std::vector<Objeto*> Cilindro::getObjetosInternos() {
     objetosInternos.push_back(this);
     return objetosInternos;
 }
+
+Color Cilindro::getColorBase(MathVector punto) {
+    return colorBase;
+}

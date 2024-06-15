@@ -17,6 +17,9 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 	colorTotal.primRecTrans = { 0.0f,0.f,0.f };
 	colorTotal.primRecReflex = { 0.0f,0.f,0.f };
 
+
+	
+
 	// La suma de coeficiente_difusa_especular + coeficiente_reflexion + coeficiente_transaccion debe ser 1, cada color debe aportar esto
 	float coeficiente_difusa_especular_corregido;
 	float coeficiente_reflexion_corregido = this->coeficienteReflexion;
@@ -32,6 +35,8 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 	}
 
 	MathVector posicionIntersepcion = getPosicion(rayo, t, EPSILON);
+
+	Color colorObjeto = getColorBase(posicionIntersepcion);
 
 	// Calculo de intersepciones con las luces
 
@@ -54,19 +59,21 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 
 		float distanciaConLuz = norma(restar(posicionIntersepcion, ld.posicion));
 
-		std::vector<Objeto*> objetosInterseptadosHastaLuz = ObjetosEscena::getInstancia()->getIntersepcionesHastaDistancia(rayoIntersepcion, distanciaConLuz);
+		std::vector<std::pair< Objeto*, MathVector>> objetosInterseptadosHastaLuz = ObjetosEscena::getInstancia()->getIntersepcionesHastaDistancia(rayoIntersepcion, distanciaConLuz);
 
 		float intersepcionCanalR = 1.0;
 		float intersepcionCanalG = 1.0;
 		float intersepcionCanalB = 1.0;
 
-		for (Objeto* objetoI : objetosInterseptadosHastaLuz) {
+		for (auto parr : objetosInterseptadosHastaLuz) {
 
-			float coef_difusa_otro = 1.0f - objetoI->coeficienteReflexion - objetoI->coeficienteTransparencia;
+			float coef_difusa_otro = 1.0f - parr.first->coeficienteReflexion - parr.first->coeficienteTransparencia;
+			Color colorObjetoBase = parr.first->getColorBase(parr.second);
 
-			intersepcionCanalR *= objetoI->coeficienteTransparencia * (objetoI->coeficienteTransparencia + coef_difusa_otro *objetoI->colorBase.r / 255.f);
-			intersepcionCanalG *= objetoI->coeficienteTransparencia * (objetoI->coeficienteTransparencia + coef_difusa_otro *objetoI->colorBase.g / 255.f);
-			intersepcionCanalB *= objetoI->coeficienteTransparencia * (objetoI->coeficienteTransparencia + coef_difusa_otro *objetoI->colorBase.b / 255.f);
+
+			intersepcionCanalR *= parr.first->coeficienteTransparencia * (parr.first->coeficienteTransparencia + coef_difusa_otro * colorObjetoBase.r / 255.f);
+			intersepcionCanalG *= parr.first->coeficienteTransparencia * (parr.first->coeficienteTransparencia + coef_difusa_otro * colorObjetoBase.g / 255.f);
+			intersepcionCanalB *= parr.first->coeficienteTransparencia * (parr.first->coeficienteTransparencia + coef_difusa_otro * colorObjetoBase.b / 255.f);
 		}
 
 		Color c = { intersepcionCanalR , intersepcionCanalG, intersepcionCanalB };
@@ -79,7 +86,7 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 	Color luzColorEspecular = { 0.0f, 0.0f, 0.0f };
 
 	LuzAmbiente luzFuenteAmbiente = ObjetosEscena::getInstancia()->luzAmbiente;
-	luzColorAmbiente = getLuzAmbientePorObjeto(luzFuenteAmbiente, colorBase, sensibilidad_luz_ambiente);
+	luzColorAmbiente = getLuzAmbientePorObjeto(luzFuenteAmbiente, colorObjeto, sensibilidad_luz_ambiente);
 	
 	// ----- Calculo luz difuza y especular -----
 
@@ -109,9 +116,9 @@ ColorCoef Objeto::getColor(Rayo rayo, float t, int profundidad){
 
 
 		Color luzColorDifusaPorLuz = {
-						(coloresLucesInterseptadas[i].r * atenuacion * (ld.intensidad.r / 255.f)) * (colorBase.r * coeficienteDifusa * sensibilidad_luz_difusa),
-						(coloresLucesInterseptadas[i].g * atenuacion * (ld.intensidad.g / 255.f)) * (colorBase.g * coeficienteDifusa * sensibilidad_luz_difusa),
-						(coloresLucesInterseptadas[i].b * atenuacion * (ld.intensidad.b / 255.f)) * (colorBase.b * coeficienteDifusa * sensibilidad_luz_difusa),
+						(coloresLucesInterseptadas[i].r * atenuacion * (ld.intensidad.r / 255.f)) * (colorObjeto.r * coeficienteDifusa * sensibilidad_luz_difusa),
+						(coloresLucesInterseptadas[i].g * atenuacion * (ld.intensidad.g / 255.f)) * (colorObjeto.g * coeficienteDifusa * sensibilidad_luz_difusa),
+						(coloresLucesInterseptadas[i].b * atenuacion * (ld.intensidad.b / 255.f)) * (colorObjeto.b * coeficienteDifusa * sensibilidad_luz_difusa),
 		};
 
 		Color luzColorEspecularPorLuz = {
