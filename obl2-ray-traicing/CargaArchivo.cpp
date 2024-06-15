@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include "Triangulo.h"
+#include "Malla.h"
 
 CargaArchivo::CargaArchivo(std::string file)
 {
@@ -40,6 +41,15 @@ CargaArchivo::CargaArchivo(std::string file)
 			pla.puntoBase.x = data["planos"][p]["x"];
 			pla.puntoBase.y = data["planos"][p]["y"];
 			pla.puntoBase.z = data["planos"][p]["z"];
+
+			pla.VectorU.x = data["planos"][p]["vectorU_x"];
+			pla.VectorU.y = data["planos"][p]["vectorU_y"];
+			pla.VectorU.z = data["planos"][p]["vectorU_z"];
+
+			pla.VectorV.x = data["planos"][p]["vectorV_x"];
+			pla.VectorV.y = data["planos"][p]["vectorV_y"];
+			pla.VectorV.z = data["planos"][p]["vectorV_z"];
+
 			pla.r = data["planos"][p]["r"];
 			pla.g = data["planos"][p]["g"];
 			pla.b = data["planos"][p]["b"];
@@ -56,31 +66,16 @@ CargaArchivo::CargaArchivo(std::string file)
 		}
 	}
 
-	for (int r = 0; r < data["malla"].size(); r++) {
-		if (data["malla"][r]["name"] != "ign") {
-			Malla rect;
-			rect.altura = data["malla"][r]["altura"];
-			rect.ancho = data["malla"][r]["ancho"];
-			rect.largo = data["malla"][r]["largo"];
-			rect.r = data["malla"][r]["r"];
-			rect.g = data["malla"][r]["g"];
-			rect.b = data["malla"][r]["b"];
-			rect.Refleccion = data["malla"][r]["Refleccion"];
-			rect.Refraccion = data["malla"][r]["Refraccion"];
-			rect.Transparencia = data["malla"][r]["Transparencia"];
-			rect.x = data["malla"][r]["x"];
-			rect.y = data["malla"][r]["y"];
-			rect.z = data["malla"][r]["z"];
-			rect.atConst = data["malla"][r]["atConst"];
-			rect.atLineal = data["malla"][r]["atLineal"];
-			rect.atCuadr = data["malla"][r]["atCuadr"];
-			rect.esxpReflecEspec = data["malla"][r]["esxpReflecEspec"];
-			rect.fracReflecEspec = data["malla"][r]["fracReflecEspec"];
-			rect.colorReflecEspecR = data["malla"][r]["colorReflecEspecR"];
-			rect.colorReflecEspecG = data["malla"][r]["colorReflecEspecG"];
-			rect.colorReflecEspecB = data["malla"][r]["colorReflecEspecB"];
-			rect.sesibilidad = data["malla"][r]["sensibilidad"];
-			this->mallas.push_back(rect);
+	for (int r = 0; r < data["mallas"].size(); r++) {
+		if (data["mallas"][r]["name"] != "ign") {
+			Malla malla;
+			malla.trasladar_x = data["mallas"][r]["trasladar_x"];
+			malla.trasladar_y = data["mallas"][r]["trasladar_y"];
+			malla.trasladar_z = data["mallas"][r]["trasladar_z"];
+			malla.escalamiento = data["mallas"][r]["escalamiento"];
+			malla.obj_url = data["mallas"][r]["obj_url"];
+			malla.png_url = data["mallas"][r]["png_url"];
+			this->mallas.push_back(malla);
 		}
 	}
 
@@ -121,9 +116,15 @@ CargaArchivo::CargaArchivo(std::string file)
 			cilin.Refleccion = data["cilindros"][c]["Refleccion"];
 			cilin.Refraccion = data["cilindros"][c]["Refraccion"];
 			cilin.Transparencia = data["cilindros"][c]["Transparencia"];
+			
 			cilin.x = data["cilindros"][c]["x"];
 			cilin.y = data["cilindros"][c]["y"];
 			cilin.z = data["cilindros"][c]["z"];
+
+			cilin.direccion_x = data["cilindros"][c]["direccion_x"];
+			cilin.direccion_y = data["cilindros"][c]["direccion_y"];
+			cilin.direccion_z = data["cilindros"][c]["direccion_z"];
+
 			cilin.atConst = data["cilindros"][c]["atConst"];
 			cilin.atLineal = data["cilindros"][c]["atLineal"];
 			cilin.atCuadr = data["cilindros"][c]["atCuadr"];
@@ -274,7 +275,7 @@ std::vector<Triangle> CargaArchivo::getCaras()
 	return this->paredes;
 }
 
-std::vector<Malla> CargaArchivo::getPrismas()
+std::vector<Malla> CargaArchivo::getMallas()
 {
 	return this->mallas;
 }

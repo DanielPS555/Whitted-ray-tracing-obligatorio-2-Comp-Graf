@@ -32,31 +32,6 @@ struct Cara
 	float sesibilidad;
 };
 
-struct Malla
-{
-	float ancho;
-	float largo;
-	float altura;
-	float x;
-	float y;
-	float z;
-	float r;
-	float g;
-	float b;
-	float Transparencia;
-	float Refleccion;
-	float Refraccion;
-	float atConst;
-	float	atLineal;
-	float	atCuadr;
-	float	esxpReflecEspec;
-	float	fracReflecEspec;
-	float colorReflecEspecR;
-	float colorReflecEspecG;
-	float colorReflecEspecB;
-	float sesibilidad;
-};
-
 struct Sphear
 {
 	float radio;
@@ -84,12 +59,20 @@ struct Cilinder
 {
 	float radio;
 	float altura;
+	
 	float x;
 	float y;
 	float z;
+	
+	float direccion_x;
+	float direccion_y;
+	float direccion_z;
+
 	float r;
 	float g;
 	float b;
+	
+	
 	float Transparencia;
 	float Refleccion;
 	float Refraccion;
@@ -135,8 +118,11 @@ struct LuzPunt {
 	float b;
 };
 
+
 struct Plane {
 	MathVector puntoBase;
+	MathVector VectorU;
+	MathVector VectorV;
 	float D;
 	float r;
 	float g;
@@ -155,6 +141,17 @@ struct Plane {
 	float colorReflecEspecG;
 	float colorReflecEspecB;
 	float sesibilidad;
+};
+
+struct Malla {
+	float trasladar_x;
+	float trasladar_y;
+	float trasladar_z;
+
+	float escalamiento;
+	std::string obj_url;
+	std::string png_url;
+
 };
 
 class CargaArchivo
@@ -193,7 +190,7 @@ class CargaArchivo
 
 		std::vector<Triangle> getCaras();
 
-		std::vector<Malla> getPrismas();
+		std::vector<Malla> getMallas();
 
 		std::vector<LuzPunt> getLuces();
 		int getCantLuces();
@@ -201,6 +198,7 @@ class CargaArchivo
 		MathVector getLuzAmb();
 
 		std::vector<Cilinder> getCilindros();
+
 };
 
 #endif

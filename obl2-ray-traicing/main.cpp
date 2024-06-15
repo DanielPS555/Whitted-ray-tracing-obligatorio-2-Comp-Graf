@@ -34,106 +34,88 @@ using chrono::milliseconds;
 using chrono::seconds;
 
 
-Camara* ejemploObj() {
-    ObjetosEscena::getInstancia()->resolucionX = 1920;
-    ObjetosEscena::getInstancia()->resolucionY = 1080;
-
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { -1.0f, -1.0f, -1.0f }, { 1200.0f, 1200.0f , 1200.0f });
-
- 
-    std::vector<Objeto*> elementos;
-
-    MallaClass* m = new MallaClass("Horse.obj", { -100.f, 0.f, 0.f }, 4.f, "horsetexture.png");
-    MallaClass* m3 = new MallaClass("Horse.obj", { 300.f, 0.f, 400.f }, 4.f, "horsetexture.png");
+Camara* cargarArchivoMetaData() {
 
 
-    Esfera* esferaEspejo = new Esfera({ 500,200,0 }, 200.0f, { 255,255,255 });
-    esferaEspejo->coeficienteTransparencia = 0.0f;
-    esferaEspejo->coeficienteReflexion = 0.8f;
-    esferaEspejo->setParametrosEspeculares(23, 0.7, { 255,255,255 });
+    CargaArchivo* carga = new CargaArchivo("MetaDatas.json");
 
-    elementos.push_back(m); 
-    elementos.push_back(m3);
-    elementos.push_back(esferaEspejo);
+    ObjetosEscena::getInstancia()->resolucionX = carga->getResX();
+    ObjetosEscena::getInstancia()->resolucionY = carga->getResY();
 
+    Camara* camaraPtr2 = new Camara(carga->getDirACam(), carga->getDirPVCam(), carga->getUbCam());
 
-    Plano* pared_piso = new Plano({ 0.0f, 0.0f, 0.0f }, { 0, 0, 1 }, { 1, 0, 0 }, { 150, 0, 150});
-    elementos.push_back(pared_piso);
+    std::vector<Sphear> esferas = carga->getEsferas();
+    std::vector<Triangle> tris = carga->getCaras();
+    std::vector<Cilinder> cilins = carga->getCilindros();
+    std::vector<LuzPunt> lucesPunt = carga->getLuces();
+    std::vector<Plane> plans = carga->getPlanos();
+    std::vector<Malla> mallas = carga->getMallas();
 
-    Plano* pared_techo = new Plano({ 0.0f, 2000.0f, 0.0f }, { 0, 0, 1 }, { 1, 0, 0 }, { 150, 0, 0 });
-    elementos.push_back(pared_techo);
-
-    ObjetosEscena::getInstancia()->setElementos(elementos);
-    ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
-
-    LuzPuntual* luces = new LuzPuntual[2];
-    luces[0] = { {255.f,    255.f,  255.f},{400.f   ,500.f,    0.f} };
-    luces[1] = { {255.f,    0.f,  255.f}, { 300.f   ,700.f,   700.f} };
-
-    ObjetosEscena::getInstancia()->lucesDifusas = luces;
-    ObjetosEscena::getInstancia()->numeroLucesDifusas = 2;
-
-    return camaraPtr;
-}
-
-Camara* ejemploObligatorio() {
-
-    ObjetosEscena::getInstancia()->resolucionX = 800;
-    ObjetosEscena::getInstancia()->resolucionY = 800;
-
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
-
-    Cilindro* cilindro = new Cilindro({ -40,-220,400 }, { 0,1,0 }, 80, 180, { 0,255,0 });
-
-    Plano* pared_piso = new Plano({ 0.0f, -350.0f, 0.0f }, { 0, 0, 1 }, { 1, 0, 0 }, { 255, 255, 255 });
-    Plano* pared_techo = new Plano({ 0.0f,  350.0f, 0.0f }, { 1, 0, 0 }, { 0, 0, 1 }, { 100, 100, 100 });
-    Plano* pared_derecha = new Plano({ 350.0f, 0.0f, 0.0f }, { 0, -1, 0 }, { 0, 0, 1 }, { 0, 100, 0 });
-    Plano* pared_isquierda = new Plano({ -350.0f, 0.0f, 0.0f }, { 0, 1, 0 }, { 0, 0, 1 }, { 100, 0, 0 });
-    Plano* fondo = new Plano({ 00.0f, 0.0f, 800.0f }, { 0,1, 0 }, { 1, 0, 0 }, { 255, 255, 255 });
-    Plano* frente = new Plano({ 00.0f, 0.0f, -1050.0f }, { 0,1, 0 }, { -1, 0, 0 }, { 0, 0, 0 });
-
-    Esfera* esferaEspejo = new Esfera({ 140,-150,400 }, 70.0f, { 255,255,255 });
-    esferaEspejo->coeficienteTransparencia = 0.0f;
-    esferaEspejo->coeficienteReflexion = 1.0f;
-
-    Esfera* esferaTransparente = new Esfera({ -120,-100,400 }, 120.0f, { 255,198,198 });
-    esferaTransparente->coeficienteTransparencia = .60f;
-    esferaTransparente->coeficienteReflexion = 0.0f;
-    esferaTransparente->setParametrosEspeculares(23, 0.8, { 255,255,255 });
 
     std::vector<Objeto*> elementos;
 
+    for (int t = 0; t < tris.size(); t++) {
+        Triangulo * tri;
+        tri = new Triangulo(tris[t].V1, tris[t].V2, tris[t].V3, { tris[t].r, tris[t].g, tris[t].b });
+        tri->setAtenuacion(tris[t].atConst, tris[t].atLineal, tris[t].atCuadr);
+        tri->setParametrosEspeculares(tris[t].esxpReflecEspec, tris[t].fracReflecEspec, { tris[t].colorReflecEspecR, tris[t].colorReflecEspecG, tris[t].colorReflecEspecB });
+        tri->coeficienteReflexion = tris[t].Refleccion;
+        tri->coeficienteTransparencia = tris[t].Transparencia;
+        elementos.push_back(tri);
+    }
 
-    elementos.push_back(pared_piso);
-    elementos.push_back(pared_techo);
-    elementos.push_back(pared_derecha);
-    elementos.push_back(pared_isquierda);
-    elementos.push_back(fondo);
-    elementos.push_back(frente);
-    elementos.push_back(esferaEspejo);
-    elementos.push_back(esferaTransparente);
-    elementos.push_back(cilindro);
+    for (int e = 0; e < esferas.size(); e++) {
+        Esfera* esf;
+        esf = new Esfera({ esferas[e].x, esferas[e].y, esferas[e].z }, esferas[e].radio, { esferas[e].r, esferas[e].g, esferas[e].b });
+        esf->setAtenuacion(esferas[e].atConst, esferas[e].atLineal, esferas[e].atCuadr);
+        esf->setParametrosEspeculares(esferas[e].esxpReflecEspec, esferas[e].fracReflecEspec, { esferas[e].colorReflecEspecR, esferas[e].colorReflecEspecG, esferas[e].colorReflecEspecB });
+        esf->coeficienteReflexion = esferas[e].Refleccion;
+        esf->coeficienteTransparencia = esferas[e].Transparencia;
+        elementos.push_back(esf);
+    }
 
+    for (int c = 0; c < cilins.size(); c++) {
+        Cilindro* cili;
+        cili = new Cilindro({ cilins[c].x, cilins[c].y, cilins[c].z }, { cilins[c].direccion_x,cilins[c].direccion_y,cilins[c].direccion_z }, cilins[c].radio, cilins[c].altura, { cilins[c].r, cilins[c].g, cilins[c].b });
+        cili->setAtenuacion(cilins[c].atConst, cilins[c].atLineal, cilins[c].atCuadr);
+        cili->setParametrosEspeculares(cilins[c].esxpReflecEspec, cilins[c].fracReflecEspec, { cilins[c].colorReflecEspecR, cilins[c].colorReflecEspecG, cilins[c].colorReflecEspecB });
+        cili->coeficienteReflexion = cilins[c].Refleccion;
+        cili->coeficienteTransparencia = cilins[c].Transparencia;
+        elementos.push_back(cili);
+    }
 
-    MallaClass* mesa = new MallaClass("m.obj", { 0.f, -300.f, 350.f }, 85.f, nullptr);
+    for (int p = 0; p < plans.size(); p++) {
+        Plano* plan;
+        
+        plan = new Plano(plans[p].puntoBase,plans[p].VectorU,plans[p].VectorV, { plans[p].r, plans[p].g, plans[p].b });
+        //plan->setAtenuacion(plans[p].atConst, plans[p].atLineal, plans[p].atCuadr);
+        //plan->setParametrosEspeculares(plans[p].esxpReflecEspec, plans[p].fracReflecEspec, { plans[p].colorReflecEspecR, plans[p].colorReflecEspecG, plans[p].colorReflecEspecB });
+        //plan->coeficienteReflexion = plans[p].Refleccion;
+        //plan->coeficienteTransparencia = plans[p].Transparencia;
+        elementos.push_back(plan);
+    }
 
-    elementos.push_back(mesa);
+    for (int m = 0; m < mallas.size(); m++) {
+        MallaClass* mall;
+        MathVector traslacion = { mallas[m].trasladar_x,mallas[m].trasladar_y,mallas[m].trasladar_z };
+        mall = new MallaClass(mallas[m].obj_url.c_str(), traslacion, mallas[m].escalamiento, mallas[m].png_url.c_str());
+        elementos.push_back(mall);
+    }
 
     ObjetosEscena::getInstancia()->setElementos(elementos);
-    ObjetosEscena::getInstancia()->luzAmbiente = { 80.0f,80.0f,80.0f };
+    ObjetosEscena::getInstancia()->luzAmbiente = { carga->getLuzAmb().x, carga->getLuzAmb().y , carga->getLuzAmb().z };
 
-    LuzPuntual* luces = new LuzPuntual[2];
-    luces[0] = { {255.f,  255.f,  255.f}, {0.f  , 300.f,   200.f} };
+    LuzPuntual* luces2 = new LuzPuntual[lucesPunt.size()];
+    for (int l = 0; l < lucesPunt.size(); l++) {
+        luces2[l] = { {lucesPunt[l].r, lucesPunt[l].g, lucesPunt[l].b}, lucesPunt[l].pos };
+    }
 
-    luces[1] = { {255.f,  255.f,  255.f}, {0.f  , 300.f,   500.f} };
-
-    ObjetosEscena::getInstancia()->lucesDifusas = luces;
-    ObjetosEscena::getInstancia()->numeroLucesDifusas = 2;
+    ObjetosEscena::getInstancia()->lucesDifusas = luces2;
+    ObjetosEscena::getInstancia()->numeroLucesDifusas = carga->getCantLuces();
 
 
-    return camaraPtr;
+    return camaraPtr2;
 }
-
 
 void render(int x_p, int y_p, Camara* cam, FIBITMAP* bitmap, FIBITMAP* bitmapTrans, FIBITMAP* bitmapRef,
     FIBITMAP* bitmapAmb, FIBITMAP* bitmapEspec, FIBITMAP* bitmapDif, FIBITMAP* bitmapPriRecTrans, FIBITMAP* bitmapPriRecRefle, FIBITMAP* preview) {
@@ -371,7 +353,7 @@ int SDL_main(int argc, char* argv[]) {
 
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    Camara* camaraEj = ejemploObj();
+    Camara* camaraEj = cargarArchivoMetaData();
 
     FIBITMAP* bitmap = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
         ObjetosEscena::getInstancia()->resolucionY);
