@@ -13,70 +13,37 @@
 #include "Cilindro.h"
 #include "Triangulo.h"
 #include "objloader.h"
-
 #include "SDL.h"
+#include "Malla.h"
 
-int render();
-
-int SDL_main(int argc, char* argv[]) {
-    // Tu c�digo SDL aqu�
-
-    SDL_Init(SDL_INIT_VIDEO);
-
-    // Ejemplo: Crear una ventana
-    SDL_Window* window = SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
-
-    // Bucle principal
-    bool quit = false;
-    SDL_Event e;
-
-    render();
+#include "chrono"
 
 
-    // Liberar recursos
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+#define SCREEN_WIDTH 700
+#define SCREEN_HEIGHT 700
 
-    return 0;
-}
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 800
+using namespace std;
+
+using Clock = std::chrono::steady_clock;
+using chrono::time_point;
+using chrono::duration_cast;
+using chrono::milliseconds;
+using chrono::seconds;
 
 
 Camara* ejemploObj() {
-    ObjetosEscena::getInstancia()->resolucionX = 500;
-    ObjetosEscena::getInstancia()->resolucionY = 500;
+    ObjetosEscena::getInstancia()->resolucionX = 400;
+    ObjetosEscena::getInstancia()->resolucionY = 400;
 
-    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 100.0f , -700.0f });
+    Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, -1.0f }, { 0.0f, 100.0f , 700.0f });
 
-    std::vector<unsigned short> indices;
-    std::vector<glm::vec3> verticess;
-    std::vector<glm::vec2> uvs;
-    std::vector<glm::vec3> normals;
-    //loadAssImp("Horse.obj", indices, verticess, uvs, normals);
-    loadAssImp("m.obj", indices, verticess, uvs, normals);
-
-    int cantTriangulos = verticess.size() / 3;
-
-    float escalar = 80;
-
-
+ 
     std::vector<Objeto*> elementos;
 
-    for (int i = 0; i < cantTriangulos; i++) {
+    MallaClass* m = new MallaClass("Horse.obj", { 0.f, 0.f, 0.f }, 4.f);
 
-        MathVector v1 = { verticess[i * 3].x * escalar      , verticess[i * 3].y * escalar    , verticess[i * 3].z * escalar };
-        MathVector v2 = { verticess[i * 3 + 1].x * escalar  , verticess[i * 3 + 1].y * escalar, verticess[i * 3 + 1].z * escalar };
-        MathVector v3 = { verticess[i * 3 + 2].x * escalar  , verticess[i * 3 + 2].y * escalar, verticess[i * 3 + 2].z * escalar };
-
-        MathVector n_v1 = { normals[i * 3].x    , normals[i * 3].y     , normals[i * 3].z };
-        MathVector n_v2 = { normals[i * 3 + 1].x, normals[i * 3 + 1].y , normals[i * 3 + 1].z };
-        MathVector n_v3 = { normals[i * 3 + 2].x, normals[i * 3 + 2].y , normals[i * 3 + 2].z };
-
-
-        elementos.push_back(new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, { 255,255,255 }));
-    }
+    elementos.push_back(m);
 
     ObjetosEscena::getInstancia()->setElementos(elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { 100.0f,100.0f,100.0f };
@@ -91,8 +58,8 @@ Camara* ejemploObj() {
 
 Camara* ejemploObligatorio() {
 
-    ObjetosEscena::getInstancia()->resolucionX = 1000;
-    ObjetosEscena::getInstancia()->resolucionY = 1000;
+    ObjetosEscena::getInstancia()->resolucionX = 800;
+    ObjetosEscena::getInstancia()->resolucionY = 800;
 
     Camara* camaraPtr = new Camara({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, -1000.0f });
 
@@ -127,30 +94,10 @@ Camara* ejemploObligatorio() {
     elementos.push_back(esferaTransparente);
     elementos.push_back(cilindro);
 
-    std::vector<unsigned short> indices;
-    std::vector<glm::vec3> verticess;
-    std::vector<glm::vec2> uvs;
-    std::vector<glm::vec3> normals;
-    loadAssImp("m.obj", indices, verticess, uvs, normals);
 
-    int cantTriangulos = verticess.size() / 3;
+    MallaClass* mesa = new MallaClass("m.obj", { 0.f, -300.f, 350.f }, 85.f);
 
-    float escalar = 85;
-    MathVector trasladar = { 0.f, -300.f, 350.f };
-
-    for (int i = 0; i < cantTriangulos; i++) {
-
-        MathVector v1 = { verticess[i * 3].x * escalar + trasladar.x , verticess[i * 3].y * escalar + trasladar.y   , verticess[i * 3].z * escalar + trasladar.z };
-        MathVector v2 = { verticess[i * 3 + 1].x * escalar + trasladar.x , verticess[i * 3 + 1].y * escalar + trasladar.y   , verticess[i * 3 + 1].z * escalar + trasladar.z };
-        MathVector v3 = { verticess[i * 3 + 2].x * escalar + trasladar.x , verticess[i * 3 + 2].y * escalar + trasladar.y   , verticess[i * 3 + 2].z * escalar + trasladar.z };
-
-        MathVector n_v1 = { normals[i * 3].x    , normals[i * 3].y     , normals[i * 3].z };
-        MathVector n_v2 = { normals[i * 3 + 1].x, normals[i * 3 + 1].y , normals[i * 3 + 1].z };
-        MathVector n_v3 = { normals[i * 3 + 2].x, normals[i * 3 + 2].y , normals[i * 3 + 2].z };
-
-
-        elementos.push_back(new Triangulo(v1, v2, v3, n_v1, n_v2, n_v3, { 255,255,255 }));
-    }
+    elementos.push_back(mesa);
 
     ObjetosEscena::getInstancia()->setElementos(elementos);
     ObjetosEscena::getInstancia()->luzAmbiente = { 80.0f,80.0f,80.0f };
@@ -167,28 +114,233 @@ Camara* ejemploObligatorio() {
     return camaraPtr;
 }
 
-using namespace std;
 
-// Main function
-int render() {
+void render(int x_p, int y_p, Camara* cam, FIBITMAP* bitmap, FIBITMAP* bitmapTrans, FIBITMAP* bitmapRef,
+    FIBITMAP* bitmapAmb, FIBITMAP* bitmapEspec, FIBITMAP* bitmapDif, FIBITMAP* bitmapPriRecTrans, FIBITMAP* bitmapPriRecRefle, FIBITMAP* preview) {
+
+    int r_c = 0;
+    int g_c = 0;
+    int b_c = 0;
+
+    int r_t = 0;
+    int g_t = 0;
+    int b_t = 0;
+
+    int r_r = 0;
+    int g_r = 0;
+    int b_r = 0;
+
+    int r_e = 0;
+    int g_e = 0;
+    int b_e = 0;
+
+    int r_a = 0;
+    int g_a = 0;
+    int b_a = 0;
 
 
-    /*if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        cerr << "No se pudo iniciar SDL: " << SDL_GetError() << endl;
-        return 1;
+    int r_d = 0;
+    int g_d = 0;
+    int b_d = 0;
+
+    int r_pr = 0;
+    int g_pr = 0;
+    int b_pr = 0;
+
+    int r_pt = 0;
+    int g_pt = 0;
+    int b_pt = 0;
+
+
+    for (int y_s = 0; y_s <= 1; y_s++) {
+        for (int x_s = 0; x_s <= 1; x_s++) {
+
+            float x_delta = ((float)x_s - 0.5f) * 0.5f;
+            float y_delta = ((float)y_s - 0.5f) * 0.5f;
+
+            Rayo r = cam->getRayo(x_p + x_delta, y_p + y_delta);
+
+            ColorCoef color = ObjetosEscena::getInstancia()->getPixelPorRayo(r, 1);
+
+            if (color.base.r > 255) {
+                color.base.r = 255.0f;
+            }
+
+            if (color.base.g > 255) {
+                color.base.g = 255.0f;
+            }
+
+            if (color.base.b > 255) {
+                color.base.b = 255.0f;
+            }
+
+            r_c += color.base.r;
+            g_c += color.base.g;
+            b_c += color.base.b;
+
+            if (color.transp.r > 255) {
+                color.transp.r = 255.0f;
+            }
+
+
+            if (color.transp.g > 255) {
+                color.transp.g = 255.0f;
+            }
+
+
+            if (color.transp.b > 255) {
+                color.transp.b = 255.0f;
+            }
+
+            r_t += color.transp.r;
+            g_t += color.transp.g;
+            b_t += color.transp.b;
+
+            if (color.reflecc.r > 255) {
+                color.reflecc.r = 255.0f;
+            }
+
+
+            if (color.reflecc.g > 255) {
+                color.reflecc.g = 255.0f;
+            }
+
+
+            if (color.reflecc.b > 255) {
+                color.reflecc.b = 255.0f;
+            }
+
+            r_r += color.reflecc.r;
+            g_r += color.reflecc.g;
+            b_r += color.reflecc.b;
+
+
+            if (color.espec.r > 255) {
+                color.espec.r = 255.0f;
+            }
+
+
+            //Implementacion de  anti-aliasing
+
+            if (color.espec.g > 255) {
+                color.espec.g = 255.0f;
+            }
+
+            if (color.espec.b > 255) {
+                color.espec.b = 255.0f;
+            }
+
+            r_e += color.espec.r;
+            g_e += color.espec.g;
+            b_e += color.espec.b;
+
+            if (color.ambient.r > 255) {
+                color.ambient.r = 255.0f;
+            }
+
+            if (color.ambient.g > 255) {
+                color.ambient.g = 255.0f;
+            }
+
+            if (color.ambient.b > 255) {
+                color.ambient.b = 255.0f;
+            }
+
+            r_a += color.ambient.r;
+            g_a += color.ambient.g;
+            b_a += color.ambient.b;
+
+            if (color.difus.r > 255) {
+                color.difus.r = 255.0f;
+            }
+
+            if (color.difus.g > 255) {
+                color.difus.g = 255.0f;
+            }
+
+            if (color.difus.b > 255) {
+                color.difus.b = 255.0f;
+            }
+
+            r_d += color.difus.r;
+            g_d += color.difus.g;
+            b_d += color.difus.b;
+
+            if (color.primRecReflex.r > 255) {
+                color.primRecReflex.r = 255.0f;
+            }
+
+            if (color.primRecReflex.g > 255) {
+                color.primRecReflex.g = 255.0f;
+            }
+
+            if (color.primRecReflex.b > 255) {
+                color.primRecReflex.b = 255.0f;
+            }
+
+            r_pr += color.primRecReflex.r;
+            g_pr += color.primRecReflex.g;
+            b_pr += color.primRecReflex.b;
+
+            if (color.primRecTrans.r > 255) {
+                color.primRecTrans.r = 255.0f;
+            }
+
+            if (color.primRecTrans.g > 255) {
+                color.primRecTrans.g = 255.0f;
+            }
+
+            if (color.primRecTrans.b > 255) {
+                color.primRecTrans.b = 255.0f;
+            }
+
+            r_pt += color.primRecTrans.r;
+            g_pt += color.primRecTrans.g;
+            b_pt += color.primRecTrans.b;
+        }
     }
 
-    SDL_Window* win = SDL_CreateWindow("Bomberman - Obligatorio 1 - Comp Graf ",
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+    RGBQUAD rgbColor = { (BYTE)(b_c / 4), (BYTE)(g_c / 4), (BYTE)(r_c / 4) };
 
-    */
+    RGBQUAD rgbColorTransp = { (BYTE)(b_t / 4), (BYTE)(g_t / 4), (BYTE)(r_t / 4) };
+    RGBQUAD rgbColorReflec = { (BYTE)(b_r / 4), (BYTE)(g_r / 4), (BYTE)(r_r / 4) };
+    RGBQUAD rgbColorAmbient = { (BYTE)(b_a / 4), (BYTE)(g_a / 4), (BYTE)(r_a / 4) };
+    RGBQUAD rgbColorEspec = { (BYTE)(b_e / 4), (BYTE)(g_e / 4), (BYTE)(r_e / 4) };
+    RGBQUAD rgbColorDifus = { (BYTE)(b_d / 4), (BYTE)(g_d / 4), (BYTE)(r_d / 4) };
+    RGBQUAD rgbColorPrimRecTrans = { (BYTE)(b_pt / 4), (BYTE)(g_pt / 4), (BYTE)(r_pt / 4) };
+    RGBQUAD rgbColorPrimRecReflex = { (BYTE)(b_pr / 4), (BYTE)(g_pr / 4), (BYTE)(r_pr / 4) };
 
+    int y_inv = ObjetosEscena::getInstancia()->resolucionY - y_p - 1;
+    
+    FreeImage_SetPixelColor(bitmap, x_p, y_p, &rgbColor);
+    FreeImage_SetPixelColor(preview, x_p, y_inv, &rgbColor);
+
+
+    FreeImage_SetPixelColor(bitmapTrans, x_p, y_p, &rgbColorTransp);
+    FreeImage_SetPixelColor(bitmapRef, x_p, y_p, &rgbColorReflec);
+    FreeImage_SetPixelColor(bitmapAmb, x_p, y_p, &rgbColorAmbient);
+    FreeImage_SetPixelColor(bitmapEspec, x_p, y_p, &rgbColorEspec);
+    FreeImage_SetPixelColor(bitmapDif, x_p, y_p, &rgbColorDifus);
+    FreeImage_SetPixelColor(bitmapPriRecTrans, x_p, y_p, &rgbColorPrimRecTrans);
+    FreeImage_SetPixelColor(bitmapPriRecRefle, x_p, y_p, &rgbColorPrimRecReflex);
+}
+
+int SDL_main(int argc, char* argv[]) {
+    // Tu c�digo SDL aqu�
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    // Ejemplo: Crear una ventana
+    SDL_Window* window = SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     Camara* camaraEj = ejemploObligatorio();
 
     FIBITMAP* bitmap = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
+        ObjetosEscena::getInstancia()->resolucionY);
+
+    FIBITMAP* bitmapPreview = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
         ObjetosEscena::getInstancia()->resolucionY);
 
     FIBITMAP* bitmapTrans = crearImagenVacia(ObjetosEscena::getInstancia()->resolucionX,
@@ -215,233 +367,90 @@ int render() {
     int w = (int)ObjetosEscena::getInstancia()->resolucionX;
     int h = (int)ObjetosEscena::getInstancia()->resolucionY;
 
+    bool quit = false;
+    SDL_Event evento;
+
+    int inicio = 0;
+    int cant_a_procesar_por_refesh = 500;
+    bool primeraVezFin = false;
 
 
+    time_point<Clock> inicioTiempo = Clock::now();
 
+    while (!quit) {
 
-    for (int y = 0; y < h; y++) {
-        for (int x = 0; x < w; x++) {
+        int cant_pross = min(w * h - inicio, cant_a_procesar_por_refesh);
 
-            //printf("%.2f\n", (float)(y * w + x) / (float)(w * h));
-             //Implementacion de  anti-aliasing
+        for (int h = 0; h < cant_pross; h++) {
+            int p = inicio + h;
 
+            int y = p / w;
+            int x = p % w;
 
-            int r_c = 0;
-            int g_c = 0;
-            int b_c = 0;
-
-            int r_t = 0;
-            int g_t = 0;
-            int b_t = 0;
-
-            int r_r = 0;
-            int g_r = 0;
-            int b_r = 0;
-
-            int r_e = 0;
-            int g_e = 0;
-            int b_e = 0;
-
-            int r_a = 0;
-            int g_a = 0;
-            int b_a = 0;
-
-
-            int r_d = 0;
-            int g_d = 0;
-            int b_d = 0;
-
-            int r_pr = 0;
-            int g_pr = 0;
-            int b_pr = 0;
-
-            int r_pt = 0;
-            int g_pt = 0;
-            int b_pt = 0;
-
-
-            for (int y_s = 0; y_s <= 1; y_s++) {
-                for (int x_s = 0; x_s <= 1; x_s++) {
-
-                    float x_delta = ((float)x_s - 0.5f) * 0.5f;
-                    float y_delta = ((float)y_s - 0.5f) * 0.5f;
-
-                    Rayo r = camaraEj->getRayo(x + x_delta, y + y_delta);
-
-                    ColorCoef color = ObjetosEscena::getInstancia()->getPixelPorRayo(r, 1);
-
-                    if (color.base.r > 255) {
-                        color.base.r = 255.0f;
-                    }
-
-                    if (color.base.g > 255) {
-                        color.base.g = 255.0f;
-                    }
-
-                    if (color.base.b > 255) {
-                        color.base.b = 255.0f;
-                    }
-
-                    r_c += color.base.r;
-                    g_c += color.base.g;
-                    b_c += color.base.b;
-
-                    if (color.transp.r > 255) {
-                        color.transp.r = 255.0f;
-                    }
-
-
-                    if (color.transp.g > 255) {
-                        color.transp.g = 255.0f;
-                    }
-
-
-                    if (color.transp.b > 255) {
-                        color.transp.b = 255.0f;
-                    }
-
-                    r_t += color.transp.r;
-                    g_t += color.transp.g;
-                    b_t += color.transp.b;
-
-                    if (color.reflecc.r > 255) {
-                        color.reflecc.r = 255.0f;
-                    }
-
-
-                    if (color.reflecc.g > 255) {
-                        color.reflecc.g = 255.0f;
-                    }
-
-
-                    if (color.reflecc.b > 255) {
-                        color.reflecc.b = 255.0f;
-                    }
-
-                    r_r += color.reflecc.r;
-                    g_r += color.reflecc.g;
-                    b_r += color.reflecc.b;
-
-
-                    if (color.espec.r > 255) {
-                        color.espec.r = 255.0f;
-                    }
-
-
-                    //Implementacion de  anti-aliasing
-
-                    if (color.espec.g > 255) {
-                        color.espec.g = 255.0f;
-                    }
-
-                    if (color.espec.b > 255) {
-                        color.espec.b = 255.0f;
-                    }
-
-                    r_e += color.espec.r;
-                    g_e += color.espec.g;
-                    b_e += color.espec.b;
-
-                    if (color.ambient.r > 255) {
-                        color.ambient.r = 255.0f;
-                    }
-
-                    if (color.ambient.g > 255) {
-                        color.ambient.g = 255.0f;
-                    }
-
-                    if (color.ambient.b > 255) {
-                        color.ambient.b = 255.0f;
-                    }
-
-                    r_a += color.ambient.r;
-                    g_a += color.ambient.g;
-                    b_a += color.ambient.b;
-
-                    if (color.difus.r > 255) {
-                        color.difus.r = 255.0f;
-                    }
-
-                    if (color.difus.g > 255) {
-                        color.difus.g = 255.0f;
-                    }
-
-                    if (color.difus.b > 255) {
-                        color.difus.b = 255.0f;
-                    }
-
-                    r_d += color.difus.r;
-                    g_d += color.difus.g;
-                    b_d += color.difus.b;
-
-                    if (color.primRecReflex.r > 255) {
-                        color.primRecReflex.r = 255.0f;
-                    }
-
-                    if (color.primRecReflex.g > 255) {
-                        color.primRecReflex.g = 255.0f;
-                    }
-
-                    if (color.primRecReflex.b > 255) {
-                        color.primRecReflex.b = 255.0f;
-                    }
-
-                    r_pr += color.primRecReflex.r;
-                    g_pr += color.primRecReflex.g;
-                    b_pr += color.primRecReflex.b;
-
-                    if (color.primRecTrans.r > 255) {
-                        color.primRecTrans.r = 255.0f;
-                    }
-
-                    if (color.primRecTrans.g > 255) {
-                        color.primRecTrans.g = 255.0f;
-                    }
-
-                    if (color.primRecTrans.b > 255) {
-                        color.primRecTrans.b = 255.0f;
-                    }
-
-                    r_pt += color.primRecTrans.r;
-                    g_pt += color.primRecTrans.g;
-                    b_pt += color.primRecTrans.b;
-                }
-            }
-
-            RGBQUAD rgbColor = { (BYTE)(b_c / 4), (BYTE)(g_c / 4), (BYTE)(r_c / 4) };
-
-            RGBQUAD rgbColorTransp = { (BYTE)(b_t / 4), (BYTE)(g_t / 4), (BYTE)(r_t / 4) };
-            RGBQUAD rgbColorReflec = { (BYTE)(b_r / 4), (BYTE)(g_r / 4), (BYTE)(r_r / 4) };
-            RGBQUAD rgbColorAmbient = { (BYTE)(b_a / 4), (BYTE)(g_a / 4), (BYTE)(r_a / 4) };
-            RGBQUAD rgbColorEspec = { (BYTE)(b_e / 4), (BYTE)(g_e / 4), (BYTE)(r_e / 4) };
-            RGBQUAD rgbColorDifus = { (BYTE)(b_d / 4), (BYTE)(g_d / 4), (BYTE)(r_d / 4) };
-            RGBQUAD rgbColorPrimRecTrans = { (BYTE)(b_pt / 4), (BYTE)(g_pt / 4), (BYTE)(r_pt / 4) };
-            RGBQUAD rgbColorPrimRecReflex = { (BYTE)(b_pr / 4), (BYTE)(g_pr / 4), (BYTE)(r_pr / 4) };
-
-            FreeImage_SetPixelColor(bitmap, x, y, &rgbColor);
-
-            FreeImage_SetPixelColor(bitmapTrans, x, y, &rgbColorTransp);
-            FreeImage_SetPixelColor(bitmapRef, x, y, &rgbColorReflec);
-            FreeImage_SetPixelColor(bitmapAmb, x, y, &rgbColorAmbient);
-            FreeImage_SetPixelColor(bitmapEspec, x, y, &rgbColorEspec);
-            FreeImage_SetPixelColor(bitmapDif, x, y, &rgbColorDifus);
-            FreeImage_SetPixelColor(bitmapPriRecTrans, x, y, &rgbColorPrimRecTrans);
-            FreeImage_SetPixelColor(bitmapPriRecRefle, x, y, &rgbColorPrimRecReflex);
+            render(x, y, camaraEj, bitmap, bitmapTrans, bitmapRef, bitmapAmb, bitmapEspec, bitmapDif, bitmapPriRecTrans, bitmapPriRecRefle, bitmapPreview);
         }
+
+        if (inicio < w * h) {
+            void* datos = FreeImage_GetBits(bitmapPreview);
+            
+            SDL_Surface * surface = SDL_CreateRGBSurfaceFrom(datos, w, h, 24, 3*w, 0x00ff0000, 0x0000ff00, 0x000000ff, 0);
+
+            SDL_Texture* image = SDL_CreateTextureFromSurface(renderer, surface);
+            SDL_FreeSurface(surface);
+
+            SDL_Rect imageRect = { 0, 0, SCREEN_WIDTH , SCREEN_HEIGHT};
+            //SDL_QueryTexture(image, NULL, NULL, &imageRect.w, &imageRect.h);
+            SDL_RenderCopy(renderer, image, NULL, &imageRect);
+
+            SDL_RenderPresent(renderer);
+        }
+
+        inicio += cant_pross;
+
+        if (inicio == w * h && !primeraVezFin) {
+            primeraVezFin = true;
+            std::string dt = getCurrentDateTime();
+
+            std::time_t tf = std::time(0);
+
+            milliseconds miliseconds = duration_cast<milliseconds>(Clock::now() - inicioTiempo);
+
+            guardarImagen(bitmap, dt, "Base");
+            guardarImagen(bitmapTrans, dt, "Transp");
+            guardarImagen(bitmapRef, dt, "Reflec");
+            guardarImagen(bitmapAmb, dt, "Amb");
+            guardarImagen(bitmapEspec, dt, "Espec");
+            guardarImagen(bitmapDif, dt, "Difus");
+            guardarImagen(bitmapPriRecTrans, dt, "TranspPrimRecursion");
+            guardarImagen(bitmapPriRecRefle, dt, "ReflexPrimRecursion");
+
+            printf("----- Tiempo transcurido = %.2f seg \n", (float)miliseconds.count() / 1000.f);
+
+        }
+       
+
+        while (SDL_PollEvent(&evento)) {
+            switch (evento.type) {
+            case SDL_QUIT:
+                quit = true;
+                break;
+            }
+        }
+
     }
-
-    /* --------------------------------------- */
-    std::string dt = getCurrentDateTime();
+    
 
 
-    guardarImagen(bitmap, dt, "Base");
-    guardarImagen(bitmapTrans, dt, "Transp");
-    guardarImagen(bitmapRef, dt, "Reflec");
-    guardarImagen(bitmapAmb, dt, "Amb");
-    guardarImagen(bitmapEspec, dt, "Espec");
-    guardarImagen(bitmapDif, dt, "Difus");
-    guardarImagen(bitmapPriRecTrans, dt, "TranspPrimRecursion");
-    guardarImagen(bitmapPriRecRefle, dt, "ReflexPrimRecursion");
+    // Liberar recursos
+    SDL_DestroyWindow(window);
+    SDL_Quit();
 
     return 0;
 }
+
+
+
+
+
+
+

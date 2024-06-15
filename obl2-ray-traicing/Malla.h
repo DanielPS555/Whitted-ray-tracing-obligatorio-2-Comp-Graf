@@ -3,27 +3,18 @@
 #include "Triangulo.h"
 #include "vector"
 
-#ifndef MALLA_CLASS
-#define MALLA_CLASS
+#ifndef MALLA_CLASS_A
+#define MALLA_CLASS_A
 
-class Malla : public Objeto{
-
-protected:
-	
-	MathVector traslacion;
-	float escalar;
+class MallaClass : public Objeto{
+protected:	
 	std::vector<Triangulo*> triangulos;
 
 public:
-
-	Malla(const char* path, MathVector traslacion, float escalar);
-
-	float intersepcion(Rayo rayo);
-
+	MallaClass(const char* path, MathVector traslacion, float escalar);
+	void intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t_int);
 	MathVector getNormal(MathVector punto);
-
 	std::vector<Objeto*> getObjetosInternos();
-
 
 };
 

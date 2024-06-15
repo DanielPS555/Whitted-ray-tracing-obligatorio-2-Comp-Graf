@@ -1,7 +1,7 @@
 #include "Malla.h"
 #include "objloader.h"
 
-Malla::Malla(const char* path, MathVector traslacion, float escalar) {
+MallaClass::MallaClass(const char* path, MathVector traslacion, float escalar) : Objeto() {
     std::vector<unsigned short> indices;
     std::vector<glm::vec3> verticess;
     std::vector<glm::vec2> uvs;
@@ -26,15 +26,26 @@ Malla::Malla(const char* path, MathVector traslacion, float escalar) {
 
 }
 
-float Malla::intersepcion(Rayo rayo) {
-
+void MallaClass::intersepcion(Rayo rayo, int& idObjetoInterseptado, float& t_int) {
+    t_int = -1;
+    for (Triangulo* tri : triangulos) {
+        float t;
+        int id_choque;
+        tri->intersepcion(rayo, id_choque, t);
+        if (t != -1) {
+            if (t_int == -1 || t_int > t) {
+                t_int = t;
+                idObjetoInterseptado = id_choque;
+            }
+        }
+    }
 }
 
-MathVector Malla::getNormal(MathVector punto) {
-
+MathVector MallaClass::getNormal(MathVector punto) {
+    return { 0,0,0 }; // No se usa porque depende de los triangulos
 }
 
-std::vector<Objeto*> Malla::getObjetosInternos() {
+std::vector<Objeto*> MallaClass::getObjetosInternos() {
     std::vector<Objeto*> obj_internos;
     for (Triangulo* tri : triangulos) {
         obj_internos.push_back(tri);
