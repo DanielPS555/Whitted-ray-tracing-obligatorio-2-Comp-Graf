@@ -417,11 +417,12 @@ int SDL_main(int argc, char* argv[]) {
 
         int cant_pross = min(w * h - inicio, cant_a_procesar_por_refesh);
 
-        #pragma omp parallel for num_threads (6)  schedule(dynamic,100)
+        if (cant_pross > 0) {
+#pragma omp parallel for num_threads (6)  schedule(dynamic,100)
 
             for (int h = 0; h < cant_pross; h++) {
 
-                int id = omp_get_thread_num();                
+                int id = omp_get_thread_num();
 
                 int p = inicio + h;
 
@@ -431,44 +432,44 @@ int SDL_main(int argc, char* argv[]) {
                 render(x, y, camaraEj, bitmap, bitmapTrans, bitmapRef, bitmapAmb, bitmapEspec, bitmapDif, bitmapPriRecTrans, bitmapPriRecRefle, bitmapPreview);
             }
 
-        if (inicio < w * h) {
-            void* datos = FreeImage_GetBits(bitmapPreview);
-            
-            SDL_Surface * surface = SDL_CreateRGBSurfaceFrom(datos, w, h, 24, 3*w, 0x00ff0000, 0x0000ff00, 0x000000ff, 0);
+            if (inicio < w * h) {
+                void* datos = FreeImage_GetBits(bitmapPreview);
 
-            SDL_Texture* image = SDL_CreateTextureFromSurface(renderer, surface);
-            SDL_FreeSurface(surface);
+                SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(datos, w, h, 24, 3 * w, 0x00ff0000, 0x0000ff00, 0x000000ff, 0);
 
-            SDL_Rect imageRect = { 0, 0, SCREEN_WIDTH , SCREEN_HEIGHT};
-            //SDL_QueryTexture(image, NULL, NULL, &imageRect.w, &imageRect.h);
-            SDL_RenderCopy(renderer, image, NULL, &imageRect);
+                SDL_Texture* image = SDL_CreateTextureFromSurface(renderer, surface);
+                SDL_FreeSurface(surface);
 
-            SDL_RenderPresent(renderer);
-        }
+                SDL_Rect imageRect = { 0, 0, SCREEN_WIDTH , SCREEN_HEIGHT };
+                //SDL_QueryTexture(image, NULL, NULL, &imageRect.w, &imageRect.h);
+                SDL_RenderCopy(renderer, image, NULL, &imageRect);
 
-        inicio += cant_pross;
+                SDL_RenderPresent(renderer);
+            }
 
-        if (inicio == w * h && !primeraVezFin) {
-            primeraVezFin = true;
-            std::string dt = getCurrentDateTime();
+            inicio += cant_pross;
 
-            std::time_t tf = std::time(0);
+            if (inicio == w * h && !primeraVezFin) {
+                primeraVezFin = true;
+                std::string dt = getCurrentDateTime();
 
-            milliseconds miliseconds = duration_cast<milliseconds>(Clock::now() - inicioTiempo);
+                std::time_t tf = std::time(0);
 
-            guardarImagen(bitmap, dt, "Base");
-            guardarImagen(bitmapTrans, dt, "Transp");
-            guardarImagen(bitmapRef, dt, "Reflec");
-            guardarImagen(bitmapAmb, dt, "Amb");
-            guardarImagen(bitmapEspec, dt, "Espec");
-            guardarImagen(bitmapDif, dt, "Difus");
-            guardarImagen(bitmapPriRecTrans, dt, "TranspPrimRecursion");
-            guardarImagen(bitmapPriRecRefle, dt, "ReflexPrimRecursion");
+                milliseconds miliseconds = duration_cast<milliseconds>(Clock::now() - inicioTiempo);
 
-            printf("----- Tiempo transcurido = %.2f seg \n", (float)miliseconds.count() / 1000.f);
+                guardarImagen(bitmap, dt, "Base");
+                guardarImagen(bitmapTrans, dt, "Transp");
+                guardarImagen(bitmapRef, dt, "Reflec");
+                guardarImagen(bitmapAmb, dt, "Amb");
+                guardarImagen(bitmapEspec, dt, "Espec");
+                guardarImagen(bitmapDif, dt, "Difus");
+                guardarImagen(bitmapPriRecTrans, dt, "TranspPrimRecursion");
+                guardarImagen(bitmapPriRecRefle, dt, "ReflexPrimRecursion");
 
-        }
-       
+                printf("----- Tiempo transcurido = %.2f seg \n", (float)miliseconds.count() / 1000.f);
+
+            }
+        }       
 
         while (SDL_PollEvent(&evento)) {
             switch (evento.type) {
