@@ -425,11 +425,13 @@ int SDL_main(int argc, char* argv[]) {
 
                 SDL_Texture* image = SDL_CreateTextureFromSurface(renderer, surface);
                 SDL_FreeSurface(surface);
+               
 
                 SDL_Rect imageRect = { 0, 0, SCREEN_WIDTH , SCREEN_HEIGHT };
                 //SDL_QueryTexture(image, NULL, NULL, &imageRect.w, &imageRect.h);
                 SDL_RenderCopy(renderer, image, NULL, &imageRect);
 
+                SDL_DestroyTexture(image);
                 SDL_RenderPresent(renderer);
             }
 
