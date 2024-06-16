@@ -92,9 +92,9 @@
     "atCuadr": 0,
     "esxpReflecEspec": 0,
     "fracReflecEspec": 0,
-    "colorReflecEspecR": 255,
-    "colorReflecEspecG": 255,
-    "colorReflecEspecB": 255,
+    "colorReflecEspecR": 0,
+    "colorReflecEspecG": 0,
+    "colorReflecEspecB": 0,
     "sensibilidad": 0
 },
     {
@@ -318,7 +318,7 @@
       "colorReflecEspecR": 255,
       "colorReflecEspecG": 255,
       "colorReflecEspecB": 255,
-      "sensibilidad": 0.3
+      "sensibilidad": 1.5
     }
     
   ],
@@ -348,7 +348,7 @@
         "colorReflecEspecR": 255,
         "colorReflecEspecG": 255,
         "colorReflecEspecB": 255,
-        "sensibilidad": 0.3
+        "sensibilidad": 0
     }
   ],
 

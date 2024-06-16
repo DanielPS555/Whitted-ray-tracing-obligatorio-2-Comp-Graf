@@ -61,6 +61,7 @@ Camara* cargarArchivoMetaData() {
         tri->setParametrosEspeculares(tris[t].esxpReflecEspec, tris[t].fracReflecEspec, { tris[t].colorReflecEspecR, tris[t].colorReflecEspecG, tris[t].colorReflecEspecB });
         tri->coeficienteReflexion = tris[t].Refleccion;
         tri->coeficienteTransparencia = tris[t].Transparencia;
+        tri->indiceTransparencia = tris[t].sesibilidad;
         elementos.push_back(tri);
     }
 
@@ -71,6 +72,7 @@ Camara* cargarArchivoMetaData() {
         esf->setParametrosEspeculares(esferas[e].esxpReflecEspec, esferas[e].fracReflecEspec, { esferas[e].colorReflecEspecR, esferas[e].colorReflecEspecG, esferas[e].colorReflecEspecB });
         esf->coeficienteReflexion = esferas[e].Refleccion;
         esf->coeficienteTransparencia = esferas[e].Transparencia;
+        esf->indiceTransparencia = esferas[e].sesibilidad;
         elementos.push_back(esf);
     }
 
@@ -81,6 +83,7 @@ Camara* cargarArchivoMetaData() {
         cili->setParametrosEspeculares(cilins[c].esxpReflecEspec, cilins[c].fracReflecEspec, { cilins[c].colorReflecEspecR, cilins[c].colorReflecEspecG, cilins[c].colorReflecEspecB });
         cili->coeficienteReflexion = cilins[c].Refleccion;
         cili->coeficienteTransparencia = cilins[c].Transparencia;
+        cili->indiceTransparencia = cilins[c].sesibilidad;
         elementos.push_back(cili);
     }
 
@@ -92,6 +95,7 @@ Camara* cargarArchivoMetaData() {
         plan->setParametrosEspeculares(plans[p].esxpReflecEspec, plans[p].fracReflecEspec, { plans[p].colorReflecEspecR, plans[p].colorReflecEspecG, plans[p].colorReflecEspecB });
         plan->coeficienteReflexion = plans[p].Refleccion;
         plan->coeficienteTransparencia = plans[p].Transparencia;
+        plan->indiceTransparencia = plans[p].sesibilidad;
         elementos.push_back(plan);
     }
 

@@ -84,6 +84,9 @@
     "g": 255,
     "b": 255,
     
+    "Transparencia": 0.0,
+    "Refleccion": 0.0,
+    "Refraccion":0.0,
     "atConst": 0,
     "atLineal": 0,
     "atCuadr": 0,
@@ -315,7 +318,7 @@
       "colorReflecEspecR": 255,
       "colorReflecEspecG": 255,
       "colorReflecEspecB": 255,
-      "sensibilidad": 0.3
+      "sensibilidad": 1.5
     }
     
   ],
@@ -345,7 +348,7 @@
         "colorReflecEspecR": 255,
         "colorReflecEspecG": 255,
         "colorReflecEspecB": 255,
-        "sensibilidad": 0.3
+        "sensibilidad": 0
     }
   ],
 
