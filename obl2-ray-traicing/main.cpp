@@ -88,10 +88,10 @@ Camara* cargarArchivoMetaData() {
         Plano* plan;
         
         plan = new Plano(plans[p].puntoBase,plans[p].VectorU,plans[p].VectorV, { plans[p].r, plans[p].g, plans[p].b });
-        //plan->setAtenuacion(plans[p].atConst, plans[p].atLineal, plans[p].atCuadr);
-        //plan->setParametrosEspeculares(plans[p].esxpReflecEspec, plans[p].fracReflecEspec, { plans[p].colorReflecEspecR, plans[p].colorReflecEspecG, plans[p].colorReflecEspecB });
-        //plan->coeficienteReflexion = plans[p].Refleccion;
-        //plan->coeficienteTransparencia = plans[p].Transparencia;
+        plan->setAtenuacion(plans[p].atConst, plans[p].atLineal, plans[p].atCuadr);
+        plan->setParametrosEspeculares(plans[p].esxpReflecEspec, plans[p].fracReflecEspec, { plans[p].colorReflecEspecR, plans[p].colorReflecEspecG, plans[p].colorReflecEspecB });
+        plan->coeficienteReflexion = plans[p].Refleccion;
+        plan->coeficienteTransparencia = plans[p].Transparencia;
         elementos.push_back(plan);
     }
 

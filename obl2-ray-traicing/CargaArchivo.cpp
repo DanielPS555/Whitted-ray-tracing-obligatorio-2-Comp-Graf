@@ -56,6 +56,10 @@ CargaArchivo::CargaArchivo(std::string file)
 			pla.atConst = data["planos"][p]["atConst"];
 			pla.atLineal = data["planos"][p]["atLineal"];
 			pla.atCuadr = data["planos"][p]["atCuadr"];
+
+			pla.Refleccion = data["planos"][p]["Refleccion"];
+			pla.Transparencia = data["planos"][p]["Transparencia"];
+
 			pla.esxpReflecEspec = data["planos"][p]["esxpReflecEspec"];
 			pla.fracReflecEspec = data["planos"][p]["fracReflecEspec"];
 			pla.colorReflecEspecR = data["planos"][p]["colorReflecEspecR"];
