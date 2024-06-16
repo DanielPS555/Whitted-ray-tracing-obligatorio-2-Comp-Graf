@@ -1,0 +1,589 @@
+{
+  "planos": [
+    {
+        "name": "pared_piso",
+        "D": 0,
+        "x": 0,
+        "y": -350,
+        "z": 0,
+
+        "vectorU_x": 0,
+        "vectorU_y": 0,
+        "vectorU_z": 1,
+
+        "vectorV_x": 1,
+        "vectorV_y": 0,
+        "vectorV_z": 0,
+
+        "r": 52,
+        "g": 73,
+        "b": 94,
+
+
+        "Transparencia": 0.0,
+        "Refleccion": 0.0,
+        "Refraccion":0.0,
+        "atConst": 0.35,
+        "atLineal": 0.0055,
+        "atCuadr": 0.0,
+        "esxpReflecEspec": 23,
+        "fracReflecEspec": 0,
+        "colorReflecEspecR": 255,
+        "colorReflecEspecG": 255,
+        "colorReflecEspecB": 255,
+        "sensibilidad": 0
+    },
+    {
+      "name": "pared_techo",
+      "D": 0,
+      "x": 0,
+      "y": 350,
+      "z": 0,
+
+      "vectorU_x": 1,
+      "vectorU_y": 0,
+      "vectorU_z": 0,
+
+      "vectorV_x": 0,
+      "vectorV_y": 0,
+      "vectorV_z": 1,
+
+      "r": 52,
+      "g": 73,
+      "b": 94,
+
+      
+
+      "Transparencia": 0.0,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+  },
+  {
+    "name": "pared_piso",
+    "D": 0,
+    "x": 0,
+    "y": -350,
+    "z": 0,
+
+    "vectorU_x": 0,
+    "vectorU_y": 0,
+    "vectorU_z": 1,
+
+    "vectorV_x": 1,
+    "vectorV_y": 0,
+    "vectorV_z": 0,
+
+    "r": 52,
+    "g": 73,
+    "b": 94,
+
+    
+    "Transparencia": 0.0,
+    "Refleccion": 0.0,
+    "Refraccion":0.0,
+    "atConst": 0,
+    "atLineal": 0,
+    "atCuadr": 0,
+    "esxpReflecEspec": 0,
+    "fracReflecEspec": 0,
+    "colorReflecEspecR": 0,
+    "colorReflecEspecG": 0,
+    "colorReflecEspecB": 0,
+    "sensibilidad": 0
+},
+    {
+        "name": "pared_derecha",
+        "D": 0,
+        "x": 350,
+        "y": 0,
+        "z": 0,
+
+        "vectorU_x": 0,
+        "vectorU_y": -1,
+        "vectorU_z": 1,
+
+        "vectorV_x": 0,
+        "vectorV_y": 0,
+        "vectorV_z": 1,
+
+        "r": 52,
+        "g": 73,
+        "b": 94,
+
+        
+
+        "Transparencia": 0.0,
+        "Refleccion": 0.0,
+        "Refraccion":0.0,
+        "atConst": 0.35,
+        "atLineal": 0.0055,
+        "atCuadr": 0.0,
+        "esxpReflecEspec": 23,
+        "fracReflecEspec": 0,
+        "colorReflecEspecR": 255,
+        "colorReflecEspecG": 255,
+        "colorReflecEspecB": 255,
+        "sensibilidad": 0
+    },
+    {
+      "name": "pared_izquierda",
+      "D": 0,
+      "x": -350,
+      "y": 0,
+      "z": 0,
+
+      "vectorU_x": 0,
+      "vectorU_y": 1,
+      "vectorU_z": 0,
+
+      "vectorV_x": 0,
+      "vectorV_y": 0,
+      "vectorV_z": 1,
+
+      "r": 52,
+      "g": 73,
+      "b": 94,
+
+      
+
+      "Transparencia": 0.0,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+  },
+  {
+    "name": "fondo",
+    "D": 0,
+    "x": 0,
+    "y": 0,
+    "z": 800,
+
+    "vectorU_x": 0,
+    "vectorU_y": 1,
+    "vectorU_z": 0,
+
+    "vectorV_x": 1,
+    "vectorV_y": 0,
+    "vectorV_z": 0,
+
+    "r": 52,
+    "g": 73,
+    "b": 94,
+
+    
+    "Transparencia": 0.0,
+    "Refleccion": 0.0,
+    "Refraccion":0.0,
+    "atConst": 0.35,
+    "atLineal": 0.0055,
+    "atCuadr": 0.0,
+    "esxpReflecEspec": 23,
+    "fracReflecEspec": 0,
+    "colorReflecEspecR": 255,
+    "colorReflecEspecG": 255,
+    "colorReflecEspecB": 255,
+    "sensibilidad": 0
+},
+  {
+    "name": "frente",
+    "D": 0,
+    "x": 0,
+    "y": 0,
+    "z": -2000,
+
+    "vectorU_x": 0,
+    "vectorU_y": 1,
+    "vectorU_z": 0,
+
+    "vectorV_x": -1,
+    "vectorV_y": 0,
+    "vectorV_z": 0,
+
+        "r": 52,
+        "g": 73,
+        "b": 94,
+        
+    
+    "Transparencia": 0.0,
+    "Refleccion": 0.0,
+    "Refraccion":0.0,
+    "atConst": 0.35,
+    "atLineal": 0.0055,
+    "atCuadr": 0.0,
+    "esxpReflecEspec": 23,
+    "fracReflecEspec": 0,
+    "colorReflecEspecR": 255,
+    "colorReflecEspecG": 255,
+    "colorReflecEspecB": 255,
+    "sensibilidad": 0
+  }
+
+
+  
+  ],
+
+  "triangulos": [
+    {
+      "name": "ign",
+      "xV1": -250,
+      "yV1": -250,
+      "zV1": 790,
+      "xV2": 250,
+      "yV2": -250,
+      "zV2": 790,
+      "xV3": -250,
+      "yV3": 250,
+      "zV3": 790,
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "Transparencia": 0.0,
+      "Refleccion": 0.9,
+      "Refraccion": 0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
+      "sesibilidad": 0
+    },
+    {
+      "name": "ign",
+      "xV1": 250,
+      "yV1": -250,
+      "zV1": 790,
+      "xV2": -250,
+      "yV2": 250,
+      "zV2": 790,
+      "xV3": 250,
+      "yV3": 250,
+      "zV3": 790,
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "Transparencia": 0,
+      "Refleccion": 0.9,
+      "Refraccion": 0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 0,
+      "colorReflecEspecG": 0,
+      "colorReflecEspecB": 0,
+      "sesibilidad": 0
+    }
+  ],
+
+    "mallas": [
+        {
+            "name": "mesa",
+            "trasladar_x": 0,
+            "trasladar_y":-300,
+            "trasladar_z":700,
+            "escalamiento":85,
+            "obj_url":"m.obj",
+            "png_url": ""
+
+        }
+    ],
+
+  "esferas": [
+    {
+      "name": "esfera1",
+      "radio": 120,
+      "x": -120,
+      "y": -100,
+      "z": 650,
+      "r": 255,
+      "g": 198,
+      "b": 198,
+      "Transparencia": 0.60,
+      "Refleccion": 0.0,
+      "Refraccion":0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0.8,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 1.5
+    },
+    {
+      "name": "esfera2",
+      "radio": 120,
+      "x": 150,
+      "y": -100,
+      "z": 650,
+      "r": 255,
+      "g": 198,
+      "b": 198,
+      "Transparencia": 0.60,
+      "Refleccion": 0.0,
+      "Refraccion":0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0.8,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 1.5
+    }
+  ],
+
+  "cilindros": [
+    {
+        "name": "cilindro1",
+        "radio": 10,
+        "altura": 1000,
+        "x": 0,
+        "y": -600,
+        "z": 300,
+        "direccion_x": 0,
+        "direccion_y": 1,
+        "direccion_z": 0,
+        "r": 93,
+        "g": 50,
+        "b": 20,
+        "Transparencia": 0.0,
+        "Refleccion": 0.5,
+        "Refraccion":0.0,
+        "atConst": 0.35,
+        "atLineal": 0.0055,
+        "atCuadr": 0.0,
+        "esxpReflecEspec": 23,
+        "fracReflecEspec": 0.0,
+        "colorReflecEspecR": 255,
+        "colorReflecEspecG": 255,
+        "colorReflecEspecB": 255,
+        "sensibilidad": 0
+    },
+    {
+      "name": "cilindro2",
+      "radio": 10,
+      "altura": 1000,
+      "x": 100,
+      "y": -600,
+      "z": 300,
+      "direccion_x": 0,
+      "direccion_y": 1,
+      "direccion_z": 0,
+      "r": 93,
+      "g": 50,
+      "b": 20,
+      "Transparencia": 0.0,
+      "Refleccion": 0.5,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0.0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+  },
+  {
+    "name": "cilindro2",
+    "radio": 10,
+    "altura": 1000,
+    "x": -100,
+    "y": -600,
+    "z": 300,
+    "direccion_x": 0,
+    "direccion_y": 1,
+    "direccion_z": 0,
+    "r": 93,
+    "g": 50,
+    "b": 20,
+    "Transparencia": 0.0,
+    "Refleccion": 0.5,
+    "Refraccion":0.0,
+    "atConst": 0.35,
+    "atLineal": 0.0055,
+    "atCuadr": 0.0,
+    "esxpReflecEspec": 23,
+    "fracReflecEspec": 0.0,
+    "colorReflecEspecR": 255,
+    "colorReflecEspecG": 255,
+    "colorReflecEspecB": 255,
+    "sensibilidad": 0
+},
+{
+  "name": "cilindro2",
+  "radio": 10,
+  "altura": 1000,
+  "x": -200,
+  "y": -600,
+  "z": 300,
+  "direccion_x": 0,
+  "direccion_y": 1,
+  "direccion_z": 0,
+  "r": 93,
+  "g": 50,
+  "b": 20,
+  "Transparencia": 0.0,
+  "Refleccion": 0.5,
+  "Refraccion":0.0,
+  "atConst": 0.35,
+  "atLineal": 0.0055,
+  "atCuadr": 0.0,
+  "esxpReflecEspec": 23,
+  "fracReflecEspec": 0.0,
+  "colorReflecEspecR": 255,
+  "colorReflecEspecG": 255,
+  "colorReflecEspecB": 255,
+  "sensibilidad": 0
+},
+{
+  "name": "cilindro2",
+  "radio": 10,
+  "altura": 1000,
+  "x": 200,
+  "y": -600,
+  "z": 300,
+  "direccion_x": 0,
+  "direccion_y": 1,
+  "direccion_z": 0,
+  "r": 93,
+  "g": 50,
+  "b": 20,
+  "Transparencia": 0.0,
+  "Refleccion": 0.5,
+  "Refraccion":0.0,
+  "atConst": 0.35,
+  "atLineal": 0.0055,
+  "atCuadr": 0.0,
+  "esxpReflecEspec": 23,
+  "fracReflecEspec": 0.0,
+  "colorReflecEspecR": 255,
+  "colorReflecEspecG": 255,
+  "colorReflecEspecB": 255,
+  "sensibilidad": 0
+},
+{
+  "name": "cilindro2",
+  "radio": 10,
+  "altura": 1000,
+  "x": -300,
+  "y": -600,
+  "z": 300,
+  "direccion_x": 0,
+  "direccion_y": 1,
+  "direccion_z": 0,
+  "r": 93,
+  "g": 50,
+  "b": 20,
+  "Transparencia": 0.0,
+  "Refleccion": 0.5,
+  "Refraccion":0.0,
+  "atConst": 0.35,
+  "atLineal": 0.0055,
+  "atCuadr": 0.0,
+  "esxpReflecEspec": 23,
+  "fracReflecEspec": 0.0,
+  "colorReflecEspecR": 255,
+  "colorReflecEspecG": 255,
+  "colorReflecEspecB": 255,
+  "sensibilidad": 0
+},
+{
+  "name": "cilindro2",
+  "radio": 10,
+  "altura": 1000,
+  "x": 300,
+  "y": -600,
+  "z": 300,
+  "direccion_x": 0,
+  "direccion_y": 1,
+  "direccion_z": 0,
+  "r": 93,
+  "g": 50,
+  "b": 20,
+  "Transparencia": 0.0,
+  "Refleccion": 0.5,
+  "Refraccion":0.0,
+  "atConst": 0.35,
+  "atLineal": 0.0055,
+  "atCuadr": 0.0,
+  "esxpReflecEspec": 23,
+  "fracReflecEspec": 0.0,
+  "colorReflecEspecR": 255,
+  "colorReflecEspecG": 255,
+  "colorReflecEspecB": 255,
+  "sensibilidad": 0
+}
+    
+  ],
+
+  "camara": [
+    {
+      "ResolucionX": 1920,
+      "ResolucionY": 1080,
+      "x": 0,
+      "y": 0,
+      "z": -1300,
+      "dirAx": 0,
+      "dirAy": 1,
+      "dirAz": 0,
+      "dirPVx": 0,
+      "dirPVy": 0,
+      "dirPVz": 1
+    }
+  ],
+
+  "luzAmbiente": [
+    {
+      "intr": 80.0,
+      "intg": 80.0,
+      "intb": 80.0
+    }
+  ],
+
+
+  "lucesPuntuales": [
+    {
+      "intr": 255,
+      "intg": 0,
+      "intb": 0,
+      "posX": 0,
+      "posY": 300,
+      "posZ": 200
+    },
+    {
+      "intr": 255,
+      "intg": 0,
+      "intb": 0,
+      "posX": 0,
+      "posY": 300,
+      "posZ": 500
+    }
+  ]
+
+}
