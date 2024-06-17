@@ -1,0 +1,250 @@
+{
+  "planos": [
+    {
+        "name": "agua",
+        "D": 0,
+        "x": 0,
+        "y": -20,
+        "z": 0,
+
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        
+        "vectorU_x": 1,
+        "vectorU_y": 0,
+        "vectorU_z": 0,
+
+        "vectorV_x": 0,
+        "vectorV_y": 0,
+        "vectorV_z": 1,
+
+        "Transparencia":0.3,
+        "Refleccion": 0.7,
+        "Refraccion":0.0,
+        "atConst": 0.35,
+        "atLineal": 0.0055,
+        "atCuadr": 0.0,
+        "esxpReflecEspec": 23,
+        "fracReflecEspec": 0,
+        "colorReflecEspecR": 255,
+        "colorReflecEspecG": 255,
+        "colorReflecEspecB": 255,
+        "sensibilidad": 1.33
+    },
+    {
+      "name": "agua",
+      "D": 0,
+      "x": 0,
+      "y": 0,
+      "z": 100,
+
+      "r": 133,
+      "g": 193,
+      "b": 233,
+      
+      "vectorU_x": 1,
+      "vectorU_y": 0,
+      "vectorU_z": 0,
+
+      "vectorV_x": 0,
+      "vectorV_y": 1,
+      "vectorV_z": 0,
+
+      "Transparencia":0.0,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+  }
+  ],
+
+  "triangulos": [
+    {
+      "name": "ign",
+      "xV1": 0,
+      "yV1": 0,
+      "zV1": 0,
+      "xV2": 0,
+      "yV2": 0,
+      "zV2": 0,
+      "xV3": 0,
+      "yV3": 0,
+      "zV3": 0,
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "Transparencia": 0.0,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+    }
+  ],
+
+    "mallas": [
+        {
+            "name": "ign",
+            "trasladar_x": 0,
+            "trasladar_y":0,
+            "trasladar_z":0,
+            "escalamiento":4,
+            "obj_url":"Horse.obj",
+            "png_url": "horsetexture.png"
+
+        }
+    ],
+
+  "esferas": [
+    {
+      "name": "esf1",
+      "radio": 100,
+      "x": 0,
+      "y": 100,
+      "z": 0,
+      "r": 234,
+      "g": 195,
+      "b": 184,
+
+      "Transparencia": 0.0,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+    },
+    {
+      "name": "esf2",
+      "radio": 100,
+      "x": -300,
+      "y": 100,
+      "z": 0,
+      "r": 247,
+      "g": 220,
+      "b": 111,
+
+      "Transparencia": 0.6,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 1.5
+    },
+    {
+      "name": "esf3",
+      "radio": 50,
+      "x": -300,
+      "y": 250,
+      "z": 0,
+      "r": 255,
+      "g": 255,
+      "b": 255,
+
+      "Transparencia": 0.0,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+    }
+  ],
+
+  "cilindros": [
+    {
+        "name": "cili1",
+        "radio": 50,
+        "altura": 100,
+        "x": 200,
+        "y": 100,
+        "z": 0,
+        "direccion_x": 1,
+        "direccion_y": 1,
+        "direccion_z": 1,
+        "r": 0,
+        "g": 222,
+        "b": 0,
+
+        "Transparencia": 0.0,
+        "Refleccion": 0.1,
+        "Refraccion":0.0,
+        "atConst": 0.35,
+        "atLineal": 0.0055,
+        "atCuadr": 0.0,
+        "esxpReflecEspec": 23,
+        "fracReflecEspec": 0,
+        "colorReflecEspecR": 255,
+        "colorReflecEspecG": 255,
+        "colorReflecEspecB": 255,
+        "sensibilidad": 0
+    }
+
+  ],
+
+  "camara": [
+    {
+      "ResolucionX": 1920,
+      "ResolucionY": 1080,
+      "x": 0,
+      "y": 100,
+      "z": -2000,
+      "dirAx": 0,
+      "dirAy": 1,
+      "dirAz": 0,
+      "dirPVx": 0,
+      "dirPVy": 0,
+      "dirPVz": 1
+    }
+  ],
+
+  "luzAmbiente": [
+    {
+      "intr": 255.0,
+      "intg": 255.0,
+      "intb": 255.0
+    }
+  ],
+
+  "lucesPuntuales": [
+    {
+      "intr": 255,
+      "intg": 223,
+      "intb": 196,
+      "posX": -100,
+      "posY": 200,
+      "posZ": 0
+    }
+  ]
+
+}

@@ -1,0 +1,221 @@
+{
+  "planos": [
+    {
+        "name": "pared",
+        "D": 0,
+        "x": 0,
+        "y": 0,
+        "z": 0,
+
+        "vectorU_x": 0,
+        "vectorU_y": 0,
+        "vectorU_z": 1,
+
+        "vectorV_x": 1,
+        "vectorV_y": 0,
+        "vectorV_z": 0,
+
+        "r": 150,
+        "g": 0,
+        "b": 150,
+
+        "Transparencia": 0.0,
+        "Refleccion": 0.0,
+        "Refraccion":0.0,
+        "atConst": 0.35,
+        "atLineal": 0.0055,
+        "atCuadr": 0.0,
+        "esxpReflecEspec": 23,
+        "fracReflecEspec": 0,
+        "colorReflecEspecR": 255,
+        "colorReflecEspecG": 255,
+        "colorReflecEspecB": 255,
+        "sensibilidad": 0
+    },
+    {
+      "name": "techo",
+      "D": 0,
+      "x": 0,
+      "y": 2000,
+      "z": 0,
+
+      "r": 150,
+      "g": 0,
+      "b": 0,
+      
+      "vectorU_x": 0,
+      "vectorU_y": 0,
+      "vectorU_z": 1,
+
+      "vectorV_x": 1,
+      "vectorV_y": 0,
+      "vectorV_z": 0,
+
+      "Transparencia": 0.0,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+  }
+  ],
+
+  "triangulos": [
+    {
+      "name": "ign",
+      "xV1": 0,
+      "yV1": 0,
+      "zV1": 0,
+      "xV2": 0,
+      "yV2": 0,
+      "zV2": 0,
+      "xV3": 0,
+      "yV3": 0,
+      "zV3": 0,
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "Transparencia": 0.0,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+    }
+  ],
+
+    "mallas": [
+        {
+            "name": "caballo1",
+            "trasladar_x": -100,
+            "trasladar_y":0,
+            "trasladar_z":0,
+            "escalamiento":4,
+            "obj_url":"Horse.obj",
+            "png_url": "horsetexture.png"
+
+        },
+        {
+          "name": "caballo2",
+          "trasladar_x": 300,
+          "trasladar_y":0,
+          "trasladar_z":400,
+          "escalamiento":4,
+          "obj_url":"Horse.obj",
+          "png_url": "horsetexture.png"
+
+      }
+    ],
+
+  "esferas": [
+    {
+      "name": "esferaEspejo",
+      "radio": 200,
+      "x": 500,
+      "y": 200,
+      "z": 0,
+      "r": 255,
+      "g": 255,
+      "b": 255,
+
+      "Transparencia": 0.0,
+      "Refleccion": 0.8,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0.7,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+    }
+  ],
+
+  "cilindros": [
+    {
+        "name": "ign",
+        "radio": 14,
+        "altura": 33,
+        "x": 80,
+        "y": 110,
+        "z": 60,
+        "direccion_x": 10,
+        "direccion_y": 20,
+        "direccion_z": 30,
+        "r": 0,
+        "g": 222,
+        "b": 0,
+
+        "Transparencia": 0.0,
+        "Refleccion": 0.0,
+        "Refraccion":0.0,
+        "atConst": 0.35,
+        "atLineal": 0.0055,
+        "atCuadr": 0.0,
+        "esxpReflecEspec": 23,
+        "fracReflecEspec": 0,
+        "colorReflecEspecR": 255,
+        "colorReflecEspecG": 255,
+        "colorReflecEspecB": 255,
+        "sensibilidad": 0
+    }
+  ],
+
+  "camara": [
+    {
+      "ResolucionX": 1920,
+      "ResolucionY": 1080,
+      "x": 1200,
+      "y": 1200,
+      "z": 1200,
+      "dirAx": 0.0,
+      "dirAy": 1.0,
+      "dirAz": 0.0,
+      "dirPVx": -1.0,
+      "dirPVy": -1.0,
+      "dirPVz": -1.0
+    }
+  ],
+
+  "luzAmbiente": [
+    {
+      "intr": 100.0,
+      "intg": 100.0,
+      "intb": 100.0
+    }
+  ],
+
+  "lucesPuntuales": [
+    {
+      "intr": 255,
+      "intg": 255,
+      "intb": 255,
+      "posX": 400,
+      "posY": 500,
+      "posZ": 0
+    },
+    {
+      "intr": 255,
+      "intg": 0,
+      "intb": 255,
+      "posX": 300,
+      "posY": 700,
+      "posZ": 700
+    }
+  ]
+
+}

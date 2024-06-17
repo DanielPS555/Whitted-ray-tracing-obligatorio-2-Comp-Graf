@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\modelos">
+      <UniqueIdentifier>{d51d7899-9905-44a5-842c-975ff5717daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\escena">
+      <UniqueIdentifier>{85939c25-101a-4ceb-ac50-eb3efb115144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\escena">
+      <UniqueIdentifier>{82901ad1-cfe1-49ba-992a-f463691ce3de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\modelos">
+      <UniqueIdentifier>{f24c02d5-e271-406d-9ab2-f6bef4e160d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{943a71ba-8558-4e39-a855-569f2caaaaca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{47b5ac8d-71f8-4aed-9887-4f5ee736606d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\iluminacion">
+      <UniqueIdentifier>{710d53a3-1470-4ca4-9436-420240eceedb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\iluminacion">
+      <UniqueIdentifier>{d9ba5f9b-a0e8-4181-9e41-61ea6d2abc8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ejemplos">
+      <UniqueIdentifier>{b0dec8c6-e1b9-429c-a39f-93cd05e7ad96}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CargaArchivo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjetosEscena.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ejemplo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camara.cpp">
+      <Filter>Source Files\escena</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MathVector.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Objeto.cpp">
+      <Filter>Source Files\modelos</Filter>
+    </ClCompile>
+    <ClCompile Include="Plano.cpp">
+      <Filter>Source Files\modelos</Filter>
+    </ClCompile>
+    <ClCompile Include="Esfera.cpp">
+      <Filter>Source Files\modelos</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangulo.cpp">
+      <Filter>Source Files\modelos</Filter>
+    </ClCompile>
+    <ClCompile Include="LuzAmbiente.cpp">
+      <Filter>Source Files\iluminacion</Filter>
+    </ClCompile>
+    <ClCompile Include="Rayo.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="LuzPuntual.cpp">
+      <Filter>Source Files\iluminacion</Filter>
+    </ClCompile>
+    <ClCompile Include="Cilindro.cpp">
+      <Filter>Source Files\modelos</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="objloader.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Malla.cpp">
+      <Filter>Source Files\modelos</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CargaArchivo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjetosEscena.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camara.h">
+      <Filter>Header Files\escena</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MathVector.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Esfera.h">
+      <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+    <ClInclude Include="Objeto.h">
+      <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+    <ClInclude Include="Plano.h">
+      <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+    <ClInclude Include="Rayo.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangulo.h">
+      <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+    <ClInclude Include="LuzAmbiente.h">
+      <Filter>Header Files\iluminacion</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="LuzPuntual.h">
+      <Filter>Header Files\iluminacion</Filter>
+    </ClInclude>
+    <ClInclude Include="Cilindro.h">
+      <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+    <ClInclude Include="objloader.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Malla.h">
+      <Filter>Header Files\modelos</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MetaDatas.json" />
+    <None Include="EscenaEjemplo.json">
+      <Filter>Ejemplos</Filter>
+    </None>
+    <None Include="Ejemplo1.json">
+      <Filter>Ejemplos</Filter>
+    </None>
+    <None Include="Ejemplo2.json">
+      <Filter>Ejemplos</Filter>
+    </None>
+    <None Include="Ejemplo4.json">
+      <Filter>Ejemplos</Filter>
+    </None>
+  </ItemGroup>
+</Project>

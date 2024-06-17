@@ -1,0 +1,39 @@
+﻿  main.cpp
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\ObjetosEscena.h(26,17): warning C4244: '=': conversión de 'float' a 'unsigned int'; posible pérdida de datos
+  (compilando archivo de origen "main.cpp")
+  
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\ObjetosEscena.h(27,17): warning C4244: '=': conversión de 'float' a 'unsigned int'; posible pérdida de datos
+  (compilando archivo de origen "main.cpp")
+  
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(53,48): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(102,54): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(197,30): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(198,30): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(199,30): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(215,32): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(216,32): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(217,32): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(233,33): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(234,33): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(235,33): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(253,31): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(254,31): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(255,31): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(269,33): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(270,33): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(271,33): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(285,31): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(286,31): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(287,31): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(301,40): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(302,40): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(303,40): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(317,39): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(318,39): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\main.cpp(319,39): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+  Generando código
+  3 of 676 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+  obl2-ray-traicing.vcxproj -> D:\FING\Proyectos\Comp Grafica\Whitted-ray-tracing-obligatorio-2-Comp-Graf\obl2-ray-traicing\x64\Release\obl2-ray-traicing.exe

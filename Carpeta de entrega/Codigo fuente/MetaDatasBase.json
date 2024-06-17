@@ -1,0 +1,179 @@
+{
+  "planos": [
+    {
+        "name": "ign",
+        "D": 0,
+        "x": 0,
+        "y": 0,
+        "z": 0,
+
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        
+        "vectorU_x": 0,
+        "vectorU_y": 0,
+        "vectorU_z": 0,
+
+        "vectorV_x": 0,
+        "vectorV_y": 0,
+        "vectorV_z": 0,
+
+        "Transparencia": 0.0,
+        "Refleccion": 0.0,
+        "Refraccion":0.0,
+        "atConst": 0.35,
+        "atLineal": 0.0055,
+        "atCuadr": 0.0,
+        "esxpReflecEspec": 23,
+        "fracReflecEspec": 0,
+        "colorReflecEspecR": 255,
+        "colorReflecEspecG": 255,
+        "colorReflecEspecB": 255,
+        "sensibilidad": 0
+    }
+  ],
+
+  "triangulos": [
+    {
+      "name": "ign",
+      "xV1": 0,
+      "yV1": 0,
+      "zV1": 0,
+      "xV2": 0,
+      "yV2": 0,
+      "zV2": 0,
+      "xV3": 0,
+      "yV3": 0,
+      "zV3": 0,
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "Transparencia": 0.0,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+    }
+  ],
+
+    "mallas": [
+        {
+            "name": "ign",
+            "trasladar_x": -100,
+            "trasladar_y":0,
+            "trasladar_z":0,
+            "escalamiento":4,
+            "obj_url":"Horse.obj",
+            "png_url": "horsetexture.png"
+
+        }
+    ],
+
+  "esferas": [
+    {
+      "name": "ign",
+      "radio": 25,
+      "x": 70,
+      "y": 140,
+      "z": 85,
+      "r": 234,
+      "g": 195,
+      "b": 184,
+
+      "Transparencia": 0.0,
+      "Refleccion": 0.0,
+      "Refraccion":0.0,
+      "atConst": 0.35,
+      "atLineal": 0.0055,
+      "atCuadr": 0.0,
+      "esxpReflecEspec": 23,
+      "fracReflecEspec": 0,
+      "colorReflecEspecR": 255,
+      "colorReflecEspecG": 255,
+      "colorReflecEspecB": 255,
+      "sensibilidad": 0
+    }
+  ],
+
+  "cilindros": [
+    {
+        "name": "ign",
+        "radio": 14,
+        "altura": 33,
+        "x": 80,
+        "y": 110,
+        "z": 60,
+        "direccion_x": 10,
+        "direccion_y": 20,
+        "direccion_z": 30,
+        "r": 0,
+        "g": 222,
+        "b": 0,
+
+        "Transparencia": 0.0,
+        "Refleccion": 0.0,
+        "Refraccion":0.0,
+        "atConst": 0.35,
+        "atLineal": 0.0055,
+        "atCuadr": 0.0,
+        "esxpReflecEspec": 23,
+        "fracReflecEspec": 0,
+        "colorReflecEspecR": 255,
+        "colorReflecEspecG": 255,
+        "colorReflecEspecB": 255,
+        "sensibilidad": 0
+    }
+  ],
+
+  "camara": [
+    {
+      "ResolucionX": 1920,
+      "ResolucionY": 1080,
+      "x": 1200,
+      "y": 1200,
+      "z": 1200,
+      "dirAx": 0,
+      "dirAy": 1,
+      "dirAz": 0,
+      "dirPVx": -1,
+      "dirPVy": -1,
+      "dirPVz": -1
+    }
+  ],
+
+  "luzAmbiente": [
+    {
+      "intr": 100.0,
+      "intg": 100.0,
+      "intb": 100.0
+    }
+  ],
+
+  "lucesPuntuales": [
+    {
+      "intr": 200,
+      "intg": 200,
+      "intb": 200,
+      "posX": 75,
+      "posY": 100,
+      "posZ": 180
+    },
+    {
+      "intr": 200,
+      "intg": 200,
+      "intb": 200,
+      "posX": 150,
+      "posY": 100,
+      "posZ": 180
+    }
+  ]
+
+}
